@@ -1,0 +1,71 @@
+{
+  "name": "datocms-plugin-translate-fields",
+  "homepage": "https://github.com/voorhoede/datocms-plugin-translate-fields",
+  "version": "1.0.0",
+  "description": "A DatoCMS plugin that gives you the ability to translate `structured-text`, `string` and `text` fields in DatoCMS",
+  "scripts": {
+    "start": "cross-env BROWSER='none' PUBLIC_URL='/' react-scripts start",
+    "build": "cross-env PUBLIC_URL='.' react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "datocms",
+    "datocms-plugin",
+    "field-addon",
+    "translate",
+    "text",
+    "string",
+    "structured-text",
+    "deepl",
+    "yandex"
+  ],
+  "files": [
+    "build",
+    "docs"
+  ],
+  "author": "Voorhoede",
+  "license": "MIT",
+  "datoCmsPlugin": {
+    "title": "Translate",
+    "previewImage": "docs/preview.png",
+    "coverImage": "docs/cover.png",
+    "entryPoint": "build/index.html"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.178",
+    "@types/node": "^16.11.14",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "datocms-plugin-sdk": "^0.3.34",
+    "datocms-react-ui": "^0.3.34",
+    "html2json": "^1.0.2",
+    "mdast-util-from-markdown": "^1.2.0",
+    "mdast-util-to-markdown": "^1.2.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.5.2"
+  }
+}

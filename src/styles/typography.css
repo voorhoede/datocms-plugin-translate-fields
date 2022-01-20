@@ -1,0 +1,61 @@
+h1,
+.h1 {
+  font-size: var(--font-size-xxl);
+  font-weight: bold;
+  margin: var(--spacing-m) 0;
+}
+
+h2,
+.h2 {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  margin: var(--spacing-m) 0;
+}
+
+h3,
+.h3 {
+  font-size: var(--font-size-l);
+  font-weight: bold;
+  margin: var(--spacing-m) 0;
+}
+
+h4,
+.h4 {
+  font-size: var(--font-size-m);
+  font-weight: bold;
+  margin: var(--spacing-s) 0;
+}
+
+p {
+  margin-bottom: var(--spacing-m);
+}
+
+.body {
+  font-family: var(--base-font-family);
+}
+
+.body--small {
+  font-size: var(--font-size-xs);
+}
+
+.text-thin {
+  font-weight: normal;
+}
+
+strong,
+.text-bold {
+  font-weight: bold;
+}
+
+.text-error {
+  color: var(--alert-color);
+}
+
+pre,
+.code {
+  font-family: var(--monospaced-font-family);
+  font-size: var(--font-size-s);
+  background-color: var(--light-bg-color);
+  padding: var(--spacing-m);
+  margin-bottom: var(--spacing-m);
+}
