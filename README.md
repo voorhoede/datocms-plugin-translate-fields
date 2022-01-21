@@ -35,7 +35,7 @@ By changing the following setting you can choose on which fields this plugin wil
 
 #### **General Settings**
 
-![](https://github.com/voorhoede/datocms-plugin-word-counter/raw/main/docs/translate-fields-general-settings.png)
+![](https://github.com/voorhoede/datocms-plugin-translate-fields/raw/main/docs/translate-fields-general-settings.png)
 
 - **Translation service**: You can choose which service will be used to translate. The chosen service will be used and an option to add a api key will be presented automatically.
 
