@@ -29,14 +29,15 @@ export async function getTranslation(string: string, options: TranslationOptions
     return response.text.join(' ')
   }
 
-  if (options.translationService === TranslationService.deepl) {
+  if (options.translationService === TranslationService.deepl || options.translationService === TranslationService.deeplFree) {
     params.set('auth_key', options.apiKey)
     params.set('target_lang', options.toLocale)
     params.set('tag_handling', 'xml')
     params.set('text', string)
 
+    const endpoint = options.translationService === TranslationService.deepl ? 'https://api.deepl.com': 'https://api-free.deepl.com'
     const request = await fetch(
-      `https://api.deepl.com/v2/translate?${params.toString()}`,
+      `${endpoint}/v2/translate?${params.toString()}`,
     )
 
     if (request.status !== 200) {

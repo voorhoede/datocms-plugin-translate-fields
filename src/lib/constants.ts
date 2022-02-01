@@ -8,7 +8,8 @@ export const fieldsOptions = [
 
 export const translationServiceOptions = [
   { label: 'Yandex translate', value: TranslationService.yandex },
-  { label: 'DEEPL translate', value: TranslationService.deepl },
+  { label: 'DeepL API Pro', value: TranslationService.deepl },
+  { label: 'DeepL API Free', value: TranslationService.deeplFree },
 ]
 
 export const translationFormats = {
