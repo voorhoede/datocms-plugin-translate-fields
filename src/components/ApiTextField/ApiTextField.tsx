@@ -22,7 +22,7 @@ export default function ApiTextField({
       required
       name={`${option.value}ApiKey`}
       id={`${option.value}ApiKey`}
-      label={`Api key of ${option.label}`}
+      label={`API key of ${option.label}`}
       value={apiKey}
       placeholder="Enter API key"
       textInputProps={{
