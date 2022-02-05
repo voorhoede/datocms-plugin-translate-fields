@@ -10,8 +10,12 @@ const parseHtml = require('html2json')
 
 export async function getTranslation(string: string, options: TranslationOptions): Promise<string> {
   const params = new URLSearchParams()
+  
+  const isDeepL = options.translationService === TranslationService.deepl
+  const isDeepLFree = options.translationService === TranslationService.deeplFree
+  const isYandex = options.translationService === TranslationService.yandex
 
-  if (options.translationService === TranslationService.yandex) {
+  if (isYandex) {
     params.set('key', options.apiKey)
     params.set('lang', options.toLocale)
     params.set('format', 'plain')
@@ -29,15 +33,15 @@ export async function getTranslation(string: string, options: TranslationOptions
     return response.text.join(' ')
   }
 
-  if (options.translationService === TranslationService.deepl || options.translationService === TranslationService.deeplFree) {
+  if (isDeepL || isDeepLFree) {
     params.set('auth_key', options.apiKey)
     params.set('target_lang', options.toLocale)
     params.set('tag_handling', 'xml')
     params.set('text', string)
-
-    const endpoint = options.translationService === TranslationService.deepl ? 'https://api.deepl.com': 'https://api-free.deepl.com'
+    
+    const apiVersion = isDeepLFree ? 'api-free' : 'api'
     const request = await fetch(
-      `${endpoint}/v2/translate?${params.toString()}`,
+       `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`,
     )
 
     if (request.status !== 200) {
