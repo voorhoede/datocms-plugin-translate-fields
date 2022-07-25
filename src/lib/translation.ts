@@ -20,51 +20,54 @@ const parseHtml = require('html2json')
 export async function getTranslation(string: string, options: TranslationOptions): Promise<string> {
   const params = new URLSearchParams()
 
-  const isDeepL = options.translationService === TranslationService.deepl
-  const isDeepLFree = options.translationService === TranslationService.deeplFree
-  const isYandex = options.translationService === TranslationService.yandex
+  switch (options.translationService) {
+    case TranslationService.yandex: {
+      params.set('key', options.apiKey)
+      params.set('lang', options.toLocale)
+      params.set('format', 'plain')
+      params.set('text', string)
 
-  if (isYandex) {
-    params.set('key', options.apiKey)
-    params.set('lang', options.toLocale)
-    params.set('format', 'plain')
-    params.set('text', string)
+      const request = await fetch(
+        `https://translate.yandex.net/api/v1.5/tr.json/translate?${params.toString()}`,
+      )
 
-    const request = await fetch(
-      `https://translate.yandex.net/api/v1.5/tr.json/translate?${params.toString()}`,
-    )
+      if (request.status !== 200) {
+        throw new Error(`Yandex returned status ${request.status}`)
+      }
 
-    if (request.status !== 200) {
-      throw new Error(`Yandex returned status ${request.status}`)
+      const response = await request.json()
+      return response.text.join(' ')
     }
+    case TranslationService.deepl:
+    case TranslationService.deeplFree: {
+      params.set('auth_key', options.apiKey)
+      params.set('target_lang', options.toLocale)
+      params.set('tag_handling', 'xml')
+      params.set('text', string)
 
-    const response = await request.json()
-    return response.text.join(' ')
-  }
+      const apiVersion =
+        options.translationService === TranslationService.deeplFree
+          ? 'api-free'
+          : 'api'
 
-  if (isDeepL || isDeepLFree) {
-    params.set('auth_key', options.apiKey)
-    params.set('target_lang', options.toLocale)
-    params.set('tag_handling', 'xml')
-    params.set('text', string)
+      const request = await fetch(
+        `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`,
+      )
 
-    const apiVersion = isDeepLFree ? 'api-free' : 'api'
-    const request = await fetch(
-      `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`,
-    )
+      if (request.status !== 200) {
+        throw new Error(`DEEPL returned status ${request.status}`)
+      }
 
-    if (request.status !== 200) {
-      throw new Error(`DEEPL returned status ${request.status}`)
+      const response = await request.json()
+
+      return response.translations
+        .map((translation: any) => translation.text)
+        .join(' ')
     }
-
-    const response = await request.json()
-    return response.translations
-      .map((translation: any) => translation.text)
-      .join(' ')
+    default: {
+      throw new Error('No translation service added in the settings')
+    }
   }
-
-
-  throw new Error('No translation service added in the settings')
 }
 
 export async function getStructuredTextTranslation(value: any[], options: TranslationOptions): Promise<any[]> {
