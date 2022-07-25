@@ -1,7 +1,16 @@
 import set from 'lodash/set'
 import get from 'lodash/get'
-import { TranslationOptions, PathTranslationOptions, Path, TranslationService } from './types'
+import {
+  TranslationOptions,
+  PathTranslationOptions,
+  Path,
+  TranslationService
+} from './types'
 import { makeObject, paths, makeArray } from './helpers'
+import {
+  yandex as yandexSupportedLocales,
+  deepl as deeplSupportedLocales
+} from './supportedLocales'
 
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { toMarkdown } from 'mdast-util-to-markdown'
@@ -10,7 +19,7 @@ const parseHtml = require('html2json')
 
 export async function getTranslation(string: string, options: TranslationOptions): Promise<string> {
   const params = new URLSearchParams()
-  
+
   const isDeepL = options.translationService === TranslationService.deepl
   const isDeepLFree = options.translationService === TranslationService.deeplFree
   const isYandex = options.translationService === TranslationService.yandex
@@ -38,10 +47,10 @@ export async function getTranslation(string: string, options: TranslationOptions
     params.set('target_lang', options.toLocale)
     params.set('tag_handling', 'xml')
     params.set('text', string)
-    
+
     const apiVersion = isDeepLFree ? 'api-free' : 'api'
     const request = await fetch(
-       `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`,
+      `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`,
     )
 
     if (request.status !== 200) {
@@ -120,4 +129,43 @@ export async function getTranslationPerPath(array: any[], options: PathTranslati
 
   const translatedArray = makeArray(jsonObject, options.arrayKey)
   return translatedArray
+}
+
+export function getSupportedLocale(locale: string, translationService: TranslationService): string {
+  const localeLower = locale.toLowerCase()
+  const localeStart = localeLower.indexOf('-') > 0 ? localeLower.substring(0, localeLower.indexOf('-')) : localeLower
+
+  switch (translationService) {
+    case TranslationService.yandex: {
+      if (yandexSupportedLocales.includes(localeStart)) {
+        return localeStart
+      }
+      break
+    }
+    case TranslationService.deepl:
+    case TranslationService.deeplFree: {
+      if (localeLower === 'en') {
+        return 'EN-US'
+      }
+
+      if (localeLower === 'pt') {
+        return 'PT-PT'
+      }
+
+      if (localeLower === 'en-us' || localeLower === 'en-gb') {
+        return localeLower.toUpperCase()
+      }
+
+      if (localeLower === 'pt-pt' || localeLower === 'pt-br') {
+        return localeLower.toUpperCase()
+      }
+
+      if (deeplSupportedLocales.includes(localeStart)) {
+        return localeStart.toUpperCase()
+      }
+      break
+    }
+  }
+
+  return locale
 }
