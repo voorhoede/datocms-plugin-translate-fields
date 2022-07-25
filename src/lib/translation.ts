@@ -147,25 +147,23 @@ export function getSupportedLocale(locale: string, translationService: Translati
     }
     case TranslationService.deepl:
     case TranslationService.deeplFree: {
-      if (localeLower === 'en') {
-        return 'EN-US'
-      }
-
-      if (localeLower === 'pt') {
-        return 'PT-PT'
-      }
-
-      if (localeLower === 'en-us' || localeLower === 'en-gb') {
-        return localeLower.toUpperCase()
-      }
-
-      if (localeLower === 'pt-pt' || localeLower === 'pt-br') {
-        return localeLower.toUpperCase()
+      switch (localeLower) {
+        case 'en':
+          return 'EN-US'
+        case 'pt':
+          return 'PT-PT'
+        case 'en-us':
+        case 'en-gb':
+        case 'pt-pt':
+        case 'pt-br':
+          return localeLower.toUpperCase()
+        default:  break
       }
 
       if (deeplSupportedLocales.includes(localeStart)) {
         return localeStart.toUpperCase()
       }
+
       break
     }
   }
