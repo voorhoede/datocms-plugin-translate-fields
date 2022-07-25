@@ -8,6 +8,7 @@ import {
   getStructuredTextTranslation,
   getMarkdownTranslation,
   getHtmlTranslation,
+  getSupportedLocale,
 } from '../../lib/translation'
 import {
   Editor,
@@ -17,6 +18,7 @@ import {
   Parameters,
   SettingOption,
   TranslationService,
+  TranslationServiceKey,
 } from '../../lib/types'
 import {
   translationFormats,
@@ -40,13 +42,14 @@ export default function FieldAddon({ ctx }: Props) {
     pluginGlobalParameters?.translationService ||
     translationServiceOptions[0]
 
+  const translationServiceValue = translationService.value as TranslationService
+  const translationServiceApiKey =
+    `${translationServiceValue}ApiKey` as TranslationServiceKey
+
   const translationApiKey: string =
-    (pluginParameters?.[
-      `${translationService.value as TranslationService}ApiKey`
-    ] as string) ||
-    (pluginGlobalParameters?.[
-      `${translationService.value as TranslationService}ApiKey`
-    ] as string)
+    pluginParameters?.[translationServiceApiKey] ||
+    pluginGlobalParameters?.[translationServiceApiKey] ||
+    ''
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
@@ -84,9 +87,9 @@ export default function FieldAddon({ ctx }: Props) {
         let translatedField
         const options: TranslationOptions = {
           fromLocale: fromLocale || locales[0],
-          toLocale: locale,
+          toLocale: getSupportedLocale(locale, translationServiceValue),
           format: translationFormats[editor],
-          translationService: translationService.value as TranslationService,
+          translationService: translationServiceValue,
           apiKey: translationApiKey,
         }
 
