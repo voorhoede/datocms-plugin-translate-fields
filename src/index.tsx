@@ -33,6 +33,7 @@ connect({
           Fields.textField,
           Fields.stringField,
           Fields.structuredTextField,
+          Fields.seo
         ],
         configurable: true,
       },

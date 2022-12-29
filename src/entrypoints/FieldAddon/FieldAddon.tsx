@@ -71,8 +71,11 @@ export default function FieldAddon({ ctx }: Props) {
     if (typeof fieldValue === 'string') {
       return Boolean(fieldValue)
     }
+    if (Array.isArray(fieldValue)) {
+      return Boolean(fieldValue?.[0]?.children?.[0]?.text)
+    }
 
-    return Boolean(fieldValue?.[0]?.children?.[0]?.text)
+    return Boolean(fieldValue?.title) || Boolean(fieldValue?.description)
   }
 
   async function translateField(languages: string[], fromLocale?: string) {
@@ -115,6 +118,16 @@ export default function FieldAddon({ ctx }: Props) {
                 translatableField,
                 options
               )
+              break
+            }
+            case TranslationFormat.seo: {
+              const field: any = get(ctx.formValues, `${fieldPath}.${locale}`);
+              translatedField = {
+                title: await getTranslation(translatableField.title, options),
+                description: await getTranslation(translatableField.description, options),
+                image: field?.image,
+                twitter_card: field?.twitter_card,
+              }
               break
             }
             default: {
