@@ -22,7 +22,8 @@
     "string",
     "structured-text",
     "deepl",
-    "yandex"
+    "yandex",
+    "seo"
   ],
   "files": [
     "build",

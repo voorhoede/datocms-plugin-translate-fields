@@ -4,7 +4,7 @@ export const fieldsOptions = [
   { label: 'String fields', value: Fields.stringField },
   { label: 'Text fields', value: Fields.textField },
   { label: 'Structured text fields', value: Fields.structuredTextField },
-  { label: 'SEO', value: Fields.seo },
+  { label: 'SEO fields', value: Fields.seo },
 ]
 
 export const translationServiceOptions = [
