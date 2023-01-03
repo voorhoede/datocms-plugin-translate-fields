@@ -121,13 +121,15 @@ export default function FieldAddon({ ctx }: Props) {
               break
             }
             case TranslationFormat.seo: {
-              const field: any = get(ctx.formValues, `${fieldPath}.${locale}`);
+              const currentField : any = get(ctx.formValues, `${fieldPath}.${locale}`);
+
               translatedField = {
                 title: await getTranslation(translatableField.title, options),
                 description: await getTranslation(translatableField.description, options),
-                image: field?.image,
-                twitter_card: field?.twitter_card,
+                image: currentField?.image || translatableField?.image,
+                twitter_card: currentField?.twitter_card || translatableField?.twitter_card,
               }
+
               break
             }
             default: {
