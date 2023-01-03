@@ -1,5 +1,5 @@
-import set from 'lodash/set'
-import get from 'lodash/get'
+import { pickBy, get, set } from 'lodash'
+
 import {
   TranslationOptions,
   PathTranslationOptions,
@@ -71,12 +71,12 @@ export async function getTranslation(string: string, options: TranslationOptions
 }
 
 export async function getStructuredTextTranslation(value: any[], options: TranslationOptions): Promise<any[]> {
-  const filteredArray = value.filter(item => item.type !== 'block')
+  const filteredArray = value.map(item => item.type !== 'block' ? item : {type:'block'})
   const filteredObject = makeObject(filteredArray, 'children')
   const allPaths = paths(filteredObject)
 
   const translatedArray = await getTranslationPerPath(
-    value,
+    value.map((item)=> item.type ==='block' ? pickBy(item,(value,key)=> key !== 'id') : item),
     {
       ...options,
       arrayKey: 'children',

@@ -1,7 +1,7 @@
 {
   "name": "datocms-plugin-translate-fields",
   "homepage": "https://github.com/voorhoede/datocms-plugin-translate-fields",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A DatoCMS plugin that gives you the ability to translate `structured-text`, `string` and `text` fields in DatoCMS",
   "engines": {
     "node": ">=16.0.0"
@@ -22,7 +22,8 @@
     "string",
     "structured-text",
     "deepl",
-    "yandex"
+    "yandex",
+    "seo"
   ],
   "files": [
     "build",
