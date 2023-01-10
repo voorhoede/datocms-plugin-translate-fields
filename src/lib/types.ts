@@ -29,12 +29,14 @@ export enum TranslationService {
   yandex = 'yandex',
   deepl = 'deepl',
   deeplFree = 'deeplFree',
+  gpt3 = 'gpt3'
 }
 
 export enum TranslationServiceKey {
   yandexKey = 'yandexApiKey',
   deeplApiKey = 'deeplApiKey',
-  deeplFreeApiKey = 'deeplFreeApiKey'
+  deeplFreeApiKey = 'deeplFreeApiKey',
+  gpt3ApiKey = 'gpt3ApiKey',
 }
 
 export type Parameters = {
@@ -42,6 +44,7 @@ export type Parameters = {
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
+  [TranslationServiceKey.gpt3ApiKey]?: string
 }
 
 export interface GlobalParameters extends Parameters {

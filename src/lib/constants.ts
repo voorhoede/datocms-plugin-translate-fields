@@ -11,6 +11,7 @@ export const translationServiceOptions = [
   { label: 'Yandex translate', value: TranslationService.yandex },
   { label: 'DeepL API Pro', value: TranslationService.deepl },
   { label: 'DeepL API Free', value: TranslationService.deeplFree },
+  { label: 'GPT-3', value: TranslationService.gpt3 }
 ]
 
 export const translationFormats = {
