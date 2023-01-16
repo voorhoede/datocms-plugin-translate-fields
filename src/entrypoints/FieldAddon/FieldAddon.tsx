@@ -19,6 +19,7 @@ import {
   SettingOption,
   TranslationService,
   TranslationServiceKey,
+  OpenAIDefaultValues,
 } from '../../lib/types'
 import {
   translationFormats,
@@ -50,6 +51,24 @@ export default function FieldAddon({ ctx }: Props) {
     pluginParameters?.[translationServiceApiKey] ||
     pluginGlobalParameters?.[translationServiceApiKey] ||
     ''
+
+  const model = pluginParameters.model ?? pluginGlobalParameters.model
+  const modelValue = model?.value ?? OpenAIDefaultValues.model
+
+  const temperature =
+    pluginParameters.temperature ??
+    pluginGlobalParameters.temperature ??
+    OpenAIDefaultValues.temperature
+
+  const maxTokens =
+    pluginParameters.maxTokens ??
+    pluginGlobalParameters.maxTokens ??
+    OpenAIDefaultValues.maxTokens
+
+  const topP =
+    pluginParameters.topP ??
+    pluginGlobalParameters.topP ??
+    OpenAIDefaultValues.topP
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
@@ -94,6 +113,12 @@ export default function FieldAddon({ ctx }: Props) {
           format: translationFormats[editor],
           translationService: translationServiceValue,
           apiKey: translationApiKey,
+          openAIOptions: {
+            model: modelValue,
+            temperature,
+            maxTokens,
+            topP,
+          },
         }
 
         try {
@@ -121,13 +146,20 @@ export default function FieldAddon({ ctx }: Props) {
               break
             }
             case TranslationFormat.seo: {
-              const currentField : any = get(ctx.formValues, `${fieldPath}.${locale}`);
+              const currentField: any = get(
+                ctx.formValues,
+                `${fieldPath}.${locale}`
+              )
 
               translatedField = {
                 title: await getTranslation(translatableField.title, options),
-                description: await getTranslation(translatableField.description, options),
+                description: await getTranslation(
+                  translatableField.description,
+                  options
+                ),
                 image: currentField?.image || translatableField?.image,
-                twitter_card: currentField?.twitter_card || translatableField?.twitter_card,
+                twitter_card:
+                  currentField?.twitter_card || translatableField?.twitter_card,
               }
 
               break
@@ -155,7 +187,7 @@ export default function FieldAddon({ ctx }: Props) {
   if (hasError) {
     return (
       <Canvas ctx={ctx}>
-        <p className="text-error body--small">{hasError}</p>
+        <p className='text-error body--small'>{hasError}</p>
       </Canvas>
     )
   }
@@ -169,19 +201,19 @@ export default function FieldAddon({ ctx }: Props) {
       <Canvas ctx={ctx}>
         <Form onSubmit={() => translateField([currentLocale], locales[0])}>
           <Button
-            buttonSize="xxs"
-            type="submit"
+            buttonSize='xxs'
+            type='submit'
             rightIcon={isTranslating ? <Spinner size={24} /> : null}
             leftIcon={
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 448 512"
-                width="1em"
-                height="1em"
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 448 512'
+                width='1em'
+                height='1em'
               >
                 <path
-                  d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"
-                  fill="currentColor"
+                  d='M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z'
+                  fill='currentColor'
                 ></path>
               </svg>
             }
@@ -202,8 +234,8 @@ export default function FieldAddon({ ctx }: Props) {
         }
       >
         <Button
-          buttonSize="xxs"
-          type="submit"
+          buttonSize='xxs'
+          type='submit'
           rightIcon={isTranslating ? <Spinner size={24} /> : null}
           disabled={isTranslating}
         >

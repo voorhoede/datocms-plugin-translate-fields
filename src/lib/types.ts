@@ -29,22 +29,33 @@ export enum TranslationService {
   yandex = 'yandex',
   deepl = 'deepl',
   deeplFree = 'deeplFree',
-  gpt3 = 'gpt3'
+  openAI = 'openAI'
 }
 
 export enum TranslationServiceKey {
   yandexKey = 'yandexApiKey',
   deeplApiKey = 'deeplApiKey',
   deeplFreeApiKey = 'deeplFreeApiKey',
-  gpt3ApiKey = 'gpt3ApiKey',
+  openAIKey = 'openAIApiKey',
+}
+
+export enum OpenAIDefaultValues {
+  model = 'text-davinci-003',
+  temperature = 0,
+  maxTokens = 100,
+  topP = 0,
 }
 
 export type Parameters = {
   translationService?: SettingOption
+  model?: SettingOption
+  temperature?: number;
+  maxTokens?: number;
+  topP?: number;
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
-  [TranslationServiceKey.gpt3ApiKey]?: string
+  [TranslationServiceKey.openAIKey]?: string
 }
 
 export interface GlobalParameters extends Parameters {
@@ -63,6 +74,12 @@ export type TranslationOptions = {
   format: TranslationFormat
   translationService: TranslationService
   apiKey: string
+  openAIOptions: {
+    model: string
+    temperature: number
+    maxTokens: number
+    topP: number
+  }
 }
 
 export interface PathTranslationOptions extends TranslationOptions {

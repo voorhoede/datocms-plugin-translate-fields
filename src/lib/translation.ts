@@ -12,6 +12,10 @@ import {
   deepl as deeplSupportedLocales,
 } from './supportedLocales'
 
+import yandexTranslate from './translationServices/yandex'
+import deeplTranslate from './translationServices/deepl'
+import openAITranslate from './translationServices/openAI'
+
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { toMarkdown } from 'mdast-util-to-markdown'
 
@@ -21,78 +25,16 @@ export async function getTranslation(
   string: string,
   options: TranslationOptions
 ): Promise<string> {
-  const params = new URLSearchParams()
-
   switch (options.translationService) {
     case TranslationService.yandex: {
-      params.set('key', options.apiKey)
-      params.set('lang', options.toLocale)
-      params.set('format', 'plain')
-      params.set('text', string)
-
-      const request = await fetch(
-        `https://translate.yandex.net/api/v1.5/tr.json/translate?${params.toString()}`
-      )
-
-      if (request.status !== 200) {
-        throw new Error(`Yandex returned status ${request.status}`)
-      }
-
-      const response = await request.json()
-      return response.text.join(' ')
+      return yandexTranslate(string, options)
     }
     case TranslationService.deepl:
     case TranslationService.deeplFree: {
-      params.set('auth_key', options.apiKey)
-      params.set('target_lang', options.toLocale)
-      params.set('tag_handling', 'xml')
-      params.set('text', string)
-
-      const apiVersion =
-        options.translationService === TranslationService.deeplFree
-          ? 'api-free'
-          : 'api'
-
-      const request = await fetch(
-        `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`
-      )
-
-      if (request.status !== 200) {
-        throw new Error(`DEEPL returned status ${request.status}`)
-      }
-
-      const response = await request.json()
-
-      return response.translations
-        .map((translation: any) => translation.text)
-        .join(' ')
+     return deeplTranslate(string, options)
     }
-    case TranslationService.gpt3: {
-      const prompt = `Translate the following into ${options.toLocale}: ${string}`
-
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + options.apiKey
-        },
-        body: JSON.stringify({
-          'prompt': prompt,
-          'model': 'text-davinci-003'
-        })
-      };
-
-      const request = await fetch('https://api.openai.com/v1/completions', requestOptions);
-
-      if (request.status !== 200) {
-        throw new Error(`OpenAI returned status ${request.status}`)
-      }
-
-      const response = await request.json();
-
-      console.log(JSON.stringify(response))
-
-      return response.choices[0].text;
+    case TranslationService.openAI: {
+     return openAITranslate(string, options)
     }
     default: {
       throw new Error('No translation service added in the settings')
