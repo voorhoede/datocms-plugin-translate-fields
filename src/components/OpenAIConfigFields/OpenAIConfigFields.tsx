@@ -38,7 +38,7 @@ function getDefaultModel({ models }: { models: Models }): SettingOption {
 
 export default function OpenAIConfigFields({ ctx }: OpenAIConfigFieldsProps) {
   const [models, setModels] = useState<Models | null>(null)
-  const [options, setOptions] = useState<SettingOption[]>([])
+  const [options, setOptions] = useState<Array<SettingOption>>([])
   const [error, setError] = useState<string>('')
 
   const pluginParameters: GlobalParameters = ctx.plugin.attributes.parameters
