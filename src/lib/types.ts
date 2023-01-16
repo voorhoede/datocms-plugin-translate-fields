@@ -3,7 +3,7 @@ export enum Fields {
   textField = 'text',
   richTextField = 'rich_text',
   structuredTextField = 'structured_text',
-  seo = 'seo'
+  seo = 'seo',
 }
 
 export enum Editor {
@@ -13,7 +13,7 @@ export enum Editor {
   structuredText = 'structured_text',
   richText = 'rich_text',
   textarea = 'textarea',
-  seo = 'seo'
+  seo = 'seo',
 }
 
 export enum TranslationFormat {
@@ -22,14 +22,14 @@ export enum TranslationFormat {
   structuredText = 'structured_text',
   richText = 'rich_text',
   plain = 'plain',
-  seo = 'seo'
+  seo = 'seo',
 }
 
 export enum TranslationService {
   yandex = 'yandex',
   deepl = 'deepl',
   deeplFree = 'deeplFree',
-  openAI = 'openAI'
+  openAI = 'openAI',
 }
 
 export enum TranslationServiceKey {
@@ -49,9 +49,9 @@ export enum OpenAIDefaultValues {
 export type Parameters = {
   translationService?: SettingOption
   model?: SettingOption
-  temperature?: number;
-  maxTokens?: number;
-  topP?: number;
+  temperature?: number
+  maxTokens?: number
+  topP?: number
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
@@ -93,3 +93,5 @@ export type Path = {
   value: string
   key: string
 }
+
+export type Models = Array<{ id: string }>

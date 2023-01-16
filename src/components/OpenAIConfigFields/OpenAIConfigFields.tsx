@@ -1,4 +1,7 @@
-import { RenderConfigScreenCtx } from 'datocms-plugin-sdk'
+import {
+  RenderConfigScreenCtx,
+  RenderManualFieldExtensionConfigScreenCtx,
+} from 'datocms-plugin-sdk'
 import {
   SelectField,
   TextField,
@@ -6,89 +9,41 @@ import {
   Spinner,
   Canvas,
 } from 'datocms-react-ui'
-import { useEffect, useMemo, useState } from 'react'
+import { useOpenAIConfigFields } from '../../hooks/useOpenAIConfigFields'
 import {
+  Parameters,
   GlobalParameters,
-  OpenAIDefaultValues,
+  Models,
   SettingOption,
 } from '../../lib/types'
 
 type OpenAIConfigFieldsProps = {
-  ctx: RenderConfigScreenCtx
+  ctx: RenderConfigScreenCtx | RenderManualFieldExtensionConfigScreenCtx
+  pluginParameters: Parameters | GlobalParameters
+  updateParametersFn: (params: Record<string, unknown>) => Promise<void>
+  options: Array<SettingOption>
+  models: Models | null
+  openAIApiKey: string | undefined
+  error: string
+  selectedModel: SettingOption
+  temperature: number
+  maxTokens: number
+  topP: number
 }
 
-type Models = Array<{ id: string }>
-
-function getDefaultModel({ models }: { models: Models }): SettingOption {
-  const model = models.find((model) => model.id === OpenAIDefaultValues.model)
-  const modelId = model?.id
-
-  if (!modelId) {
-    return {
-      value: '',
-      label: ''
-    }
-  }
-
-  return {
-    value: modelId,
-    label: modelId
-  }
-}
-
-export default function OpenAIConfigFields({ ctx }: OpenAIConfigFieldsProps) {
-  const [models, setModels] = useState<Models | null>(null)
-  const [options, setOptions] = useState<Array<SettingOption>>([])
-  const [error, setError] = useState<string>('')
-
-  const pluginParameters: GlobalParameters = ctx.plugin.attributes.parameters
-  const { openAIApiKey } = pluginParameters
-
-  const selectedModel: SettingOption = useMemo(
-    () => pluginParameters?.model ?? getDefaultModel({ models: models ?? [] }),
-    [models, pluginParameters?.model]
-  )
-
-  const temperature =
-    pluginParameters.temperature ?? OpenAIDefaultValues.temperature
-  const maxTokens = pluginParameters.maxTokens ?? OpenAIDefaultValues.maxTokens
-  const topP = pluginParameters.topP ?? OpenAIDefaultValues.topP
-
-  useEffect(() => {
-    if (openAIApiKey) {
-      setError('')
-
-      fetch('https://api.openai.com/v1/models', {
-        headers: {
-          Authorization: 'Bearer ' + openAIApiKey,
-        },
-      })
-        .then((request) => {
-          if (request.status !== 200) {
-            throw new Error(`OpenAI returned status ${request.status}`)
-          }
-
-          return request.json()
-        })
-        .then((response) => {
-          setModels(response.data)
-        })
-        .catch((e: Error) => {
-          setError(e.message)
-        })
-    }
-  }, [openAIApiKey])
-
-  useEffect(() => {
-    if (models) {
-      const modelOptions = models.map((model) => ({
-        label: model.id,
-        value: model.id,
-      }))
-      setOptions(modelOptions)
-    }
-  }, [models])
-
+function OpenAIConfigFields({
+  ctx,
+  pluginParameters,
+  updateParametersFn,
+  options,
+  models,
+  error,
+  openAIApiKey,
+  selectedModel,
+  temperature,
+  maxTokens,
+  topP,
+}: OpenAIConfigFieldsProps) {
   if (error) {
     return (
       <Canvas ctx={ctx}>
@@ -115,7 +70,7 @@ export default function OpenAIConfigFields({ ctx }: OpenAIConfigFieldsProps) {
         selectInputProps={{ options }}
         value={selectedModel}
         onChange={(newValue) => {
-          ctx.updatePluginParameters({
+          updateParametersFn({
             ...pluginParameters,
             model: newValue,
           })
@@ -136,7 +91,7 @@ export default function OpenAIConfigFields({ ctx }: OpenAIConfigFieldsProps) {
           step: 0.01,
         }}
         onChange={(newValue) => {
-          ctx.updatePluginParameters({
+          updateParametersFn({
             ...pluginParameters,
             temperature: Number(newValue),
           })
@@ -158,7 +113,7 @@ export default function OpenAIConfigFields({ ctx }: OpenAIConfigFieldsProps) {
           step: 1,
         }}
         onChange={(newValue) => {
-          ctx.updatePluginParameters({
+          updateParametersFn({
             ...pluginParameters,
             maxTokens: Number(newValue),
           })
@@ -179,7 +134,7 @@ export default function OpenAIConfigFields({ ctx }: OpenAIConfigFieldsProps) {
           step: 0.01,
         }}
         onChange={(newValue) => {
-          ctx.updatePluginParameters({
+          updateParametersFn({
             ...pluginParameters,
             topP: Number(newValue),
           })
@@ -187,5 +142,78 @@ export default function OpenAIConfigFields({ ctx }: OpenAIConfigFieldsProps) {
         }}
       />
     </FieldGroup>
+  )
+}
+
+type OpenAIConfigFieldsConfigScreenProps = {
+  ctx: RenderConfigScreenCtx
+}
+
+export function OpenAIConfigFieldsConfigScreen({
+  ctx,
+}: OpenAIConfigFieldsConfigScreenProps) {
+  const {
+    options,
+    models,
+    error,
+    openAIApiKey,
+    selectedModel,
+    temperature,
+    maxTokens,
+    topP,
+  } = useOpenAIConfigFields({ ctx })
+
+  const pluginParameters: GlobalParameters = ctx.plugin.attributes.parameters
+
+  return (
+    <OpenAIConfigFields
+      ctx={ctx}
+      pluginParameters={pluginParameters}
+      updateParametersFn={ctx.updatePluginParameters}
+      options={options}
+      models={models}
+      openAIApiKey={openAIApiKey}
+      error={error}
+      selectedModel={selectedModel}
+      temperature={temperature}
+      maxTokens={maxTokens}
+      topP={topP}
+    />
+  )
+}
+
+type OpenAIConfigFieldsFieldAddonConfigScreenProps = {
+  ctx: RenderManualFieldExtensionConfigScreenCtx
+}
+
+export function OpenAIConfigFieldsFieldAddonConfigScreen({
+  ctx,
+}: OpenAIConfigFieldsFieldAddonConfigScreenProps) {
+  const configFields = useOpenAIConfigFields({ ctx })
+
+  const { options, models, openAIApiKey, error } = configFields
+  let { selectedModel, temperature, maxTokens, topP } = configFields
+
+  const pluginParameters: Parameters = ctx.parameters
+
+  selectedModel = pluginParameters.model ?? selectedModel
+  temperature = pluginParameters.temperature ?? temperature
+  maxTokens = pluginParameters.maxTokens ?? maxTokens
+  topP = pluginParameters.topP ?? topP
+
+  return (
+    <OpenAIConfigFields
+      ctx={ctx}
+      pluginParameters={pluginParameters}
+      updateParametersFn={ctx.setParameters}
+      options={options}
+      models={models}
+      openAIApiKey={openAIApiKey}
+      error={error}
+      selectedModel={selectedModel}
+      temperature={temperature}
+      maxTokens={maxTokens}
+      topP={topP}
+    />
   )
 }

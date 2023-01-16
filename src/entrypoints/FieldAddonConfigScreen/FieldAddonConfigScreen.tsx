@@ -2,9 +2,15 @@ import { RenderManualFieldExtensionConfigScreenCtx } from 'datocms-plugin-sdk'
 import { Canvas, Form, SelectField, FieldGroup } from 'datocms-react-ui'
 
 import { translationServiceOptions } from '../../lib/constants'
-import { GlobalParameters, SettingOption, Parameters } from '../../lib/types'
+import {
+  GlobalParameters,
+  SettingOption,
+  Parameters,
+  TranslationService,
+} from '../../lib/types'
 
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
+import { OpenAIConfigFieldsFieldAddonConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
 
 type Props = {
   ctx: RenderManualFieldExtensionConfigScreenCtx
@@ -27,10 +33,10 @@ export default function ConfigScreen({ ctx }: Props) {
       <Form>
         <FieldGroup>
           <SelectField
-            name="translationService"
-            id="translationService"
-            label="Translation service"
-            hint="This is the translation service that will be used to translate fields."
+            name='translationService'
+            id='translationService'
+            label='Translation service'
+            hint='This is the translation service that will be used to translate fields.'
             value={selectedTranslationService}
             selectInputProps={{
               options: translationServiceOptions,
@@ -68,6 +74,10 @@ export default function ConfigScreen({ ctx }: Props) {
               )
             )
           })}
+
+          {selectedTranslationService.value === TranslationService.openAI && (
+            <OpenAIConfigFieldsFieldAddonConfigScreen ctx={ctx} />
+          )}
         </FieldGroup>
       </Form>
     </Canvas>

@@ -11,7 +11,7 @@ import { fieldsOptions, translationServiceOptions } from '../../lib/constants'
 import { GlobalParameters, SettingOption, TranslationService } from '../../lib/types'
 
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
-import OpenAIConfigFields from '../../components/OpenAIConfigFields/OpenAIConfigFields'
+import { OpenAIConfigFieldsConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
 
 type Props = {
   ctx: RenderConfigScreenCtx
@@ -111,7 +111,7 @@ export default function ConfigScreen({ ctx }: Props) {
             })}
 
             {selectedTranslationService.value === TranslationService.openAI && 
-              <OpenAIConfigFields ctx={ctx} />
+              <OpenAIConfigFieldsConfigScreen ctx={ctx} />
             }
           </FieldGroup>
         )}

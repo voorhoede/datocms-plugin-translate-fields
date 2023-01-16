@@ -45,6 +45,7 @@ By changing the following setting you can choose on which fields this plugin wil
 > * Yandex translate
 > * DeepL API Pro
 > * DeepL API Free
+> * OpenAI
 
 - **API key of `[selected translation service]`**: Add the API key of the translation service that you have selected. The plugin will give errors if the API key isn't added or if the translation service serves an error.
 
