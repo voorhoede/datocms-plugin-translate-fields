@@ -33,10 +33,10 @@ export default function ConfigScreen({ ctx }: Props) {
       <Form>
         <FieldGroup>
           <SelectField
-            name='translationService'
-            id='translationService'
-            label='Translation service'
-            hint='This is the translation service that will be used to translate fields.'
+            name="translationService"
+            id="translationService"
+            label="Translation service"
+            hint="This is the translation service that will be used to translate fields."
             value={selectedTranslationService}
             selectInputProps={{
               options: translationServiceOptions,
