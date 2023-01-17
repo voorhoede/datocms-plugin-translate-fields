@@ -47,7 +47,7 @@ function OpenAIConfigFields({
   if (error) {
     return (
       <Canvas ctx={ctx}>
-        <p className='text-error'>{error}</p>
+        <p className="text-error">{error}</p>
       </Canvas>
     )
   }
@@ -63,10 +63,10 @@ function OpenAIConfigFields({
   return (
     <FieldGroup>
       <SelectField
-        name='model'
-        id='model'
-        label='Model'
-        hint='All available GPT3 models. Note: not all models are suitable for translation.'
+        name="model"
+        id="model"
+        label="Model"
+        hint="All available GPT3 models. Note: not all models are suitable for translation."
         selectInputProps={{ options }}
         value={selectedModel}
         onChange={(newValue) => {
@@ -79,10 +79,10 @@ function OpenAIConfigFields({
       />
 
       <TextField
-        name='temperature'
-        id='temperature'
-        label='Temperature'
-        hint='What sampling temperature to use.'
+        name="temperature"
+        id="temperature"
+        label="Temperature"
+        hint="What sampling temperature to use."
         value={temperature}
         textInputProps={{
           type: 'number',
@@ -100,11 +100,11 @@ function OpenAIConfigFields({
       />
 
       <TextField
-        name='maxTokens'
-        id='maxTokens'
-        label='Max Tokens'
-        hint='The maximum number of tokens to generate in the completion. The exact limit varies per model.'
-        placeholder='100'
+        name="maxTokens"
+        id="maxTokens"
+        label="Max Tokens"
+        hint="The maximum number of tokens to generate in the completion. The exact limit varies per model."
+        placeholder="100"
         value={maxTokens}
         textInputProps={{
           type: 'number',
@@ -122,10 +122,10 @@ function OpenAIConfigFields({
       />
 
       <TextField
-        name='topP'
-        id='topP'
-        label='Top P'
-        hint='An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass.'
+        name="topP"
+        id="topP"
+        label="Top P"
+        hint="An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass."
         value={topP}
         textInputProps={{
           type: 'number',
