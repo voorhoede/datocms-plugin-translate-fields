@@ -1,6 +1,14 @@
-import { RenderConfigScreenCtx, RenderManualFieldExtensionConfigScreenCtx } from "datocms-plugin-sdk"
-import { useEffect, useMemo, useState } from "react"
-import { GlobalParameters, Models, OpenAIDefaultValues, SettingOption } from "../lib/types"
+import {
+  RenderConfigScreenCtx,
+  RenderManualFieldExtensionConfigScreenCtx,
+} from 'datocms-plugin-sdk'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  GlobalParameters,
+  Models,
+  OpenAIDefaultValues,
+  SettingOption,
+} from '../lib/types'
 
 function getDefaultModel({ models }: { models: Models }): SettingOption {
   const model = models.find((model) => model.id === OpenAIDefaultValues.model)
@@ -9,13 +17,13 @@ function getDefaultModel({ models }: { models: Models }): SettingOption {
   if (!modelId) {
     return {
       value: '',
-      label: ''
+      label: '',
     }
   }
 
   return {
     value: modelId,
-    label: modelId
+    label: modelId,
   }
 }
 
@@ -84,6 +92,6 @@ export function useOpenAIConfigFields({
     selectedModel,
     temperature,
     maxTokens,
-    topP
+    topP,
   }
 }
