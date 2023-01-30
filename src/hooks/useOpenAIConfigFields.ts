@@ -33,16 +33,26 @@ export function useOpenAIConfigFields({
   ctx: RenderConfigScreenCtx | RenderManualFieldExtensionConfigScreenCtx
 }) {
   const [models, setModels] = useState<Models | null>(null)
-  const [options, setOptions] = useState<Array<SettingOption>>([])
   const [error, setError] = useState<string>('')
 
   const pluginParameters: GlobalParameters = ctx.plugin.attributes.parameters
   const { openAIApiKey } = pluginParameters
 
-  const selectedModel: SettingOption = useMemo(
+  const selectedModel = useMemo(
     () => pluginParameters?.model ?? getDefaultModel({ models: models ?? [] }),
     [models, pluginParameters?.model]
   )
+
+  const options = useMemo(() => {
+    if (!models) {
+      return []
+    }
+
+    return models.map((model) => ({
+      label: model.id,
+      value: model.id,
+    }))
+  }, [models])
 
   const temperature =
     pluginParameters.temperature ?? OpenAIDefaultValues.temperature
@@ -73,16 +83,6 @@ export function useOpenAIConfigFields({
         })
     }
   }, [openAIApiKey])
-
-  useEffect(() => {
-    if (models) {
-      const modelOptions = models.map((model) => ({
-        label: model.id,
-        value: model.id,
-      }))
-      setOptions(modelOptions)
-    }
-  }, [models])
 
   return {
     options,
