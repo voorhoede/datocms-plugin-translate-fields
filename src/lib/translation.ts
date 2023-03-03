@@ -4,65 +4,37 @@ import {
   TranslationOptions,
   PathTranslationOptions,
   Path,
-  TranslationService
+  TranslationService,
 } from './types'
 import { makeObject, paths, makeArray } from './helpers'
 import {
   yandex as yandexSupportedLocales,
-  deepl as deeplSupportedLocales
+  deepl as deeplSupportedLocales,
 } from './supportedLocales'
+
+import yandexTranslate from './translationServices/yandex'
+import deeplTranslate from './translationServices/deepl'
+import openAITranslate from './translationServices/openAI'
 
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { toMarkdown } from 'mdast-util-to-markdown'
 
 const parseHtml = require('html2json')
 
-export async function getTranslation(string: string, options: TranslationOptions): Promise<string> {
-  const params = new URLSearchParams()
-
+export async function getTranslation(
+  string: string,
+  options: TranslationOptions
+): Promise<string> {
   switch (options.translationService) {
     case TranslationService.yandex: {
-      params.set('key', options.apiKey)
-      params.set('lang', options.toLocale)
-      params.set('format', 'plain')
-      params.set('text', string)
-
-      const request = await fetch(
-        `https://translate.yandex.net/api/v1.5/tr.json/translate?${params.toString()}`,
-      )
-
-      if (request.status !== 200) {
-        throw new Error(`Yandex returned status ${request.status}`)
-      }
-
-      const response = await request.json()
-      return response.text.join(' ')
+      return yandexTranslate(string, options)
     }
     case TranslationService.deepl:
     case TranslationService.deeplFree: {
-      params.set('auth_key', options.apiKey)
-      params.set('target_lang', options.toLocale)
-      params.set('tag_handling', 'xml')
-      params.set('text', string)
-
-      const apiVersion =
-        options.translationService === TranslationService.deeplFree
-          ? 'api-free'
-          : 'api'
-
-      const request = await fetch(
-        `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`,
-      )
-
-      if (request.status !== 200) {
-        throw new Error(`DEEPL returned status ${request.status}`)
-      }
-
-      const response = await request.json()
-
-      return response.translations
-        .map((translation: any) => translation.text)
-        .join(' ')
+     return deeplTranslate(string, options)
+    }
+    case TranslationService.openAI: {
+     return openAITranslate(string, options)
     }
     default: {
       throw new Error('No translation service added in the settings')
@@ -70,13 +42,20 @@ export async function getTranslation(string: string, options: TranslationOptions
   }
 }
 
-export async function getStructuredTextTranslation(value: any[], options: TranslationOptions): Promise<any[]> {
-  const filteredArray = value.map(item => item.type !== 'block' ? item : {type:'block'})
+export async function getStructuredTextTranslation(
+  value: any[],
+  options: TranslationOptions
+): Promise<any[]> {
+  const filteredArray = value.map((item) =>
+    item.type !== 'block' ? item : { type: 'block' }
+  )
   const filteredObject = makeObject(filteredArray, 'children')
   const allPaths = paths(filteredObject)
 
   const translatedArray = await getTranslationPerPath(
-    value.map((item)=> item.type ==='block' ? pickBy(item,(value,key)=> key !== 'id') : item),
+    value.map((item) =>
+      item.type === 'block' ? pickBy(item, (value, key) => key !== 'id') : item
+    ),
     {
       ...options,
       arrayKey: 'children',
@@ -87,35 +66,38 @@ export async function getStructuredTextTranslation(value: any[], options: Transl
   return translatedArray
 }
 
-export async function getHtmlTranslation(string: string, options: TranslationOptions): Promise<string> {
+export async function getHtmlTranslation(
+  string: string,
+  options: TranslationOptions
+): Promise<string> {
   const json = parseHtml.html2json(string)
-  const translatedArray = await getTranslationPerPath(
-    json.child,
-    {
-      ...options,
-      arrayKey: 'child',
-      translatingKey: 'text'
-    }
-  )
+  const translatedArray = await getTranslationPerPath(json.child, {
+    ...options,
+    arrayKey: 'child',
+    translatingKey: 'text',
+  })
   const html = parseHtml.json2html({ ...json, child: translatedArray })
   return html
 }
 
-export async function getMarkdownTranslation(string: string, options: TranslationOptions): Promise<string> {
+export async function getMarkdownTranslation(
+  string: string,
+  options: TranslationOptions
+): Promise<string> {
   const json = fromMarkdown(string)
-  const translatedArray = await getTranslationPerPath(
-    json.children,
-    {
-      ...options,
-      arrayKey: 'children',
-      translatingKey: 'value'
-    }
-  )
+  const translatedArray = await getTranslationPerPath(json.children, {
+    ...options,
+    arrayKey: 'children',
+    translatingKey: 'value',
+  })
   const md = toMarkdown({ ...json, children: translatedArray })
   return md
 }
 
-export async function getTranslationPerPath(array: any[], options: PathTranslationOptions): Promise<any[]> {
+export async function getTranslationPerPath(
+  array: any[],
+  options: PathTranslationOptions
+): Promise<any[]> {
   const jsonObject = makeObject(array, options.arrayKey)
   const allPaths: Path[] = options.paths ? options.paths : paths(jsonObject)
 
@@ -134,9 +116,15 @@ export async function getTranslationPerPath(array: any[], options: PathTranslati
   return translatedArray
 }
 
-export function getSupportedLocale(locale: string, translationService: TranslationService): string {
+export function getSupportedLocale(
+  locale: string,
+  translationService: TranslationService
+): string {
   const localeLower = locale.toLowerCase()
-  const localeStart = localeLower.indexOf('-') > 0 ? localeLower.substring(0, localeLower.indexOf('-')) : localeLower
+  const localeStart =
+    localeLower.indexOf('-') > 0
+      ? localeLower.substring(0, localeLower.indexOf('-'))
+      : localeLower
 
   switch (translationService) {
     case TranslationService.yandex: {
@@ -157,7 +145,8 @@ export function getSupportedLocale(locale: string, translationService: Translati
         case 'pt-pt':
         case 'pt-br':
           return localeLower.toUpperCase()
-        default:  break
+        default:
+          break
       }
 
       if (deeplSupportedLocales.includes(localeStart)) {

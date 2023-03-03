@@ -19,6 +19,7 @@ import {
   SettingOption,
   TranslationService,
   TranslationServiceKey,
+  OpenAIDefaultValues,
 } from '../../lib/types'
 import {
   translationFormats,
@@ -50,6 +51,24 @@ export default function FieldAddon({ ctx }: Props) {
     pluginParameters?.[translationServiceApiKey] ||
     pluginGlobalParameters?.[translationServiceApiKey] ||
     ''
+
+  const model = pluginParameters.model ?? pluginGlobalParameters.model
+  const modelValue = model?.value ?? OpenAIDefaultValues.model
+
+  const temperature =
+    pluginParameters.temperature ??
+    pluginGlobalParameters.temperature ??
+    OpenAIDefaultValues.temperature
+
+  const maxTokens =
+    pluginParameters.maxTokens ??
+    pluginGlobalParameters.maxTokens ??
+    OpenAIDefaultValues.maxTokens
+
+  const topP =
+    pluginParameters.topP ??
+    pluginGlobalParameters.topP ??
+    OpenAIDefaultValues.topP
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
@@ -94,6 +113,12 @@ export default function FieldAddon({ ctx }: Props) {
           format: translationFormats[editor],
           translationService: translationServiceValue,
           apiKey: translationApiKey,
+          openAIOptions: {
+            model: modelValue,
+            temperature,
+            maxTokens,
+            topP,
+          },
         }
 
         try {
@@ -121,13 +146,20 @@ export default function FieldAddon({ ctx }: Props) {
               break
             }
             case TranslationFormat.seo: {
-              const currentField : any = get(ctx.formValues, `${fieldPath}.${locale}`);
+              const currentField: any = get(
+                ctx.formValues,
+                `${fieldPath}.${locale}`
+              )
 
               translatedField = {
                 title: await getTranslation(translatableField.title, options),
-                description: await getTranslation(translatableField.description, options),
+                description: await getTranslation(
+                  translatableField.description,
+                  options
+                ),
                 image: currentField?.image || translatableField?.image,
-                twitter_card: currentField?.twitter_card || translatableField?.twitter_card,
+                twitter_card:
+                  currentField?.twitter_card || translatableField?.twitter_card,
               }
 
               break

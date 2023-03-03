@@ -3,7 +3,7 @@ export enum Fields {
   textField = 'text',
   richTextField = 'rich_text',
   structuredTextField = 'structured_text',
-  seo = 'seo'
+  seo = 'seo',
 }
 
 export enum Editor {
@@ -13,7 +13,7 @@ export enum Editor {
   structuredText = 'structured_text',
   richText = 'rich_text',
   textarea = 'textarea',
-  seo = 'seo'
+  seo = 'seo',
 }
 
 export enum TranslationFormat {
@@ -22,26 +22,40 @@ export enum TranslationFormat {
   structuredText = 'structured_text',
   richText = 'rich_text',
   plain = 'plain',
-  seo = 'seo'
+  seo = 'seo',
 }
 
 export enum TranslationService {
   yandex = 'yandex',
   deepl = 'deepl',
   deeplFree = 'deeplFree',
+  openAI = 'openAI',
 }
 
 export enum TranslationServiceKey {
   yandexKey = 'yandexApiKey',
   deeplApiKey = 'deeplApiKey',
-  deeplFreeApiKey = 'deeplFreeApiKey'
+  deeplFreeApiKey = 'deeplFreeApiKey',
+  openAIKey = 'openAIApiKey',
+}
+
+export enum OpenAIDefaultValues {
+  model = 'text-davinci-003',
+  temperature = 0,
+  maxTokens = 100,
+  topP = 0,
 }
 
 export type Parameters = {
   translationService?: SettingOption
+  model?: SettingOption
+  temperature?: number
+  maxTokens?: number
+  topP?: number
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
+  [TranslationServiceKey.openAIKey]?: string
 }
 
 export interface GlobalParameters extends Parameters {
@@ -60,6 +74,12 @@ export type TranslationOptions = {
   format: TranslationFormat
   translationService: TranslationService
   apiKey: string
+  openAIOptions: {
+    model: string
+    temperature: number
+    maxTokens: number
+    topP: number
+  }
 }
 
 export interface PathTranslationOptions extends TranslationOptions {
@@ -73,3 +93,5 @@ export type Path = {
   value: string
   key: string
 }
+
+export type Models = Array<{ id: string }>
