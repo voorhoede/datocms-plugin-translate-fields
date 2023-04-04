@@ -1,9 +1,8 @@
 import { StrictMode, ReactNode } from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
+const domNode = document.getElementById('root')!
+const root = createRoot(domNode)
 export function render(component: ReactNode): void {
-  return ReactDOM.render(
-    <StrictMode>{component}</StrictMode>,
-    document.getElementById('root')
-  )
+  return root.render(<StrictMode>{component}</StrictMode>)
 }
