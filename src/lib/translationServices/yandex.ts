@@ -5,7 +5,7 @@ export default async function translate(
   options: TranslationOptions
 ): Promise<string> {
   const params = new URLSearchParams()
-  
+
   params.set('key', options.apiKey)
   params.set('lang', options.toLocale)
   params.set('format', 'plain')
