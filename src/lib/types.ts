@@ -92,6 +92,7 @@ export type Path = {
   path: string
   value: string
   key: string
+  type?: 'text' | 'structured_text' | 'media' | 'id' | 'number'
 }
 
 export type Models = Array<{ id: string }>

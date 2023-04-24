@@ -6,7 +6,12 @@ import {
   Path,
   TranslationService,
 } from './types'
-import { makeObject, paths, makeArray } from './helpers'
+import {
+  makeObject,
+  paths,
+  makeArray,
+  removePropertyFromArrayRecursively,
+} from './helpers'
 import {
   yandex as yandexSupportedLocales,
   deepl as deeplSupportedLocales,
@@ -31,15 +36,36 @@ export async function getTranslation(
     }
     case TranslationService.deepl:
     case TranslationService.deeplFree: {
-     return deeplTranslate(string, options)
+      return deeplTranslate(string, options)
     }
     case TranslationService.openAI: {
-     return openAITranslate(string, options)
+      return openAITranslate(string, options)
     }
     default: {
       throw new Error('No translation service added in the settings')
     }
   }
+}
+
+export async function getRichTextTranslation(
+  value: any[],
+  options: TranslationOptions
+): Promise<any[]> {
+  const mappedValue = removePropertyFromArrayRecursively(value, ['itemId'])
+  const allPaths = paths(mappedValue)
+  let translatedArray = mappedValue
+
+  for (const path of allPaths) {
+    if (path.type === 'text') {
+      const currentPath = path.path
+      const currentString = get(translatedArray, path.path)
+      if (currentString) {
+        const translatedString = await getTranslation(currentString, options)
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+  }
+  return mappedValue
 }
 
 export async function getStructuredTextTranslation(
@@ -51,10 +77,9 @@ export async function getStructuredTextTranslation(
   )
   const filteredObject = makeObject(filteredArray, 'children')
   const allPaths = paths(filteredObject)
-
   const translatedArray = await getTranslationPerPath(
     value.map((item) =>
-      item.type === 'block' ? pickBy(item, (value, key) => key !== 'id') : item
+      item.type === 'block' ? pickBy(item, (_, key) => key !== 'id') : item
     ),
     {
       ...options,
