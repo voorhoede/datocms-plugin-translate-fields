@@ -4,6 +4,7 @@ export const fieldsOptions = [
   { label: 'String fields', value: Fields.stringField },
   { label: 'Text fields', value: Fields.textField },
   { label: 'Structured text fields', value: Fields.structuredTextField },
+  { label: 'Modular content fields', value: Fields.richTextField },
   { label: 'SEO fields', value: Fields.seo },
 ]
 

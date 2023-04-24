@@ -33,7 +33,7 @@ connect({
           Fields.textField,
           Fields.stringField,
           Fields.structuredTextField,
-          Fields.seo
+          Fields.seo,
         ],
         configurable: true,
       },
@@ -61,14 +61,13 @@ connect({
       (setting: SettingOption) => setting.value === field.attributes.field_type
     )
 
-
     if (
       pluginGlobalParameters?.autoApply &&
       !hasPlugin &&
       showOnThisFieldType &&
       fieldIsLocalized
       ) {
-        return {
+      return {
         addons: [{ id: extensionId }],
       }
     }
