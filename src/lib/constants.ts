@@ -12,7 +12,7 @@ export const translationServiceOptions = [
   { label: 'Yandex translate', value: TranslationService.yandex },
   { label: 'DeepL API Pro', value: TranslationService.deepl },
   { label: 'DeepL API Free', value: TranslationService.deeplFree },
-  { label: 'OpenAI', value: TranslationService.openAI }
+  { label: 'OpenAI', value: TranslationService.openAI },
 ]
 
 export const translationFormats = {
@@ -25,3 +25,5 @@ export const translationFormats = {
   [Editor.seo]: TranslationFormat.seo,
 }
 
+export const htmlRegex =
+  /<(?=.*? .*?\/ ?>|br|hr|input|!--|wbr)[a-z]+.*?>|<([a-z]+).*?<\/\1>/i

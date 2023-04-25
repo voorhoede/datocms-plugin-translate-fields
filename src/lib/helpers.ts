@@ -1,7 +1,7 @@
 import { isEmptyDocument } from 'datocms-structured-text-utils'
 import { slateToDast } from 'datocms-structured-text-slate-utils'
 import { Path, TranslationFormat, Editor } from './types'
-import { translationFormats } from './constants'
+import { translationFormats, htmlRegex } from './constants'
 
 export function makeObject(array: any[], arrayKey: string): any {
   return array.reduce((acc: any, item: any, index: number) => {
@@ -42,19 +42,29 @@ export function paths(
       const path = `${prev}${prev ? `.${key}` : key}`
       const value = object[key]
       let valueType = type
+
+      if (!isNaN(Date.parse(value))) {
+        valueType = 'date'
+      }
+
+      if (typeof value === 'boolean') {
+        valueType = 'boolean'
+      }
+
       if (
         valueType === 'text' &&
         Array.isArray(value) &&
+        typeof value[0] === 'object' &&
         isStructuredTextSlate(value[0])
       ) {
         valueType = 'structured_text'
       }
 
-      if (
-        valueType === 'text' &&
-        typeof value === 'object' &&
-        isImageSlate(value)
-      ) {
+      if (valueType === 'text' && typeof value === 'object' && isColor(value)) {
+        valueType = 'color'
+      }
+
+      if (valueType === 'text' && typeof value === 'object' && isImage(value)) {
         valueType = 'media'
       }
 
@@ -69,6 +79,10 @@ export function paths(
 
       if (Number(value)) {
         valueType = 'number'
+      }
+
+      if (htmlRegex.test(value)) {
+        valueType = 'html'
       }
 
       if (typeof value === 'object') {
@@ -113,15 +127,34 @@ export function removePropertyFromArrayRecursively(
 }
 
 export function isStructuredTextSlate(value: any): boolean {
-  return Boolean(value) && 'children' in value && 'type' in value
-}
-
-export function isImageSlate(value: any): boolean {
   return (
     Boolean(value) &&
+    !Array.isArray(value) &&
+    Object.keys(value).length === 2 &&
+    'children' in value &&
+    'type' in value
+  )
+}
+
+export function isImage(value: any): boolean {
+  return (
+    Boolean(value) &&
+    !Array.isArray(value) &&
     'upload_id' in value &&
     'focal_point' in value &&
     'alt' in value
+  )
+}
+
+export function isColor(value: any): boolean {
+  return (
+    Boolean(value) &&
+    !Array.isArray(value) &&
+    Object.keys(value).length === 4 &&
+    'alpha' in value &&
+    'blue' in value &&
+    'red' in value &&
+    'green' in value
   )
 }
 

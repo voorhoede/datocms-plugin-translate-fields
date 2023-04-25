@@ -64,6 +64,15 @@ export async function getRichTextTranslation(
         set(translatedArray, currentPath, translatedString)
       }
     }
+
+    if (path.type === 'html') {
+      const currentPath = path.path
+      const currentString = get(translatedArray, path.path)
+      if (currentString) {
+        const translatedString = await getHtmlTranslation(currentString, options)
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
   }
   return mappedValue
 }
