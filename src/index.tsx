@@ -12,7 +12,7 @@ import FieldAddonConfigScreen from './entrypoints/FieldAddonConfigScreen/FieldAd
 
 import { fieldsOptions } from './lib/constants'
 import { GlobalParameters, SettingOption, Fields } from './lib/types'
-import { render } from './utils/render'
+import { render } from './lib/render'
 
 import 'datocms-react-ui/styles.css'
 import './styles/index.css'
@@ -33,7 +33,7 @@ connect({
           Fields.textField,
           Fields.stringField,
           Fields.structuredTextField,
-          Fields.seo
+          Fields.seo,
         ],
         configurable: true,
       },
@@ -61,14 +61,13 @@ connect({
       (setting: SettingOption) => setting.value === field.attributes.field_type
     )
 
-
     if (
       pluginGlobalParameters?.autoApply &&
       !hasPlugin &&
       showOnThisFieldType &&
       fieldIsLocalized
       ) {
-        return {
+      return {
         addons: [{ id: extensionId }],
       }
     }

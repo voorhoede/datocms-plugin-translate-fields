@@ -7,8 +7,10 @@ import {
   getTranslation,
   getStructuredTextTranslation,
   getMarkdownTranslation,
+  getRichTextTranslation,
   getHtmlTranslation,
   getSupportedLocale,
+  getSeoTranslation,
 } from '../../lib/translation'
 import {
   Editor,
@@ -25,6 +27,7 @@ import {
   translationFormats,
   translationServiceOptions,
 } from '../../lib/constants'
+import { fieldHasFieldValue } from '../../lib/helpers'
 
 type Props = {
   ctx: RenderFieldExtensionCtx
@@ -75,6 +78,7 @@ export default function FieldAddon({ ctx }: Props) {
   const locales: string[] = ctx.formValues.internalLocales as string[]
   const editor: Editor = ctx.field.attributes.appeareance?.editor as Editor
   const isDefaultLocale: boolean = currentLocale === locales[0]
+  const translationFormat: TranslationFormat = translationFormats[editor]
 
   useEffect(() => {
     setHasError('')
@@ -86,17 +90,6 @@ export default function FieldAddon({ ctx }: Props) {
     }
   }, [translationApiKey, translationService])
 
-  function hasFieldValue(fieldValue: any): boolean {
-    if (typeof fieldValue === 'string') {
-      return Boolean(fieldValue)
-    }
-    if (Array.isArray(fieldValue)) {
-      return Boolean(fieldValue?.[0]?.children?.[0]?.text)
-    }
-
-    return Boolean(fieldValue?.title) || Boolean(fieldValue?.description)
-  }
-
   async function translateField(languages: string[], fromLocale?: string) {
     let translatableField = fieldValue
     const [fieldPath]: string[] = ctx.fieldPath.split(/\.(?=[^.]+$)/)
@@ -104,13 +97,13 @@ export default function FieldAddon({ ctx }: Props) {
       translatableField = get(ctx.formValues, `${fieldPath}.${fromLocale}`)
     }
 
-    if (hasFieldValue(translatableField)) {
+    if (fieldHasFieldValue(translatableField, ctx)) {
       for (const locale of languages) {
         let translatedField
         const options: TranslationOptions = {
           fromLocale: fromLocale || locales[0],
           toLocale: getSupportedLocale(locale, translationServiceValue),
-          format: translationFormats[editor],
+          format: translationFormat,
           translationService: translationServiceValue,
           apiKey: translationApiKey,
           openAIOptions: {
@@ -123,7 +116,7 @@ export default function FieldAddon({ ctx }: Props) {
 
         try {
           setIsTranslating(true)
-          switch (translationFormats[editor]) {
+          switch (translationFormat) {
             case TranslationFormat.structuredText: {
               translatedField = await getStructuredTextTranslation(
                 translatableField,
@@ -146,22 +139,17 @@ export default function FieldAddon({ ctx }: Props) {
               break
             }
             case TranslationFormat.seo: {
-              const currentField: any = get(
-                ctx.formValues,
-                `${fieldPath}.${locale}`
+              translatedField = await getSeoTranslation(
+                translatableField,
+                options
               )
-
-              translatedField = {
-                title: await getTranslation(translatableField.title, options),
-                description: await getTranslation(
-                  translatableField.description,
-                  options
-                ),
-                image: currentField?.image || translatableField?.image,
-                twitter_card:
-                  currentField?.twitter_card || translatableField?.twitter_card,
-              }
-
+              break
+            }
+            case TranslationFormat.richText: {
+              translatedField = await getRichTextTranslation(
+                translatableField,
+                options
+              )
               break
             }
             default: {
@@ -192,7 +180,8 @@ export default function FieldAddon({ ctx }: Props) {
     )
   }
 
-  if (hasFieldValue(fieldValue) && !isDefaultLocale) {
+  if (fieldHasFieldValue(fieldValue, ctx) && !isDefaultLocale) {
+    ctx.setHeight(0)
     return <></>
   }
 

@@ -1,8 +1,8 @@
 {
   "name": "datocms-plugin-translate-fields",
   "homepage": "https://github.com/voorhoede/datocms-plugin-translate-fields",
-  "version": "1.4.1",
-  "description": "A DatoCMS plugin that gives you the ability to translate `structured-text`, `string`, `text` and `seo` fields in DatoCMS",
+  "version": "1.5.0",
+  "description": "A DatoCMS plugin that gives you the ability to translate `structured-text`, `rich-text`, `string`, `text` and `seo` fields in DatoCMS",
   "engines": {
     "node": ">=16.0.0"
   },
@@ -21,6 +21,9 @@
     "text",
     "string",
     "structured-text",
+    "rich-text",
+    "modular-content",
+    "markdown",
     "deepl",
     "yandex",
     "seo",
@@ -66,8 +69,10 @@
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
-    "datocms-plugin-sdk": "^0.7.4",
-    "datocms-react-ui": "^0.7.4",
+    "datocms-plugin-sdk": "^0.7.8",
+    "datocms-react-ui": "^0.7.8",
+    "datocms-structured-text-slate-utils": "^2.1.2",
+    "datocms-structured-text-utils": "^2.0.4",
     "html2json": "^1.0.2",
     "mdast-util-from-markdown": "^1.3.0",
     "mdast-util-to-markdown": "^1.5.0",

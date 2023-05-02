@@ -5,8 +5,14 @@ import {
   PathTranslationOptions,
   Path,
   TranslationService,
+  PathType,
 } from './types'
-import { makeObject, paths, makeArray } from './helpers'
+import {
+  makeObject,
+  paths,
+  makeArray,
+  removePropertyFromArrayRecursively,
+} from './helpers'
 import {
   yandex as yandexSupportedLocales,
   deepl as deeplSupportedLocales,
@@ -31,14 +37,93 @@ export async function getTranslation(
     }
     case TranslationService.deepl:
     case TranslationService.deeplFree: {
-     return deeplTranslate(string, options)
+      return deeplTranslate(string, options)
     }
     case TranslationService.openAI: {
-     return openAITranslate(string, options)
+      return openAITranslate(string, options)
     }
     default: {
       throw new Error('No translation service added in the settings')
     }
+  }
+}
+
+export async function getRichTextTranslation(
+  value: any[],
+  options: TranslationOptions
+): Promise<any[]> {
+  const mappedValue = removePropertyFromArrayRecursively(value, ['itemId'])
+  const allPaths = paths(mappedValue)
+  let translatedArray = mappedValue
+
+  for (const path of allPaths) {
+    if (path.type === PathType.text) {
+      const currentPath = path.path
+      const currentString = get(translatedArray, path.path)
+      if (currentString) {
+        const translatedString = await getTranslation(currentString, options)
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+
+    if (path.type === PathType.html) {
+      const currentPath = path.path
+      const currentString = get(translatedArray, path.path)
+      if (currentString) {
+        const translatedString = await getHtmlTranslation(
+          currentString,
+          options
+        )
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+
+    if (path.type === PathType.markdown) {
+      const currentPath = path.path
+      const currentString = get(translatedArray, path.path)
+      if (currentString) {
+        const translatedString = await getMarkdownTranslation(
+          currentString,
+          options
+        )
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+
+    if (path.type === PathType.structured_text) {
+      const currentPath = path.path
+      const currentArray = get(translatedArray, path.path)
+      if (currentArray) {
+        const translatedString = await getStructuredTextTranslation(
+          currentArray,
+          options
+        )
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+
+    if (path.type === PathType.seo) {
+      const currentPath = path.path
+      const currentValue = get(translatedArray, path.path)
+      if (currentValue) {
+        const translatedString = await getSeoTranslation(currentValue, options)
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+  }
+
+  return translatedArray
+}
+
+export async function getSeoTranslation(
+  value: any,
+  options: TranslationOptions
+): Promise<any> {
+  return {
+    title: await getTranslation(value.title, options),
+    description: await getTranslation(value.description, options),
+    image: value?.image,
+    twitter_card: value?.twitter_card,
   }
 }
 
@@ -51,10 +136,9 @@ export async function getStructuredTextTranslation(
   )
   const filteredObject = makeObject(filteredArray, 'children')
   const allPaths = paths(filteredObject)
-
   const translatedArray = await getTranslationPerPath(
     value.map((item) =>
-      item.type === 'block' ? pickBy(item, (value, key) => key !== 'id') : item
+      item.type === 'block' ? pickBy(item, (_, key) => key !== 'id') : item
     ),
     {
       ...options,
