@@ -24,6 +24,3 @@ export const translationFormats = {
   [Editor.textarea]: TranslationFormat.plain,
   [Editor.seo]: TranslationFormat.seo,
 }
-
-export const htmlRegex =
-  /<(?=.*? .*?\/ ?>|br|hr|input|!--|wbr)[a-z]+.*?>|<([a-z]+).*?<\/\1>/i

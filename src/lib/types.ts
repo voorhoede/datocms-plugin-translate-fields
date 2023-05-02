@@ -92,17 +92,23 @@ export type Path = {
   path: string
   value: string
   key: string
-  type?:
-    | 'text'
-    | 'structured_text'
-    | 'media'
-    | 'id'
-    | 'number'
-    | 'date'
-    | 'boolean'
-    | 'color'
-    | 'html'
-    | 'markdown'
+  type?: PathType
+}
+
+export enum PathType {
+  text = 'text',
+  structured_text = 'structured_text',
+  media = 'media',
+  id = 'id',
+  number = 'number',
+  date = 'date',
+  boolean = 'boolean',
+  color = 'color',
+  html = 'html',
+  markdown = 'markdown',
+  json = 'json',
+  seo = 'seo',
+  slug = 'slug',
 }
 
 export type Models = Array<{ id: string }>

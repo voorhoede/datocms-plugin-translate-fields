@@ -5,6 +5,7 @@ import {
   PathTranslationOptions,
   Path,
   TranslationService,
+  PathType,
 } from './types'
 import {
   makeObject,
@@ -56,7 +57,7 @@ export async function getRichTextTranslation(
   let translatedArray = mappedValue
 
   for (const path of allPaths) {
-    if (path.type === 'text') {
+    if (path.type === PathType.text) {
       const currentPath = path.path
       const currentString = get(translatedArray, path.path)
       if (currentString) {
@@ -65,16 +66,65 @@ export async function getRichTextTranslation(
       }
     }
 
-    if (path.type === 'html') {
+    if (path.type === PathType.html) {
       const currentPath = path.path
       const currentString = get(translatedArray, path.path)
       if (currentString) {
-        const translatedString = await getHtmlTranslation(currentString, options)
+        const translatedString = await getHtmlTranslation(
+          currentString,
+          options
+        )
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+
+    if (path.type === PathType.markdown) {
+      const currentPath = path.path
+      const currentString = get(translatedArray, path.path)
+      if (currentString) {
+        const translatedString = await getMarkdownTranslation(
+          currentString,
+          options
+        )
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+
+    if (path.type === PathType.structured_text) {
+      const currentPath = path.path
+      const currentArray = get(translatedArray, path.path)
+      if (currentArray) {
+        const translatedString = await getStructuredTextTranslation(
+          currentArray,
+          options
+        )
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+
+    if (path.type === PathType.seo) {
+      const currentPath = path.path
+      const currentValue = get(translatedArray, path.path)
+      if (currentValue) {
+        const translatedString = await getSeoTranslation(currentValue, options)
         set(translatedArray, currentPath, translatedString)
       }
     }
   }
-  return mappedValue
+
+  return translatedArray
+}
+
+export async function getSeoTranslation(
+  value: any,
+  options: TranslationOptions
+): Promise<any> {
+  return {
+    title: await getTranslation(value.title, options),
+    description: await getTranslation(value.description, options),
+    image: value?.image,
+    twitter_card: value?.twitter_card,
+  }
 }
 
 export async function getStructuredTextTranslation(

@@ -8,7 +8,11 @@ import {
 } from 'datocms-react-ui'
 
 import { fieldsOptions, translationServiceOptions } from '../../lib/constants'
-import { GlobalParameters, SettingOption, TranslationService } from '../../lib/types'
+import {
+  GlobalParameters,
+  SettingOption,
+  TranslationService,
+} from '../../lib/types'
 
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
 import { OpenAIConfigFieldsConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
@@ -110,9 +114,9 @@ export default function ConfigScreen({ ctx }: Props) {
               )
             })}
 
-            {selectedTranslationService.value === TranslationService.openAI && 
+            {selectedTranslationService.value === TranslationService.openAI && (
               <OpenAIConfigFieldsConfigScreen ctx={ctx} />
-            }
+            )}
           </FieldGroup>
         )}
       </Form>

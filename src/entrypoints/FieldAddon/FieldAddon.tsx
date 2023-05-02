@@ -10,6 +10,7 @@ import {
   getRichTextTranslation,
   getHtmlTranslation,
   getSupportedLocale,
+  getSeoTranslation,
 } from '../../lib/translation'
 import {
   Editor,
@@ -138,22 +139,10 @@ export default function FieldAddon({ ctx }: Props) {
               break
             }
             case TranslationFormat.seo: {
-              const currentField: any = get(
-                ctx.formValues,
-                `${fieldPath}.${locale}`
+              translatedField = await getSeoTranslation(
+                translatableField,
+                options
               )
-
-              translatedField = {
-                title: await getTranslation(translatableField.title, options),
-                description: await getTranslation(
-                  translatableField.description,
-                  options
-                ),
-                image: currentField?.image || translatableField?.image,
-                twitter_card:
-                  currentField?.twitter_card || translatableField?.twitter_card,
-              }
-
               break
             }
             case TranslationFormat.richText: {
