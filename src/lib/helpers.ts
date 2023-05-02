@@ -4,15 +4,6 @@ import { Path, TranslationFormat, Editor, PathType } from './types'
 import { translationFormats } from './constants'
 import { markdownRegexesArray, htmlRegex } from './regexes'
 
-export function isJsonString(value: string) {
-  try {
-    JSON.parse(value)
-  } catch (e) {
-    return false
-  }
-  return true
-}
-
 export function makeObject(array: any[], arrayKey: string): any {
   return array.reduce((acc: any, item: any, index: number) => {
     if (arrayKey in item) {
@@ -80,8 +71,8 @@ export function paths(
 export function getValueType(
   key: string,
   value: any,
-  currentType: Path['type']
-): Path['type'] {
+  currentType: PathType
+): PathType {
   if (
     key === 'itemTypeId' ||
     key === 'itemId' ||
@@ -232,6 +223,15 @@ export function isSeo(value: any): boolean {
     'title' in value &&
     'twitter_card' in value
   )
+}
+
+export function isJsonString(value: any): boolean {
+  try {
+    JSON.parse(value)
+  } catch (e) {
+    return false
+  }
+  return true
 }
 
 export function structuredTextValueToDast(fieldValue: any, ctx: any) {
