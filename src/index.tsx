@@ -12,7 +12,7 @@ import FieldAddonConfigScreen from './entrypoints/FieldAddonConfigScreen/FieldAd
 
 import { fieldsOptions } from './lib/constants'
 import { GlobalParameters, SettingOption, Fields } from './lib/types'
-import { render } from './utils/render'
+import { render } from './lib/render'
 
 import 'datocms-react-ui/styles.css'
 import './styles/index.css'
