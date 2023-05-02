@@ -1,4 +1,4 @@
-import { pickBy, get, set } from 'lodash'
+import { get, set } from 'lodash'
 
 import {
   TranslationOptions,
@@ -59,7 +59,7 @@ export async function getRichTextTranslation(
   for (const path of allPaths) {
     if (path.type === PathType.text) {
       const currentPath = path.path
-      const currentString = get(translatedArray, path.path)
+      const currentString = get(translatedArray, currentPath)
       if (currentString) {
         const translatedString = await getTranslation(currentString, options)
         set(translatedArray, currentPath, translatedString)
@@ -68,7 +68,7 @@ export async function getRichTextTranslation(
 
     if (path.type === PathType.html) {
       const currentPath = path.path
-      const currentString = get(translatedArray, path.path)
+      const currentString = get(translatedArray, currentPath)
       if (currentString) {
         const translatedString = await getHtmlTranslation(
           currentString,
@@ -80,7 +80,7 @@ export async function getRichTextTranslation(
 
     if (path.type === PathType.markdown) {
       const currentPath = path.path
-      const currentString = get(translatedArray, path.path)
+      const currentString = get(translatedArray, currentPath)
       if (currentString) {
         const translatedString = await getMarkdownTranslation(
           currentString,
@@ -92,7 +92,7 @@ export async function getRichTextTranslation(
 
     if (path.type === PathType.structured_text) {
       const currentPath = path.path
-      const currentArray = get(translatedArray, path.path)
+      const currentArray = get(translatedArray, currentPath)
       if (currentArray) {
         const translatedString = await getStructuredTextTranslation(
           currentArray,
@@ -102,9 +102,25 @@ export async function getRichTextTranslation(
       }
     }
 
+    if (path.type === PathType.structured_text_block) {
+      const currentPath = path.path
+      const currentObject: any = get(translatedArray, path.path)
+      if (currentObject) {
+        const translatedObject = await getRichTextTranslation(
+          { ...currentObject, type: null, children: null },
+          options
+        )
+        set(translatedArray, currentPath, {
+          ...translatedObject,
+          type: currentObject.type,
+          children: currentObject.children,
+        })
+      }
+    }
+
     if (path.type === PathType.seo) {
       const currentPath = path.path
-      const currentValue = get(translatedArray, path.path)
+      const currentValue = get(translatedArray, currentPath)
       if (currentValue) {
         const translatedString = await getSeoTranslation(currentValue, options)
         set(translatedArray, currentPath, translatedString)
@@ -131,22 +147,49 @@ export async function getStructuredTextTranslation(
   value: any[],
   options: TranslationOptions
 ): Promise<any[]> {
-  const filteredArray = value.map((item) =>
-    item.type !== 'block' ? item : { type: 'block' }
-  )
-  const filteredObject = makeObject(filteredArray, 'children')
-  const allPaths = paths(filteredObject)
-  const translatedArray = await getTranslationPerPath(
-    value.map((item) =>
-      item.type === 'block' ? pickBy(item, (_, key) => key !== 'id') : item
-    ),
-    {
-      ...options,
-      arrayKey: 'children',
-      translatingKey: 'text',
-      paths: allPaths,
+  const mappedValue = removePropertyFromArrayRecursively(value, ['id'])
+  const allPaths = paths(mappedValue)
+  let translatedArray = mappedValue
+
+  for (const path of allPaths) {
+    if (path.type === PathType.text && path.key === 'text') {
+      const currentPath = path.path
+      const currentString = get(translatedArray, currentPath)
+      if (currentString) {
+        const translatedString = await getTranslation(currentString, options)
+        set(translatedArray, currentPath, translatedString)
+      }
     }
-  )
+
+    if (path.type === PathType.structured_text) {
+      const currentPath = path.path
+      const currentArray = get(translatedArray, currentPath)
+      if (currentArray) {
+        const translatedString = await getStructuredTextTranslation(
+          currentArray,
+          options
+        )
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+
+    if (path.type === PathType.structured_text_block) {
+      const currentPath = path.path
+      const currentObject: any = get(translatedArray, path.path)
+      if (currentObject) {
+        const translatedObject = await getRichTextTranslation(
+          { ...currentObject, type: null, children: null },
+          options
+        )
+        set(translatedArray, currentPath, {
+          ...translatedObject,
+          type: currentObject.type,
+          children: currentObject.children,
+        })
+      }
+    }
+  }
+
   return translatedArray
 }
 
