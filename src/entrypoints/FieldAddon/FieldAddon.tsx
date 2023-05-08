@@ -85,7 +85,10 @@ export default function FieldAddon({ ctx }: Props) {
   }, [fieldValue])
 
   useEffect(() => {
-    if (translationApiKey === '') {
+    if (
+      translationApiKey === '' &&
+      process.env.REACT_APP_USE_MOCK !== 'true'
+    ) {
       setHasError(`Set ${translationService.label} API key in the settings`)
     }
   }, [translationApiKey, translationService])

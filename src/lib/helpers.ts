@@ -2,7 +2,7 @@ import { isEmptyDocument } from 'datocms-structured-text-utils'
 import { slateToDast } from 'datocms-structured-text-slate-utils'
 import { Path, TranslationFormat, Editor, PathType } from './types'
 import { translationFormats } from './constants'
-import { markdownRegexesArray, htmlRegex } from './regexes'
+import { pathTypeIsObject, getValueType } from './datocms-helpers'
 
 export function makeObject(array: any[], arrayKey: string): any {
   return array.reduce((acc: any, item: any, index: number) => {
@@ -45,10 +45,7 @@ export function paths(
       let valueType = getValueType(key, value, type)
 
       if (
-        valueType !== PathType.structured_text &&
-        valueType !== PathType.color &&
-        valueType !== PathType.media &&
-        valueType !== PathType.seo &&
+        pathTypeIsObject.indexOf(valueType) === -1 &&
         typeof value === 'object'
       ) {
         acc.push(...paths(value, path, valueType))
@@ -66,96 +63,6 @@ export function paths(
   }
 
   return []
-}
-
-export function getValueType(
-  key: string,
-  value: any,
-  currentType: PathType
-): PathType {
-  if (
-    key === 'itemTypeId' ||
-    key === 'itemId' ||
-    key === 'upload_id' ||
-    key === 'id'
-  ) {
-    return PathType.id
-  }
-
-  if (key === 'slug' || key === 'url') {
-    return PathType.slug
-  }
-
-  if (isJsonString(value)) {
-    return PathType.json
-  }
-
-  if (typeof value === 'boolean') {
-    return PathType.boolean
-  }
-
-  if (markdownRegexesArray.some((regex) => regex.test(value))) {
-    return PathType.markdown
-  }
-
-  if (htmlRegex.test(value)) {
-    return PathType.html
-  }
-
-  if (
-    currentType === PathType.text &&
-    Array.isArray(value) &&
-    typeof value[0] === 'object' &&
-    isStructuredTextSlate(value[0])
-  ) {
-    return PathType.structured_text
-  }
-
-  if (
-    currentType === PathType.text &&
-    typeof value === 'object' &&
-    isColor(value)
-  ) {
-    return PathType.color
-  }
-
-  if (
-    currentType === PathType.text &&
-    typeof value === 'object' &&
-    isImage(value)
-  ) {
-    return PathType.media
-  }
-
-  if (
-    currentType === PathType.text &&
-    typeof value === 'object' &&
-    isSeo(value)
-  ) {
-    return PathType.seo
-  }
-
-  if (
-    currentType !== PathType.color &&
-    currentType !== PathType.structured_text &&
-    currentType !== PathType.media &&
-    currentType !== PathType.seo &&
-    !isNaN(Date.parse(value))
-  ) {
-    return PathType.date
-  }
-
-  if (
-    currentType !== PathType.color &&
-    currentType !== PathType.structured_text &&
-    currentType !== PathType.media &&
-    currentType !== PathType.seo &&
-    Number(value)
-  ) {
-    return PathType.number
-  }
-
-  return currentType
 }
 
 export function removePropertyFromArrayRecursively(
@@ -179,50 +86,6 @@ export function removePropertyFromArrayRecursively(
   }
 
   return value
-}
-
-export function isStructuredTextSlate(value: any): boolean {
-  return (
-    Boolean(value) &&
-    !Array.isArray(value) &&
-    Object.keys(value).length === 2 &&
-    'children' in value &&
-    'type' in value
-  )
-}
-
-export function isImage(value: any): boolean {
-  return (
-    Boolean(value) &&
-    !Array.isArray(value) &&
-    'upload_id' in value &&
-    'focal_point' in value &&
-    'alt' in value
-  )
-}
-
-export function isColor(value: any): boolean {
-  return (
-    Boolean(value) &&
-    !Array.isArray(value) &&
-    Object.keys(value).length === 4 &&
-    'alpha' in value &&
-    'blue' in value &&
-    'green' in value &&
-    'red' in value
-  )
-}
-
-export function isSeo(value: any): boolean {
-  return (
-    Boolean(value) &&
-    !Array.isArray(value) &&
-    Object.keys(value).length === 4 &&
-    'description' in value &&
-    'image' in value &&
-    'title' in value &&
-    'twitter_card' in value
-  )
 }
 
 export function isJsonString(value: any): boolean {

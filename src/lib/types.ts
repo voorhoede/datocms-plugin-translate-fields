@@ -85,7 +85,6 @@ export type TranslationOptions = {
 export interface PathTranslationOptions extends TranslationOptions {
   arrayKey: string
   translatingKey: string
-  paths?: Path[]
 }
 
 export type Path = {
@@ -98,6 +97,9 @@ export type Path = {
 export enum PathType {
   text = 'text',
   structured_text = 'structured_text',
+  structured_text_block = 'structured_text_block',
+  structured_text_inline_item = 'structured_text_inline_item',
+  structured_text_code = 'structured_text_code',
   media = 'media',
   id = 'id',
   number = 'number',
