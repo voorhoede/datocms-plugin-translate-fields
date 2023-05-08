@@ -31,6 +31,10 @@ export async function getTranslation(
   string: string,
   options: TranslationOptions
 ): Promise<string> {
+  if (process.env.REACT_APP_USE_MOCK === 'true') {
+    return `Translated ${string}`
+  }
+
   switch (options.translationService) {
     case TranslationService.yandex: {
       return yandexTranslate(string, options)
