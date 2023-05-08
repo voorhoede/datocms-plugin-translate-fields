@@ -85,7 +85,6 @@ export type TranslationOptions = {
 export interface PathTranslationOptions extends TranslationOptions {
   arrayKey: string
   translatingKey: string
-  paths?: Path[]
 }
 
 export type Path = {

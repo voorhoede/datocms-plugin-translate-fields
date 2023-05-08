@@ -226,7 +226,7 @@ export async function getTranslationPerPath(
   options: PathTranslationOptions
 ): Promise<any[]> {
   const jsonObject = makeObject(array, options.arrayKey)
-  const allPaths: Path[] = options.paths ? options.paths : paths(jsonObject)
+  const allPaths: Path[] = paths(jsonObject)
 
   for (const pathObject of allPaths) {
     const fullPath = pathObject.path
