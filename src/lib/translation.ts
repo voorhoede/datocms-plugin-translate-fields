@@ -140,8 +140,10 @@ export async function getSeoTranslation(
   options: TranslationOptions
 ): Promise<any> {
   return {
-    title: await getTranslation(value.title, options),
-    description: await getTranslation(value.description, options),
+    title: value.title ? await getTranslation(value.title, options) : '',
+    description: value.description
+      ? await getTranslation(value.description, options)
+      : '',
     image: value?.image,
     twitter_card: value?.twitter_card,
   }
