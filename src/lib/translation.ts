@@ -19,9 +19,9 @@ import {
   deeplFrom as deeplSupportedFromLocales,
 } from './supported-locales'
 
-import yandexTranslate from './translationServices/yandex'
-import deeplTranslate from './translationServices/deepl'
-import openAITranslate from './translationServices/openAI'
+import yandexTranslate from './translation-services/yandex'
+import deeplTranslate from './translation-services/deepl'
+import openAITranslate from './translation-services/openAI'
 
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { toMarkdown } from 'mdast-util-to-markdown'
