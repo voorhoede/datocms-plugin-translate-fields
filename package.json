@@ -66,12 +66,12 @@
     "react-scripts": "^5.0.1"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.192",
-    "@types/node": "^18.15.11",
-    "@types/react": "^18.0.33",
-    "@types/react-dom": "^18.0.11",
-    "datocms-plugin-sdk": "^0.7.8",
-    "datocms-react-ui": "^0.7.8",
+    "@types/lodash": "^4.14.194",
+    "@types/node": "^20.2.3",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "datocms-plugin-sdk": "^0.7.13",
+    "datocms-react-ui": "^0.7.13",
     "datocms-structured-text-slate-utils": "^2.1.2",
     "datocms-structured-text-utils": "^2.0.4",
     "html2json": "^1.0.2",
