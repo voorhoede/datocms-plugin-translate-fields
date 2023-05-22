@@ -15,8 +15,9 @@ import {
 } from './helpers'
 import {
   yandex as yandexSupportedLocales,
-  deepl as deeplSupportedLocales,
-} from './supportedLocales'
+  deeplTo as deeplSupportedToLocales,
+  deeplFrom as deeplSupportedFromLocales,
+} from './supported-locales'
 
 import yandexTranslate from './translationServices/yandex'
 import deeplTranslate from './translationServices/deepl'
@@ -249,22 +250,18 @@ export async function getTranslationPerPath(
   return translatedArray
 }
 
-export function getSupportedLocale(
+export function getSupportedToLocale(
   locale: string,
   translationService: TranslationService
 ): string {
   const localeLower = locale.toLowerCase()
+  const indexOfDash = localeLower.indexOf('-')
   const localeStart =
-    localeLower.indexOf('-') > 0
-      ? localeLower.substring(0, localeLower.indexOf('-'))
-      : localeLower
+    indexOfDash > 0 ? localeLower.substring(0, indexOfDash) : localeLower
 
   switch (translationService) {
     case TranslationService.yandex: {
-      if (yandexSupportedLocales.includes(localeStart)) {
-        return localeStart
-      }
-      break
+      return localeStart
     }
     case TranslationService.deepl:
     case TranslationService.deeplFree: {
@@ -273,20 +270,53 @@ export function getSupportedLocale(
           return 'EN-US'
         case 'pt':
           return 'PT-PT'
-        case 'en-us':
-        case 'en-gb':
-        case 'pt-pt':
-        case 'pt-br':
-          return localeLower.toUpperCase()
         default:
           break
       }
 
-      if (deeplSupportedLocales.includes(localeStart)) {
+      if (
+        deeplSupportedToLocales
+          .map((deeplLocale) => deeplLocale.toLowerCase())
+          .includes(localeStart)
+      ) {
         return localeStart.toUpperCase()
       }
 
-      break
+      return locale.toUpperCase()
+    }
+  }
+
+  return locale
+}
+
+export function getSupportedFromLocale(
+  locale: string,
+  translationService: TranslationService
+): string {
+  const localeLower = locale.toLowerCase()
+  const indexOfDash = localeLower.indexOf('-')
+  const localeStart =
+    indexOfDash > 0 ? localeLower.substring(0, indexOfDash) : localeLower
+
+  switch (translationService) {
+    case TranslationService.yandex: {
+      if (yandexSupportedLocales.includes(localeStart)) {
+        return localeStart
+      }
+
+      return ''
+    }
+    case TranslationService.deepl:
+    case TranslationService.deeplFree: {
+      if (
+        deeplSupportedFromLocales
+          .map((deeplLocale) => deeplLocale.toLowerCase())
+          .includes(localeStart)
+      ) {
+        return localeStart.toUpperCase()
+      }
+
+      return ''
     }
   }
 

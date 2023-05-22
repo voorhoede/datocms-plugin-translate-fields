@@ -9,7 +9,8 @@ import {
   getMarkdownTranslation,
   getRichTextTranslation,
   getHtmlTranslation,
-  getSupportedLocale,
+  getSupportedToLocale,
+  getSupportedFromLocale,
   getSeoTranslation,
 } from '../../lib/translation'
 import {
@@ -85,10 +86,7 @@ export default function FieldAddon({ ctx }: Props) {
   }, [fieldValue])
 
   useEffect(() => {
-    if (
-      translationApiKey === '' &&
-      process.env.REACT_APP_USE_MOCK !== 'true'
-    ) {
+    if (translationApiKey === '' && process.env.REACT_APP_USE_MOCK !== 'true') {
       setHasError(`Set ${translationService.label} API key in the settings`)
     }
   }, [translationApiKey, translationService])
@@ -104,8 +102,11 @@ export default function FieldAddon({ ctx }: Props) {
       for (const locale of languages) {
         let translatedField
         const options: TranslationOptions = {
-          fromLocale: fromLocale || locales[0],
-          toLocale: getSupportedLocale(locale, translationServiceValue),
+          fromLocale: getSupportedFromLocale(
+            fromLocale || locales[0],
+            translationServiceValue
+          ),
+          toLocale: getSupportedToLocale(locale, translationServiceValue),
           format: translationFormat,
           translationService: translationServiceValue,
           apiKey: translationApiKey,
