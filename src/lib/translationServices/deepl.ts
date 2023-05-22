@@ -5,12 +5,15 @@ export default async function translate(
   options: TranslationOptions
 ): Promise<string> {
   const params = new URLSearchParams()
-  
+
   params.set('auth_key', options.apiKey)
   params.set('target_lang', options.toLocale)
-  params.set('source_lang', options.fromLocale)
   params.set('tag_handling', 'xml')
   params.set('text', string)
+
+  if (options.fromLocale) {
+    params.set('source_lang', options.fromLocale)
+  }
 
   const apiVersion =
     options.translationService === TranslationService.deeplFree
