@@ -76,7 +76,7 @@ export default function FieldAddon({ ctx }: Props) {
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
   const locales: string[] = ctx.formValues.internalLocales as string[]
-  const editor: Editor = ctx.field.attributes.appeareance?.editor as Editor
+  const editor: Editor = ctx.field.attributes.appearance?.editor as Editor
   const isDefaultLocale: boolean = currentLocale === locales[0]
   const translationFormat: TranslationFormat = translationFormats[editor]
 

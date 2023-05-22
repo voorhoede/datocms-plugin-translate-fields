@@ -113,7 +113,7 @@ export function structuredTextValueToDast(fieldValue: any, ctx: any) {
 }
 
 export function fieldHasFieldValue(fieldValue: any, ctx: any): boolean {
-  const editor: Editor = ctx.field.attributes.appeareance?.editor as Editor
+  const editor: Editor = ctx.field.attributes.appearance?.editor as Editor
   const translationFormat: TranslationFormat = translationFormats[editor]
   switch (translationFormat) {
     case TranslationFormat.seo: {
