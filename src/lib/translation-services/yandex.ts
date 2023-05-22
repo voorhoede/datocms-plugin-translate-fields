@@ -7,7 +7,12 @@ export default async function translate(
   const params = new URLSearchParams()
 
   params.set('key', options.apiKey)
-  params.set('lang', options.toLocale)
+  params.set(
+    'lang',
+    options.fromLocale
+      ? `${options.fromLocale}-${options.toLocale}`
+      : options.toLocale
+  )
   params.set('format', 'plain')
   params.set('text', string)
 
