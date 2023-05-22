@@ -1,0 +1,30 @@
+---
+name: Test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '15'
+      - uses: actions/checkout@v3
+      - env:
+          cache-name: cache-node-modules
+        name: 'Cache node modules'
+        uses: actions/cache@v3
+        with:
+          key: "${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}"
+          path: ~/.npm
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install Dependencies
+        run: npm ci
+      - name: Test
+        run: 'npm run test'
