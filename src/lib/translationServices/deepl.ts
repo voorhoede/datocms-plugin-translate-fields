@@ -8,6 +8,7 @@ export default async function translate(
   
   params.set('auth_key', options.apiKey)
   params.set('target_lang', options.toLocale)
+  params.set('source_lang', options.fromLocale)
   params.set('tag_handling', 'xml')
   params.set('text', string)
 
