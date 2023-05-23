@@ -82,11 +82,6 @@ export type TranslationOptions = {
   }
 }
 
-export interface PathTranslationOptions extends TranslationOptions {
-  arrayKey: string
-  translatingKey: string
-}
-
 export type Path = {
   path: string
   value: string

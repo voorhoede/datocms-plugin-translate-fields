@@ -1,37 +1,10 @@
+import { Field, ItemType } from 'datocms-plugin-sdk'
 import { isEmptyDocument } from 'datocms-structured-text-utils'
 import { slateToDast } from 'datocms-structured-text-slate-utils'
+
 import { Path, TranslationFormat, Editor, PathType } from './types'
 import { translationFormats } from './constants'
 import { pathTypeIsObject, getValueType } from './datocms-helpers'
-
-export function makeObject(array: any[], arrayKey: string): any {
-  return array.reduce((acc: any, item: any, index: number) => {
-    if (arrayKey in item) {
-      return {
-        ...acc,
-        [index]: {
-          ...item,
-          [arrayKey]: makeObject(item[arrayKey], arrayKey),
-        },
-      }
-    }
-    return { ...acc, [index]: item }
-  }, {})
-}
-
-export function makeArray(object: any, objectKey: string): any[] {
-  return Object.keys(object).reduce((acc: any[], key: string) => {
-    if (objectKey in object[key]) {
-      acc.push({
-        ...object[key],
-        [objectKey]: makeArray(object[key][objectKey], objectKey),
-      })
-      return acc
-    }
-    acc.push(object[key])
-    return acc
-  }, [])
-}
 
 export function paths(
   object: any,
@@ -65,13 +38,13 @@ export function paths(
   return []
 }
 
-export function removePropertyFromArrayRecursively(
+export function removePropertyRecursively(
   value: any,
   propertyNames: string[]
 ): any {
   if (Array.isArray(value)) {
     return value.map((item: any) =>
-      removePropertyFromArrayRecursively(item, propertyNames)
+      removePropertyRecursively(item, propertyNames)
     )
   }
 
@@ -79,7 +52,7 @@ export function removePropertyFromArrayRecursively(
     const newObj: any = {}
     for (const [key, val] of Object.entries(value)) {
       if (!propertyNames.includes(key)) {
-        newObj[key] = removePropertyFromArrayRecursively(val, propertyNames)
+        newObj[key] = removePropertyRecursively(val, propertyNames)
       }
     }
     return newObj
@@ -97,30 +70,46 @@ export function isJsonString(value: any): boolean {
   return true
 }
 
-export function structuredTextValueToDast(fieldValue: any, ctx: any) {
-  const itemTypes: Record<string, any[]> = Object.values(ctx.itemTypes).reduce(
-    (acc: Record<string, any[]>, itemType: any) => {
+type structuredTextFieldType = {
+  itemTypes: Partial<Record<string, ItemType>>
+  fields: Partial<Record<string, Field>>
+}
+
+interface ctxFieldsType extends structuredTextFieldType {
+  editor: Editor
+}
+
+export function structuredTextValueToDast(
+  fieldValue: any,
+  structuredTextField: structuredTextFieldType
+) {
+  const itemTypes = Object.values(structuredTextField.itemTypes).reduce(
+    (acc, itemType?: ItemType) => {
+      if (!itemType?.relationships?.fields) return acc
       const itemTypeFields = itemType.relationships.fields.data.map(
         (item: { id: string }) => {
-          return ctx.fields[item.id]
+          return structuredTextField.fields[item.id]
         }
       )
       return { ...acc, [itemType.id]: [...itemTypeFields] }
     },
     {}
   )
-  return slateToDast(fieldValue, itemTypes)
+  return slateToDast(fieldValue, itemTypes || {})
 }
 
-export function fieldHasFieldValue(fieldValue: any, ctx: any): boolean {
-  const editor: Editor = ctx.field.attributes.appearance?.editor as Editor
+export function fieldHasFieldValue(
+  fieldValue: any,
+  ctxFields: ctxFieldsType
+): boolean {
+  const editor: Editor = ctxFields.editor as Editor
   const translationFormat: TranslationFormat = translationFormats[editor]
   switch (translationFormat) {
     case TranslationFormat.seo: {
       return Boolean(fieldValue?.title) || Boolean(fieldValue?.description)
     }
     case TranslationFormat.structuredText: {
-      const dast = structuredTextValueToDast(fieldValue, ctx)
+      const dast = structuredTextValueToDast(fieldValue, ctxFields)
       return !isEmptyDocument(dast)
     }
     case TranslationFormat.richText: {

@@ -1,3 +1,83 @@
+import { TranslationService } from './types'
+import {
+  yandex as yandexSupportedLocales,
+  deeplTo as deeplSupportedToLocales,
+  deeplFrom as deeplSupportedFromLocales,
+} from './supported-locales'
+
+export function getSupportedToLocale(
+  locale: string,
+  translationService: TranslationService
+): string {
+  const localeLower = locale.toLowerCase()
+  const indexOfDash = localeLower.indexOf('-')
+  const localeStart =
+    indexOfDash > 0 ? localeLower.substring(0, indexOfDash) : localeLower
+
+  switch (translationService) {
+    case TranslationService.yandex: {
+      return localeStart
+    }
+    case TranslationService.deepl:
+    case TranslationService.deeplFree: {
+      switch (localeLower) {
+        case 'en':
+          return 'EN-US'
+        case 'pt':
+          return 'PT-PT'
+        default:
+          break
+      }
+
+      if (
+        deeplSupportedToLocales
+          .map((deeplLocale) => deeplLocale.toLowerCase())
+          .includes(localeStart)
+      ) {
+        return localeStart.toUpperCase()
+      }
+
+      return locale.toUpperCase()
+    }
+  }
+
+  return locale
+}
+
+export function getSupportedFromLocale(
+  locale: string,
+  translationService: TranslationService
+): string {
+  const localeLower = locale.toLowerCase()
+  const indexOfDash = localeLower.indexOf('-')
+  const localeStart =
+    indexOfDash > 0 ? localeLower.substring(0, indexOfDash) : localeLower
+
+  switch (translationService) {
+    case TranslationService.yandex: {
+      if (yandexSupportedLocales.includes(localeStart)) {
+        return localeStart
+      }
+
+      return ''
+    }
+    case TranslationService.deepl:
+    case TranslationService.deeplFree: {
+      if (
+        deeplSupportedFromLocales
+          .map((deeplLocale) => deeplLocale.toLowerCase())
+          .includes(localeStart)
+      ) {
+        return localeStart.toUpperCase()
+      }
+
+      return ''
+    }
+  }
+
+  return locale
+}
+
 export const deeplTo = [
   'BG',
   'CS',

@@ -9,10 +9,12 @@ import {
   getMarkdownTranslation,
   getRichTextTranslation,
   getHtmlTranslation,
-  getSupportedToLocale,
-  getSupportedFromLocale,
   getSeoTranslation,
 } from '../../lib/translation'
+import {
+  getSupportedToLocale,
+  getSupportedFromLocale,
+} from '../../lib/supported-locales'
 import {
   Editor,
   TranslationFormat,
@@ -98,7 +100,13 @@ export default function FieldAddon({ ctx }: Props) {
       translatableField = get(ctx.formValues, `${fieldPath}.${fromLocale}`)
     }
 
-    if (fieldHasFieldValue(translatableField, ctx)) {
+    if (
+      fieldHasFieldValue(translatableField, {
+        itemTypes: ctx.itemTypes,
+        fields: ctx.fields,
+        editor: editor,
+      })
+    ) {
       for (const locale of languages) {
         let translatedField
         const options: TranslationOptions = {
@@ -184,7 +192,14 @@ export default function FieldAddon({ ctx }: Props) {
     )
   }
 
-  if (fieldHasFieldValue(fieldValue, ctx) && !isDefaultLocale) {
+  if (
+    fieldHasFieldValue(fieldValue, {
+      itemTypes: ctx.itemTypes,
+      fields: ctx.fields,
+      editor: editor,
+    }) &&
+    !isDefaultLocale
+  ) {
     ctx.setHeight(0)
     return <></>
   }
