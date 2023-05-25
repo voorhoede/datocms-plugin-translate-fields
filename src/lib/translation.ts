@@ -15,11 +15,10 @@ export async function getTranslation(
   string: string,
   options: TranslationOptions
 ): Promise<string> {
-  if (process.env.REACT_APP_USE_MOCK === 'true') {
-    return `Translated ${string}`
-  }
-
   switch (options.translationService) {
+    case TranslationService.mock: {
+      return `Translated ${string}`
+    }
     case TranslationService.yandex: {
       return yandexTranslate(string, options)
     }
@@ -43,7 +42,7 @@ export async function getRichTextTranslation(
   const mappedValue = removePropertyRecursively(value, ['itemId'])
   const allPaths = paths(mappedValue)
   let translatedArray = mappedValue
-  console.log(allPaths)
+
   for (const path of allPaths) {
     if (path.type === PathType.text) {
       const currentPath = path.path

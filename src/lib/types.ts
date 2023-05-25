@@ -30,6 +30,7 @@ export enum TranslationService {
   deepl = 'deepl',
   deeplFree = 'deeplFree',
   openAI = 'openAI',
+  mock = 'mock',
 }
 
 export enum TranslationServiceKey {
@@ -37,6 +38,7 @@ export enum TranslationServiceKey {
   deeplApiKey = 'deeplApiKey',
   deeplFreeApiKey = 'deeplFreeApiKey',
   openAIKey = 'openAIApiKey',
+  mockKey = 'mockApiKey',
 }
 
 export enum OpenAIDefaultValues {
@@ -56,6 +58,7 @@ export type Parameters = {
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
   [TranslationServiceKey.openAIKey]?: string
+  [TranslationServiceKey.mockKey]?: string
 }
 
 export interface GlobalParameters extends Parameters {

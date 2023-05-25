@@ -27,7 +27,6 @@ export const structuredTextBlockSlate = {
 }
 
 export const structuredTextInlineItemSlate = {
-  blockModelId: '1',
   item: '1',
   itemTypeId: '1',
   type: 'inlineItem',
