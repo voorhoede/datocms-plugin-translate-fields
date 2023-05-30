@@ -54,7 +54,3 @@ By changing the following setting you can choose on which fields this plugin wil
 ## Contributing
 
 See [contributing.md](https://github.com/voorhoede/datocms-plugin-translate-fields/blob/main/contributing.md).
-
-## License
-
-*MIT Licensed* by [De Voorhoede](https://www.voorhoede.nl).
