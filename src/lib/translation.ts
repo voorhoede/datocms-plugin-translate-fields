@@ -1,30 +1,13 @@
 import { get, set } from 'lodash'
+import { fromMarkdown } from 'mdast-util-from-markdown'
+import { toMarkdown } from 'mdast-util-to-markdown'
 
-import {
-  TranslationOptions,
-  PathTranslationOptions,
-  Path,
-  TranslationService,
-  PathType,
-} from './types'
-import {
-  makeObject,
-  paths,
-  makeArray,
-  removePropertyFromArrayRecursively,
-} from './helpers'
-import {
-  yandex as yandexSupportedLocales,
-  deeplTo as deeplSupportedToLocales,
-  deeplFrom as deeplSupportedFromLocales,
-} from './supported-locales'
+import { TranslationOptions, Path, TranslationService, PathType } from './types'
+import { paths, removePropertyRecursively } from './helpers'
 
 import yandexTranslate from './translation-services/yandex'
 import deeplTranslate from './translation-services/deepl'
 import openAITranslate from './translation-services/openAI'
-
-import { fromMarkdown } from 'mdast-util-from-markdown'
-import { toMarkdown } from 'mdast-util-to-markdown'
 
 const parseHtml = require('html2json')
 
@@ -32,11 +15,10 @@ export async function getTranslation(
   string: string,
   options: TranslationOptions
 ): Promise<string> {
-  if (process.env.REACT_APP_USE_MOCK === 'true') {
-    return `Translated ${string}`
-  }
-
   switch (options.translationService) {
+    case TranslationService.mock: {
+      return `Translated ${string}`
+    }
     case TranslationService.yandex: {
       return yandexTranslate(string, options)
     }
@@ -57,7 +39,7 @@ export async function getRichTextTranslation(
   value: any[],
   options: TranslationOptions
 ): Promise<any[]> {
-  const mappedValue = removePropertyFromArrayRecursively(value, ['itemId'])
+  const mappedValue = removePropertyRecursively(value, ['itemId'])
   const allPaths = paths(mappedValue)
   let translatedArray = mappedValue
 
@@ -154,7 +136,7 @@ export async function getStructuredTextTranslation(
   value: any[],
   options: TranslationOptions
 ): Promise<any[]> {
-  const mappedValue = removePropertyFromArrayRecursively(value, ['id'])
+  const mappedValue = removePropertyRecursively(value, ['id'])
   const allPaths = paths(mappedValue)
   let translatedArray = mappedValue
 
@@ -205,11 +187,20 @@ export async function getHtmlTranslation(
   options: TranslationOptions
 ): Promise<string> {
   const json = parseHtml.html2json(string)
-  const translatedArray = await getTranslationPerPath(json.child, {
-    ...options,
-    arrayKey: 'child',
-    translatingKey: 'text',
-  })
+  const allPaths: Path[] = paths(json.child)
+  let translatedArray = json.child
+
+  for (const path of allPaths) {
+    if (path.key === 'text') {
+      const currentPath = path.path
+      const currentString = get(translatedArray, currentPath)
+      if (currentString) {
+        const translatedString = await getTranslation(currentString, options)
+        set(translatedArray, currentPath, translatedString)
+      }
+    }
+  }
+
   const html = parseHtml.json2html({ ...json, child: translatedArray })
   return html
 }
@@ -219,106 +210,20 @@ export async function getMarkdownTranslation(
   options: TranslationOptions
 ): Promise<string> {
   const json = fromMarkdown(string)
-  const translatedArray = await getTranslationPerPath(json.children, {
-    ...options,
-    arrayKey: 'children',
-    translatingKey: 'value',
-  })
-  const md = toMarkdown({ ...json, children: translatedArray })
-  return md
-}
+  const allPaths: Path[] = paths(json.children)
+  let translatedArray = json.children
 
-export async function getTranslationPerPath(
-  array: any[],
-  options: PathTranslationOptions
-): Promise<any[]> {
-  const jsonObject = makeObject(array, options.arrayKey)
-  const allPaths: Path[] = paths(jsonObject)
-
-  for (const pathObject of allPaths) {
-    const fullPath = pathObject.path
-    if (pathObject.key === options.translatingKey && pathObject.value.trim()) {
-      const currentString = get(jsonObject, fullPath)
+  for (const path of allPaths) {
+    if (path.key === 'value') {
+      const currentPath = path.path
+      const currentString = get(translatedArray, currentPath)
       if (currentString) {
         const translatedString = await getTranslation(currentString, options)
-        set(jsonObject, fullPath, translatedString)
+        set(translatedArray, currentPath, translatedString)
       }
     }
   }
 
-  const translatedArray = makeArray(jsonObject, options.arrayKey)
-  return translatedArray
-}
-
-export function getSupportedToLocale(
-  locale: string,
-  translationService: TranslationService
-): string {
-  const localeLower = locale.toLowerCase()
-  const indexOfDash = localeLower.indexOf('-')
-  const localeStart =
-    indexOfDash > 0 ? localeLower.substring(0, indexOfDash) : localeLower
-
-  switch (translationService) {
-    case TranslationService.yandex: {
-      return localeStart
-    }
-    case TranslationService.deepl:
-    case TranslationService.deeplFree: {
-      switch (localeLower) {
-        case 'en':
-          return 'EN-US'
-        case 'pt':
-          return 'PT-PT'
-        default:
-          break
-      }
-
-      if (
-        deeplSupportedToLocales
-          .map((deeplLocale) => deeplLocale.toLowerCase())
-          .includes(localeStart)
-      ) {
-        return localeStart.toUpperCase()
-      }
-
-      return locale.toUpperCase()
-    }
-  }
-
-  return locale
-}
-
-export function getSupportedFromLocale(
-  locale: string,
-  translationService: TranslationService
-): string {
-  const localeLower = locale.toLowerCase()
-  const indexOfDash = localeLower.indexOf('-')
-  const localeStart =
-    indexOfDash > 0 ? localeLower.substring(0, indexOfDash) : localeLower
-
-  switch (translationService) {
-    case TranslationService.yandex: {
-      if (yandexSupportedLocales.includes(localeStart)) {
-        return localeStart
-      }
-
-      return ''
-    }
-    case TranslationService.deepl:
-    case TranslationService.deeplFree: {
-      if (
-        deeplSupportedFromLocales
-          .map((deeplLocale) => deeplLocale.toLowerCase())
-          .includes(localeStart)
-      ) {
-        return localeStart.toUpperCase()
-      }
-
-      return ''
-    }
-  }
-
-  return locale
+  const md = toMarkdown({ ...json, children: translatedArray })
+  return md
 }

@@ -114,12 +114,23 @@ export function getValueType(
     return PathType.slug
   }
 
-  if (isJsonString(value)) {
-    return PathType.json
-  }
-
   if (typeof value === 'boolean') {
     return PathType.boolean
+  }
+
+  if (pathTypeIsObject.indexOf(currentType) === -1 && Number(value)) {
+    return PathType.number
+  }
+
+  if (
+    pathTypeIsObject.indexOf(currentType) === -1 &&
+    !isNaN(Date.parse(value))
+  ) {
+    return PathType.date
+  }
+
+  if (isJsonString(value)) {
+    return PathType.json
   }
 
   if (markdownRegexesArray.some((regex) => regex.test(value))) {
@@ -185,17 +196,6 @@ export function getValueType(
     isSeo(value)
   ) {
     return PathType.seo
-  }
-
-  if (
-    pathTypeIsObject.indexOf(currentType) === -1 &&
-    !isNaN(Date.parse(value))
-  ) {
-    return PathType.date
-  }
-
-  if (pathTypeIsObject.indexOf(currentType) === -1 && Number(value)) {
-    return PathType.number
   }
 
   return currentType

@@ -9,10 +9,12 @@ import {
   getMarkdownTranslation,
   getRichTextTranslation,
   getHtmlTranslation,
-  getSupportedToLocale,
-  getSupportedFromLocale,
   getSeoTranslation,
 } from '../../lib/translation'
+import {
+  getSupportedToLocale,
+  getSupportedFromLocale,
+} from '../../lib/supported-locales'
 import {
   Editor,
   TranslationFormat,
@@ -37,6 +39,7 @@ type Props = {
 export default function FieldAddon({ ctx }: Props) {
   const [isTranslating, setIsTranslating] = useState(false)
   const [hasError, setHasError] = useState('')
+  const useMock = process.env.REACT_APP_USE_MOCK === 'true'
 
   const pluginGlobalParameters: GlobalParameters =
     ctx.plugin.attributes.parameters
@@ -47,7 +50,9 @@ export default function FieldAddon({ ctx }: Props) {
     pluginGlobalParameters?.translationService ||
     translationServiceOptions[0]
 
-  const translationServiceValue = translationService.value as TranslationService
+  const translationServiceValue = useMock
+    ? TranslationService.mock
+    : (translationService.value as TranslationService)
   const translationServiceApiKey =
     `${translationServiceValue}ApiKey` as TranslationServiceKey
 
@@ -86,10 +91,10 @@ export default function FieldAddon({ ctx }: Props) {
   }, [fieldValue])
 
   useEffect(() => {
-    if (translationApiKey === '' && process.env.REACT_APP_USE_MOCK !== 'true') {
+    if (translationApiKey === '' && !useMock) {
       setHasError(`Set ${translationService.label} API key in the settings`)
     }
-  }, [translationApiKey, translationService])
+  }, [translationApiKey, translationService, useMock])
 
   async function translateField(languages: string[], fromLocale?: string) {
     let translatableField = fieldValue
@@ -98,7 +103,13 @@ export default function FieldAddon({ ctx }: Props) {
       translatableField = get(ctx.formValues, `${fieldPath}.${fromLocale}`)
     }
 
-    if (fieldHasFieldValue(translatableField, ctx)) {
+    if (
+      fieldHasFieldValue(translatableField, {
+        itemTypes: ctx.itemTypes,
+        fields: ctx.fields,
+        editor: editor,
+      })
+    ) {
       for (const locale of languages) {
         let translatedField
         const options: TranslationOptions = {
@@ -184,7 +195,15 @@ export default function FieldAddon({ ctx }: Props) {
     )
   }
 
-  if ((fieldHasFieldValue(fieldValue, ctx) && !isDefaultLocale) || locales.length <= 1) {
+  if (
+    (fieldHasFieldValue(fieldValue, {
+      itemTypes: ctx.itemTypes,
+      fields: ctx.fields,
+      editor: editor,
+    }) &&
+      !isDefaultLocale) ||
+    locales.length <= 1
+  ) {
     ctx.setHeight(0)
     return <></>
   }
