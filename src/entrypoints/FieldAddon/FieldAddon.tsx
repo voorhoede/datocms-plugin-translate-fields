@@ -188,6 +188,11 @@ export default function FieldAddon({ ctx }: Props) {
     ctx.setHeight(0)
     return <></>
   }
+  
+  if (locales.length <= 1) {
+    ctx.setHeight(0)
+    return <></>
+  }
 
   if (!isDefaultLocale) {
     return (
