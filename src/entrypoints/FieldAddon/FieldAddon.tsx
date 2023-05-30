@@ -196,12 +196,13 @@ export default function FieldAddon({ ctx }: Props) {
   }
 
   if (
-    fieldHasFieldValue(fieldValue, {
+    (fieldHasFieldValue(fieldValue, {
       itemTypes: ctx.itemTypes,
       fields: ctx.fields,
       editor: editor,
     }) &&
-    !isDefaultLocale
+      !isDefaultLocale) ||
+    locales.length <= 1
   ) {
     ctx.setHeight(0)
     return <></>
