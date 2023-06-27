@@ -11,6 +11,7 @@ import {
 
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
 import { OpenAIConfigFieldsFieldAddonConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
+import GlossaryIdField from '../../components/GlossaryIdField/GlossaryIdField'
 
 type Props = {
   ctx: RenderManualFieldExtensionConfigScreenCtx
@@ -53,7 +54,7 @@ export default function ConfigScreen({ ctx }: Props) {
             const currentValue: string =
               pluginParameters?.[`${option.value}ApiKey`] ||
               pluginGlobalParameters?.[`${option.value}ApiKey`] ||
-              ''
+              ""
 
             return (
               selectedTranslationService.value === option.value && (
@@ -74,6 +75,24 @@ export default function ConfigScreen({ ctx }: Props) {
               )
             )
           })}
+
+          {(selectedTranslationService.value === TranslationService.deepl ||
+            selectedTranslationService.value ===
+              TranslationService.deeplFree) && (
+            <GlossaryIdField
+              value={pluginParameters?.deeplGlossaryId || ''}
+              onBlur={(newValue) => {
+                if (newValue !== pluginParameters?.deeplGlossaryId) {
+                  ctx.updatePluginParameters({
+                    ...pluginParameters,
+                    deeplGlossaryId: newValue,
+                  })
+
+                  ctx.notice('Settings updated successfully!')
+                }
+              }}
+            />
+          )}
 
           {selectedTranslationService.value === TranslationService.openAI && (
             <OpenAIConfigFieldsFieldAddonConfigScreen ctx={ctx} />
