@@ -15,6 +15,10 @@ export default async function translate(
     params.set('source_lang', options.fromLocale)
   }
 
+  if (options.deeplOptions?.glossaryId) {
+    params.set('glossary_id', options.deeplOptions.glossaryId)
+  }
+
   const apiVersion =
     options.translationService === TranslationService.deeplFree
       ? 'api-free'
