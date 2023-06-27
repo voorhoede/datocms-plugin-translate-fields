@@ -79,6 +79,10 @@ export default function FieldAddon({ ctx }: Props) {
     pluginGlobalParameters.topP ??
     OpenAIDefaultValues.topP
 
+  const deeplGlossaryId =
+    pluginParameters.deeplGlossaryId ||
+    pluginGlobalParameters.deeplGlossaryId
+
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
   const locales: string[] = ctx.formValues.internalLocales as string[]
@@ -121,6 +125,9 @@ export default function FieldAddon({ ctx }: Props) {
           format: translationFormat,
           translationService: translationServiceValue,
           apiKey: translationApiKey,
+          deeplOptions: {
+            glossaryId: deeplGlossaryId,
+          },
           openAIOptions: {
             model: modelValue,
             temperature,
