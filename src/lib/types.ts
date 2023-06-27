@@ -54,6 +54,7 @@ export type Parameters = {
   temperature?: number
   maxTokens?: number
   topP?: number
+  deeplGlossaryId?: string
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
@@ -77,6 +78,9 @@ export type TranslationOptions = {
   format: TranslationFormat
   translationService: TranslationService
   apiKey: string
+  deeplOptions?: {
+    glossaryId?: string
+  }
   openAIOptions: {
     model: string
     temperature: number
