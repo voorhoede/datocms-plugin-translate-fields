@@ -48,6 +48,14 @@ export enum OpenAIDefaultValues {
   topP = 0,
 }
 
+export enum DeeplFormalityLevel {
+  default = 'default',
+  more = 'more',
+  less = 'less',
+  preferMore = 'prefer_more',
+  preferLess = 'prefer_less',
+}
+
 export type Parameters = {
   translationService?: SettingOption
   model?: SettingOption
@@ -55,6 +63,7 @@ export type Parameters = {
   maxTokens?: number
   topP?: number
   deeplGlossaryId?: string
+  deeplFormalityLevel?: TSettingOption<DeeplFormalityLevel>
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
@@ -72,6 +81,11 @@ export type SettingOption = {
   label: string
 }
 
+export type TSettingOption<T> = {
+  value: T
+  label: string
+}
+
 export type TranslationOptions = {
   fromLocale: string
   toLocale: string
@@ -80,6 +94,7 @@ export type TranslationOptions = {
   apiKey: string
   deeplOptions?: {
     glossaryId?: string
+    formality?: DeeplFormalityLevel
   }
   openAIOptions: {
     model: string

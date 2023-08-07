@@ -1,4 +1,11 @@
-import { Fields, Editor, TranslationFormat, TranslationService } from './types'
+import {
+  Fields,
+  Editor,
+  TranslationFormat,
+  TranslationService,
+  DeeplFormalityLevel,
+  TSettingOption,
+} from './types'
 
 export const fieldsOptions = [
   { label: 'String fields', value: Fields.stringField },
@@ -24,3 +31,18 @@ export const translationFormats = {
   [Editor.textarea]: TranslationFormat.plain,
   [Editor.seo]: TranslationFormat.seo,
 }
+
+export const deeplFormalityLevelOptions: TSettingOption<DeeplFormalityLevel>[] =
+  [
+    { label: 'Default', value: DeeplFormalityLevel.default },
+    { label: 'More formal', value: DeeplFormalityLevel.more },
+    { label: 'Less formal', value: DeeplFormalityLevel.less },
+    {
+      label: 'Prefer more formal if available',
+      value: DeeplFormalityLevel.preferMore,
+    },
+    {
+      label: 'Prefer less formal if available',
+      value: DeeplFormalityLevel.preferLess,
+    },
+  ]

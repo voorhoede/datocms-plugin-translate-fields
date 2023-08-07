@@ -25,8 +25,10 @@ import {
   TranslationService,
   TranslationServiceKey,
   OpenAIDefaultValues,
+  DeeplFormalityLevel,
 } from '../../lib/types'
 import {
+  deeplFormalityLevelOptions,
   translationFormats,
   translationServiceOptions,
 } from '../../lib/constants'
@@ -80,8 +82,11 @@ export default function FieldAddon({ ctx }: Props) {
     OpenAIDefaultValues.topP
 
   const deeplGlossaryId =
-    pluginParameters.deeplGlossaryId ||
-    pluginGlobalParameters.deeplGlossaryId
+    pluginParameters.deeplGlossaryId || pluginGlobalParameters.deeplGlossaryId
+
+  const deeplFormalityLevelValue =
+    pluginGlobalParameters.deeplFormalityLevel?.value ||
+    (deeplFormalityLevelOptions[0].value as DeeplFormalityLevel)
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
@@ -127,6 +132,7 @@ export default function FieldAddon({ ctx }: Props) {
           apiKey: translationApiKey,
           deeplOptions: {
             glossaryId: deeplGlossaryId,
+            formality: deeplFormalityLevelValue,
           },
           openAIOptions: {
             model: modelValue,
