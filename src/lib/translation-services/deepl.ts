@@ -25,9 +25,9 @@ export default async function translate(
 
   if (
     options.deeplOptions?.formality &&
-    options.deeplOptions?.formality !== DeeplFormalityLevel.default
+    options.deeplOptions.formality !== DeeplFormalityLevel.default
   ) {
-    params.set('formality', options.deeplOptions?.formality)
+    params.set('formality', options.deeplOptions.formality)
   }
 
   const apiVersion =

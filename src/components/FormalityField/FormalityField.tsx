@@ -1,11 +1,12 @@
 import { SelectField } from 'datocms-react-ui'
+import { RenderConfigScreenCtx } from 'datocms-plugin-sdk'
+
 import {
   DeeplFormalityLevel,
   GlobalParameters,
   TSettingOption,
 } from '../../lib/types'
 import { deeplFormalityLevelOptions } from '../../lib/constants'
-import { RenderConfigScreenCtx } from 'datocms-plugin-sdk'
 
 type FormalityFieldProps = {
   ctx: RenderConfigScreenCtx

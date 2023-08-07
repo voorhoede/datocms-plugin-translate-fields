@@ -25,7 +25,6 @@ import {
   TranslationService,
   TranslationServiceKey,
   OpenAIDefaultValues,
-  DeeplFormalityLevel,
 } from '../../lib/types'
 import {
   deeplFormalityLevelOptions,
@@ -86,7 +85,7 @@ export default function FieldAddon({ ctx }: Props) {
 
   const deeplFormalityLevelValue =
     pluginGlobalParameters.deeplFormalityLevel?.value ||
-    (deeplFormalityLevelOptions[0].value as DeeplFormalityLevel)
+    (deeplFormalityLevelOptions[0].value)
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
