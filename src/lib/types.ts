@@ -1,4 +1,4 @@
-export enum Fields {
+export enum DatoFieldType {
   stringField = 'string',
   textField = 'text',
   richTextField = 'rich_text',
@@ -73,7 +73,7 @@ export type Parameters = {
 
 export interface GlobalParameters extends Parameters {
   autoApply?: boolean
-  fieldsToEnable?: SettingOption[]
+  fieldsToEnable?: TSettingOption<DatoFieldType>[]
 }
 
 export type SettingOption = {

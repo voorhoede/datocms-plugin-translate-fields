@@ -1,5 +1,5 @@
 import {
-  Fields,
+  DatoFieldType,
   Editor,
   TranslationFormat,
   TranslationService,
@@ -7,12 +7,12 @@ import {
   TSettingOption,
 } from './types'
 
-export const fieldsOptions = [
-  { label: 'String fields', value: Fields.stringField },
-  { label: 'Text fields', value: Fields.textField },
-  { label: 'Structured text fields', value: Fields.structuredTextField },
-  { label: 'Modular content fields', value: Fields.richTextField },
-  { label: 'SEO fields', value: Fields.seo },
+export const fieldsOptions: TSettingOption<DatoFieldType>[] =  [
+  { label: 'String fields', value: DatoFieldType.stringField },
+  { label: 'Text fields', value: DatoFieldType.textField },
+  { label: 'Structured text fields', value: DatoFieldType.structuredTextField },
+  { label: 'Modular content fields', value: DatoFieldType.richTextField },
+  { label: 'SEO fields', value: DatoFieldType.seo },
 ]
 
 export const translationServiceOptions: TSettingOption<TranslationService>[] = [
