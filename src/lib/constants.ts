@@ -4,10 +4,10 @@ import {
   TranslationFormat,
   TranslationService,
   DeeplFormalityLevel,
-  TSettingOption,
+  SettingOption,
 } from './types'
 
-export const fieldsOptions: TSettingOption<DatoFieldType>[] =  [
+export const fieldsOptions: SettingOption<DatoFieldType>[] =  [
   { label: 'String fields', value: DatoFieldType.stringField },
   { label: 'Text fields', value: DatoFieldType.textField },
   { label: 'Structured text fields', value: DatoFieldType.structuredTextField },
@@ -15,7 +15,7 @@ export const fieldsOptions: TSettingOption<DatoFieldType>[] =  [
   { label: 'SEO fields', value: DatoFieldType.seo },
 ]
 
-export const translationServiceOptions: TSettingOption<TranslationService>[] = [
+export const translationServiceOptions: SettingOption<TranslationService>[] = [
   { label: 'Yandex translate', value: TranslationService.yandex },
   { label: 'DeepL API Pro', value: TranslationService.deepl },
   { label: 'DeepL API Free', value: TranslationService.deeplFree },
@@ -32,7 +32,7 @@ export const translationFormats = {
   [Editor.seo]: TranslationFormat.seo,
 }
 
-export const deeplFormalityLevelOptions: TSettingOption<DeeplFormalityLevel>[] =
+export const deeplFormalityLevelOptions: SettingOption<DeeplFormalityLevel>[] =
   [
     { label: 'Default', value: DeeplFormalityLevel.default },
     { label: 'More formal', value: DeeplFormalityLevel.more },

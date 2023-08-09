@@ -4,13 +4,13 @@ import { RenderConfigScreenCtx } from 'datocms-plugin-sdk'
 import {
   DeeplFormalityLevel,
   GlobalParameters,
-  TSettingOption,
+  SettingOption,
 } from '../../lib/types'
 import { deeplFormalityLevelOptions } from '../../lib/constants'
 
 type FormalityFieldProps = {
   ctx: RenderConfigScreenCtx
-  value: TSettingOption<DeeplFormalityLevel>
+  value: SettingOption<DeeplFormalityLevel>
 }
 
 export default function FormalityField({ ctx, value }: FormalityFieldProps) {

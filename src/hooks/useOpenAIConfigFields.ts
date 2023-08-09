@@ -8,10 +8,9 @@ import {
   Models,
   OpenAIDefaultValues,
   SettingOption,
-  TSettingOption,
 } from '../lib/types'
 
-function getDefaultModel({ models }: { models: Models }): TSettingOption<string>  {
+function getDefaultModel({ models }: { models: Models }): SettingOption<string>  {
   const model = models.find((model) => model.id === OpenAIDefaultValues.model)
   const modelId = model?.id
 

@@ -15,7 +15,7 @@ import {
 import {
   DeeplFormalityLevel,
   GlobalParameters,
-  TSettingOption,
+  SettingOption,
   TranslationService,
 } from '../../lib/types'
 
@@ -32,7 +32,7 @@ export default function ConfigScreen({ ctx }: Props) {
   const pluginParameters: GlobalParameters = ctx.plugin.attributes.parameters
   const selectedTranslationService =
     pluginParameters?.translationService || translationServiceOptions[0]
-  const selectedFormalityLevel: TSettingOption<DeeplFormalityLevel> =
+  const selectedFormalityLevel: SettingOption<DeeplFormalityLevel> =
     pluginParameters?.deeplFormalityLevel || deeplFormalityLevelOptions[0]
 
   return (

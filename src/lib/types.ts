@@ -57,13 +57,13 @@ export enum DeeplFormalityLevel {
 }
 
 export type Parameters = {
-  translationService?: TSettingOption<TranslationService>
-  model?: TSettingOption<string>
+  translationService?: SettingOption<TranslationService>
+  model?: SettingOption<string>
   temperature?: number
   maxTokens?: number
   topP?: number
   deeplGlossaryId?: string
-  deeplFormalityLevel?: TSettingOption<DeeplFormalityLevel>
+  deeplFormalityLevel?: SettingOption<DeeplFormalityLevel>
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
@@ -73,10 +73,10 @@ export type Parameters = {
 
 export interface GlobalParameters extends Parameters {
   autoApply?: boolean
-  fieldsToEnable?: TSettingOption<DatoFieldType>[]
+  fieldsToEnable?: SettingOption<DatoFieldType>[]
 }
 
-export type TSettingOption<T> = {
+export type SettingOption<T> = {
   value: T
   label: string
 }
