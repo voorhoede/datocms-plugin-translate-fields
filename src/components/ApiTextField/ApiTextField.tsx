@@ -1,10 +1,10 @@
 import { TextField } from 'datocms-react-ui'
 import { useState } from 'react'
 
-import { SettingOption } from '../../lib/types'
+import {  TSettingOption } from '../../lib/types'
 
 type ApiTextFieldProps = {
-  option: SettingOption
+  option: TSettingOption<string>
   value: string
   onBlur: (newValue: string) => void
 }

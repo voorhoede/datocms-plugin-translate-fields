@@ -58,7 +58,7 @@ export enum DeeplFormalityLevel {
 
 export type Parameters = {
   translationService?: TSettingOption<TranslationService>
-  model?: SettingOption
+  model?: TSettingOption<string>
   temperature?: number
   maxTokens?: number
   topP?: number
@@ -74,11 +74,6 @@ export type Parameters = {
 export interface GlobalParameters extends Parameters {
   autoApply?: boolean
   fieldsToEnable?: TSettingOption<DatoFieldType>[]
-}
-
-export type SettingOption = {
-  value: string
-  label: string
 }
 
 export type TSettingOption<T> = {
