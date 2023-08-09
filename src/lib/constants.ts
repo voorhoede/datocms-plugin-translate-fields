@@ -15,7 +15,7 @@ export const fieldsOptions = [
   { label: 'SEO fields', value: Fields.seo },
 ]
 
-export const translationServiceOptions = [
+export const translationServiceOptions: TSettingOption<TranslationService>[] = [
   { label: 'Yandex translate', value: TranslationService.yandex },
   { label: 'DeepL API Pro', value: TranslationService.deepl },
   { label: 'DeepL API Free', value: TranslationService.deeplFree },

@@ -4,7 +4,6 @@ import { Canvas, Form, SelectField, FieldGroup } from 'datocms-react-ui'
 import { translationServiceOptions } from '../../lib/constants'
 import {
   GlobalParameters,
-  SettingOption,
   Parameters,
   TranslationService,
 } from '../../lib/types'
@@ -22,7 +21,7 @@ export default function ConfigScreen({ ctx }: Props) {
   const pluginGlobalParameters: GlobalParameters =
     ctx.plugin.attributes.parameters
 
-  const selectedTranslationService: SettingOption =
+  const selectedTranslationService =
     pluginParameters?.translationService ||
     pluginGlobalParameters?.translationService ||
     translationServiceOptions[0]

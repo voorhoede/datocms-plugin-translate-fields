@@ -57,7 +57,7 @@ export enum DeeplFormalityLevel {
 }
 
 export type Parameters = {
-  translationService?: SettingOption
+  translationService?: TSettingOption<TranslationService>
   model?: SettingOption
   temperature?: number
   maxTokens?: number

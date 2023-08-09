@@ -21,10 +21,10 @@ import {
   TranslationOptions,
   GlobalParameters,
   Parameters,
-  SettingOption,
   TranslationService,
   TranslationServiceKey,
   OpenAIDefaultValues,
+  TSettingOption,
 } from '../../lib/types'
 import {
   deeplFormalityLevelOptions,
@@ -46,14 +46,14 @@ export default function FieldAddon({ ctx }: Props) {
     ctx.plugin.attributes.parameters
   const pluginParameters: Parameters = ctx.parameters
 
-  const translationService: SettingOption =
+  const translationService =
     pluginParameters?.translationService ||
     pluginGlobalParameters?.translationService ||
     translationServiceOptions[0]
 
   const translationServiceValue = useMock
     ? TranslationService.mock
-    : (translationService.value as TranslationService)
+    : (translationService.value)
   const translationServiceApiKey =
     `${translationServiceValue}ApiKey` as TranslationServiceKey
 
