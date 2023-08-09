@@ -35,6 +35,10 @@ export default function ConfigScreen({ ctx }: Props) {
   const selectedFormalityLevel: SettingOption<DeeplFormalityLevel> =
     pluginParameters?.deeplFormalityLevel || deeplFormalityLevelOptions[0]
 
+  const isDeepl = selectedTranslationService.value === TranslationService.deepl ||
+  selectedTranslationService.value ===
+    TranslationService.deeplFree
+
   return (
     <Canvas ctx={ctx}>
       <p>
@@ -123,15 +127,11 @@ export default function ConfigScreen({ ctx }: Props) {
               )
             })}
 
-            {(selectedTranslationService.value === TranslationService.deepl ||
-              selectedTranslationService.value ===
-                TranslationService.deeplFree) && (
+            {isDeepl && (
               <FormalityField ctx={ctx} value={selectedFormalityLevel} />
             )}
 
-            {(selectedTranslationService.value === TranslationService.deepl ||
-              selectedTranslationService.value ===
-                TranslationService.deeplFree) && (
+            {isDeepl && (
               <GlossaryIdField
                 value={pluginParameters?.deeplGlossaryId || ''}
                 onBlur={(newValue) => {
