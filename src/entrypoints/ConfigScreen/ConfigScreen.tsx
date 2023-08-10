@@ -12,10 +12,7 @@ import {
   fieldsOptions,
   translationServiceOptions,
 } from '../../lib/constants'
-import {
-  GlobalParameters,
-  TranslationService,
-} from '../../lib/types'
+import { GlobalParameters, TranslationService } from '../../lib/types'
 
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
 import { OpenAIConfigFieldsConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
@@ -33,9 +30,9 @@ export default function ConfigScreen({ ctx }: Props) {
   const selectedFormalityLevel =
     pluginParameters?.deeplFormalityLevel || deeplFormalityLevelOptions[0]
 
-  const isDeepl = selectedTranslationService.value === TranslationService.deepl ||
-  selectedTranslationService.value ===
-    TranslationService.deeplFree
+  const isDeepl =
+    selectedTranslationService.value === TranslationService.deepl ||
+    selectedTranslationService.value === TranslationService.deeplFree
 
   return (
     <Canvas ctx={ctx}>

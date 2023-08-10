@@ -37,7 +37,7 @@ describe('getTranslation', () => {
 
   it('should return translation with deepl response', async () => {
     fetchMock.mockOnce(
-      JSON.stringify({ translations: [{ text: translatedText }] })
+      JSON.stringify({ translations: [{ text: translatedText }] }),
     )
 
     const translation = await getTranslation('test', {
@@ -49,7 +49,7 @@ describe('getTranslation', () => {
 
   it('should return translation with deepl free response', async () => {
     fetchMock.mockOnce(
-      JSON.stringify({ translations: [{ text: translatedText }] })
+      JSON.stringify({ translations: [{ text: translatedText }] }),
     )
 
     const translation = await getTranslation('test', {
@@ -63,7 +63,7 @@ describe('getTranslation', () => {
     fetchMock.mockOnce(
       JSON.stringify({
         choices: [{ text: translatedText }],
-      })
+      }),
     )
 
     const translation = await getTranslation('test', {
@@ -79,7 +79,7 @@ describe('getTranslation', () => {
       getTranslation('test', {
         ...tranlationOptions,
         translationService: 'test' as TranslationService,
-      })
+      }),
     ).rejects.toThrow('No translation service added in the settings')
   })
 })

@@ -22,7 +22,7 @@ describe('getValueType', () => {
   })
   it('should return id when key is blockModelId', () => {
     expect(getValueType('blockModelId', 'text', PathType.text)).toBe(
-      PathType.id
+      PathType.id,
     )
   })
   it('should return id when key is key', () => {
@@ -39,17 +39,17 @@ describe('getValueType', () => {
   })
   it('should return markdown when value is markdown', () => {
     expect(getValueType('markdown', '## markdown', PathType.text)).toBe(
-      PathType.markdown
+      PathType.markdown,
     )
   })
   it('should return html when value is html', () => {
     expect(getValueType('html', '<p>html</p>', PathType.text)).toBe(
-      PathType.html
+      PathType.html,
     )
   })
   it('should return structured_text when value is a structured text slate', () => {
     expect(
-      getValueType('structured_text', structuredTextSlate, PathType.text)
+      getValueType('structured_text', structuredTextSlate, PathType.text),
     ).toBe(PathType.structured_text)
   })
   it('should return structured_text_block when value is a block inside a structured text slate', () => {
@@ -57,8 +57,8 @@ describe('getValueType', () => {
       getValueType(
         'structured_text_block',
         structuredTextBlockSlate,
-        PathType.text
-      )
+        PathType.text,
+      ),
     ).toBe(PathType.structured_text_block)
   })
   it('should return structured_text_inline_item when value is an inline item inside a structured text slate', () => {
@@ -66,8 +66,8 @@ describe('getValueType', () => {
       getValueType(
         'structured_text_inline_item',
         structuredTextInlineItemSlate,
-        PathType.text
-      )
+        PathType.text,
+      ),
     ).toBe(PathType.structured_text_inline_item)
   })
   it('should return structured_text_code when value is a code block inside a structured text slate', () => {
@@ -75,8 +75,8 @@ describe('getValueType', () => {
       getValueType(
         'structured_text_code',
         structuredTextCodeSlate,
-        PathType.text
-      )
+        PathType.text,
+      ),
     ).toBe(PathType.structured_text_code)
   })
   it('should return color when value is a color', () => {
@@ -84,8 +84,8 @@ describe('getValueType', () => {
       getValueType(
         'color',
         { red: 0, green: 0, blue: 0, alpha: 0 },
-        PathType.text
-      )
+        PathType.text,
+      ),
     ).toBe(PathType.color)
   })
   it('should return media when value is a media', () => {
@@ -93,8 +93,8 @@ describe('getValueType', () => {
       getValueType(
         'media',
         { upload_id: '1', focal_point: '1', alt: '' },
-        PathType.text
-      )
+        PathType.text,
+      ),
     ).toBe(PathType.media)
   })
   it('should return seo when value is a seo', () => {
@@ -107,8 +107,8 @@ describe('getValueType', () => {
           image: '1',
           twitter_card: 'summary',
         },
-        PathType.text
-      )
+        PathType.text,
+      ),
     ).toBe(PathType.seo)
   })
   it('should return number when value is a number', () => {
@@ -116,13 +116,13 @@ describe('getValueType', () => {
   })
   it('should return date when value is a date', () => {
     expect(getValueType('date', '2021-01-01', PathType.text)).toBe(
-      PathType.date
+      PathType.date,
     )
   })
   it('should return json when value is json string', () => {
-    expect(
-      getValueType('json string', '["test","test"]', PathType.text)
-    ).toBe(PathType.json)
+    expect(getValueType('json string', '["test","test"]', PathType.text)).toBe(
+      PathType.json,
+    )
   })
   it('should return text when value is string', () => {
     expect(getValueType('text', 'text', PathType.text)).toBe(PathType.text)

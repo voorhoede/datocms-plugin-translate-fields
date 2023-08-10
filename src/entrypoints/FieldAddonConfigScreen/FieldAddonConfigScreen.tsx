@@ -53,7 +53,7 @@ export default function ConfigScreen({ ctx }: Props) {
             const currentValue: string =
               pluginParameters?.[`${option.value}ApiKey`] ||
               pluginGlobalParameters?.[`${option.value}ApiKey`] ||
-              ""
+              ''
 
             return (
               selectedTranslationService.value === option.value && (

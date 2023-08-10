@@ -53,7 +53,7 @@ export default function FieldAddon({ ctx }: Props) {
 
   const translationServiceValue = useMock
     ? TranslationService.mock
-    : (translationService.value)
+    : translationService.value
   const translationServiceApiKey =
     `${translationServiceValue}ApiKey` as TranslationServiceKey
 
@@ -85,7 +85,7 @@ export default function FieldAddon({ ctx }: Props) {
 
   const deeplFormalityLevelValue =
     pluginGlobalParameters.deeplFormalityLevel?.value ||
-    (deeplFormalityLevelOptions[0].value)
+    deeplFormalityLevelOptions[0].value
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
@@ -123,7 +123,7 @@ export default function FieldAddon({ ctx }: Props) {
         const options: TranslationOptions = {
           fromLocale: getSupportedFromLocale(
             fromLocale || locales[0],
-            translationServiceValue
+            translationServiceValue,
           ),
           toLocale: getSupportedToLocale(locale, translationServiceValue),
           format: translationFormat,
@@ -147,42 +147,42 @@ export default function FieldAddon({ ctx }: Props) {
             case TranslationFormat.structuredText: {
               translatedField = await getStructuredTextTranslation(
                 translatableField,
-                options
+                options,
               )
               break
             }
             case TranslationFormat.html: {
               translatedField = await getHtmlTranslation(
                 translatableField,
-                options
+                options,
               )
               break
             }
             case TranslationFormat.markdown: {
               translatedField = await getMarkdownTranslation(
                 translatableField,
-                options
+                options,
               )
               break
             }
             case TranslationFormat.seo: {
               translatedField = await getSeoTranslation(
                 translatableField,
-                options
+                options,
               )
               break
             }
             case TranslationFormat.richText: {
               translatedField = await getRichTextTranslation(
                 translatableField,
-                options
+                options,
               )
               break
             }
             case TranslationFormat.slug: {
               translatedField = await getSlugTranslation(
                 translatableField,
-                options
+                options,
               )
               break
             }
@@ -201,7 +201,7 @@ export default function FieldAddon({ ctx }: Props) {
       }
     } else {
       setHasError(
-        `Please add content to the default field (${fromLocale || locales[0]})`
+        `Please add content to the default field (${fromLocale || locales[0]})`,
       )
     }
   }

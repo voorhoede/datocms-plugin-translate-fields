@@ -2,7 +2,7 @@ import { TranslationOptions } from '../types'
 
 export default async function translate(
   string: string,
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<string> {
   const params = new URLSearchParams()
 
@@ -11,13 +11,13 @@ export default async function translate(
     'lang',
     options.fromLocale
       ? `${options.fromLocale}-${options.toLocale}`
-      : options.toLocale
+      : options.toLocale,
   )
   params.set('format', 'plain')
   params.set('text', string)
 
   const request = await fetch(
-    `https://translate.yandex.net/api/v1.5/tr.json/translate?${params.toString()}`
+    `https://translate.yandex.net/api/v1.5/tr.json/translate?${params.toString()}`,
   )
 
   if (request.status !== 200) {

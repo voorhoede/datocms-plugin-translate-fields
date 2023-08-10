@@ -14,7 +14,7 @@ const parseHtml = require('html2json')
 
 export async function getTranslation(
   string: string,
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<string> {
   switch (options.translationService) {
     case TranslationService.mock: {
@@ -38,7 +38,7 @@ export async function getTranslation(
 
 export async function getRichTextTranslation(
   value: any[],
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<any[]> {
   const mappedValue = removePropertyRecursively(value, ['itemId'])
   const allPaths = paths(mappedValue)
@@ -60,7 +60,7 @@ export async function getRichTextTranslation(
       if (currentString) {
         const translatedString = await getHtmlTranslation(
           currentString,
-          options
+          options,
         )
         set(translatedArray, currentPath, translatedString)
       }
@@ -72,7 +72,7 @@ export async function getRichTextTranslation(
       if (currentString) {
         const translatedString = await getMarkdownTranslation(
           currentString,
-          options
+          options,
         )
         set(translatedArray, currentPath, translatedString)
       }
@@ -84,7 +84,7 @@ export async function getRichTextTranslation(
       if (currentArray) {
         const translatedString = await getStructuredTextTranslation(
           currentArray,
-          options
+          options,
         )
         set(translatedArray, currentPath, translatedString)
       }
@@ -96,7 +96,7 @@ export async function getRichTextTranslation(
       if (currentObject) {
         const translatedObject = await getRichTextTranslation(
           { ...currentObject, type: null, children: null },
-          options
+          options,
         )
         set(translatedArray, currentPath, {
           ...translatedObject,
@@ -121,7 +121,7 @@ export async function getRichTextTranslation(
 
 export async function getSeoTranslation(
   value: any,
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<any> {
   return {
     title: value.title ? await getTranslation(value.title, options) : '',
@@ -135,7 +135,7 @@ export async function getSeoTranslation(
 
 export async function getStructuredTextTranslation(
   value: any[],
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<any[]> {
   const mappedValue = removePropertyRecursively(value, ['id'])
   const allPaths = paths(mappedValue)
@@ -157,7 +157,7 @@ export async function getStructuredTextTranslation(
       if (currentArray) {
         const translatedString = await getStructuredTextTranslation(
           currentArray,
-          options
+          options,
         )
         set(translatedArray, currentPath, translatedString)
       }
@@ -169,7 +169,7 @@ export async function getStructuredTextTranslation(
       if (currentObject) {
         const translatedObject = await getRichTextTranslation(
           { ...currentObject, type: null, children: null },
-          options
+          options,
         )
         set(translatedArray, currentPath, {
           ...translatedObject,
@@ -185,7 +185,7 @@ export async function getStructuredTextTranslation(
 
 export async function getHtmlTranslation(
   string: string,
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<string> {
   const json = parseHtml.html2json(string)
   const allPaths: Path[] = paths(json.child)
@@ -208,7 +208,7 @@ export async function getHtmlTranslation(
 
 export async function getMarkdownTranslation(
   string: string,
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<string> {
   const json = fromMarkdown(string)
   const allPaths: Path[] = paths(json.children)
@@ -231,14 +231,14 @@ export async function getMarkdownTranslation(
 
 export async function getSlugTranslation(
   string: string,
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<string> {
-  const deSlugifiedString = string.replace(/-/g, " ")
+  const deSlugifiedString = string.replace(/-/g, ' ')
 
   const translatedString = await getTranslation(deSlugifiedString, options)
   return slugify(translatedString, {
     lower: true,
     strict: true,
     locale: options.toLocale,
-  });
+  })
 }

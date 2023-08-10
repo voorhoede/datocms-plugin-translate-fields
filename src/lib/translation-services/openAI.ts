@@ -2,7 +2,7 @@ import { TranslationOptions } from '../types'
 
 export default async function translate(
   string: string,
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<string> {
   const prompt = `Translate the following from the locale '${options.fromLocale}' to the locale '${options.toLocale}': ${string}`
 
@@ -23,7 +23,7 @@ export default async function translate(
 
   const request = await fetch(
     'https://api.openai.com/v1/completions',
-    requestOptions
+    requestOptions,
   )
 
   if (request.status !== 200) {

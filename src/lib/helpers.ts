@@ -9,7 +9,7 @@ import { pathTypeIsObject, getValueType } from './datocms-helpers'
 export function paths(
   object: any,
   prev = '',
-  type: PathType = PathType.text
+  type: PathType = PathType.text,
 ): Path[] {
   if (object) {
     return Object.keys(object).reduce((acc: any[], key: string) => {
@@ -40,11 +40,11 @@ export function paths(
 
 export function removePropertyRecursively(
   value: any,
-  propertyNames: string[]
+  propertyNames: string[],
 ): any {
   if (Array.isArray(value)) {
     return value.map((item: any) =>
-      removePropertyRecursively(item, propertyNames)
+      removePropertyRecursively(item, propertyNames),
     )
   }
 
@@ -81,7 +81,7 @@ interface ctxFieldsType extends structuredTextFieldType {
 
 export function structuredTextValueToDast(
   fieldValue: any,
-  structuredTextField: structuredTextFieldType
+  structuredTextField: structuredTextFieldType,
 ) {
   const itemTypes = Object.values(structuredTextField.itemTypes).reduce(
     (acc, itemType?: ItemType) => {
@@ -89,18 +89,18 @@ export function structuredTextValueToDast(
       const itemTypeFields = itemType.relationships.fields.data.map(
         (item: { id: string }) => {
           return structuredTextField.fields[item.id]
-        }
+        },
       )
       return { ...acc, [itemType.id]: [...itemTypeFields] }
     },
-    {}
+    {},
   )
   return slateToDast(fieldValue, itemTypes || {})
 }
 
 export function fieldHasFieldValue(
   fieldValue: any,
-  ctxFields: ctxFieldsType
+  ctxFields: ctxFieldsType,
 ): boolean {
   const editor: Editor = ctxFields.editor as Editor
   const translationFormat: TranslationFormat = translationFormats[editor]

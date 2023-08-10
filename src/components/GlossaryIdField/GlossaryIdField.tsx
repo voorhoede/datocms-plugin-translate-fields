@@ -4,7 +4,7 @@ import { useState } from 'react'
 type ApiTextFieldProps = {
   value: string
   onBlur: (newValue: string) => void
-};
+}
 
 export default function GlossaryIdField({ value, onBlur }: ApiTextFieldProps) {
   const [glossaryId, setGlossaryId] = useState<string>(value)
@@ -19,10 +19,10 @@ export default function GlossaryIdField({ value, onBlur }: ApiTextFieldProps) {
       placeholder="Enter glossary key"
       textInputProps={{
         onBlur: (e) => {
-          onBlur(e.target.value);
+          onBlur(e.target.value)
         },
       }}
       onChange={(newValue) => setGlossaryId(newValue)}
     />
-  );
+  )
 }
