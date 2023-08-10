@@ -1,6 +1,6 @@
 # DatoCMS plugin: Translate fields
 
-**This DatoCMS plugin gives you the ability to translate `structured-text`, `rich-text`, `string`, `text` and `seo` fields. This plugin is an addon which will add a translate button to all selected fields.**
+**This DatoCMS plugin gives you the ability to translate `structured-text`, `rich-text`, `string`, `text`, `seo` and `slug` fields. This plugin is an addon which will add a translate button to all selected fields.**
 
 ![](https://github.com/voorhoede/datocms-plugin-translate-fields/raw/main/docs/translate-fields.png)
 
@@ -10,6 +10,7 @@
 * Translate structured text fields
 * Translate rich text fields
 * Translate SEO fields
+* Translate Slug fields
 * Translate to all languages with one button press
 * Translate and copy text from the default language
 
@@ -36,6 +37,7 @@ By changing the following setting you can choose on which fields this plugin wil
 > * String fields
 > * Text fields
 > * SEO fields
+> * Slug fields
 
 #### **General Settings**
 

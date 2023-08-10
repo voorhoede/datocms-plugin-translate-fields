@@ -13,6 +13,7 @@ export const fieldsOptions: SettingOption<DatoFieldType>[] =  [
   { label: 'Structured text fields', value: DatoFieldType.structuredTextField },
   { label: 'Modular content fields', value: DatoFieldType.richTextField },
   { label: 'SEO fields', value: DatoFieldType.seo },
+  { label: 'Slug fields', value: DatoFieldType.slug },
 ]
 
 export const translationServiceOptions: SettingOption<TranslationService>[] = [
@@ -30,6 +31,7 @@ export const translationFormats = {
   [Editor.richText]: TranslationFormat.richText,
   [Editor.textarea]: TranslationFormat.plain,
   [Editor.seo]: TranslationFormat.seo,
+  [Editor.slug]: TranslationFormat.slug,
 }
 
 export const deeplFormalityLevelOptions: SettingOption<DeeplFormalityLevel>[] =

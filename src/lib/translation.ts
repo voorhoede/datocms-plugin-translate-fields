@@ -1,4 +1,5 @@
 import { get, set } from 'lodash'
+import slugify from 'slugify'
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { toMarkdown } from 'mdast-util-to-markdown'
 
@@ -226,4 +227,18 @@ export async function getMarkdownTranslation(
 
   const md = toMarkdown({ ...json, children: translatedArray })
   return md
+}
+
+export async function getSlugTranslation(
+  string: string,
+  options: TranslationOptions
+): Promise<string> {
+  const deSlugifiedString = string.replace(/-/g, " ")
+
+  const translatedString = await getTranslation(deSlugifiedString, options)
+  return slugify(translatedString, {
+    lower: true,
+    strict: true,
+    locale: options.toLocale,
+  });
 }

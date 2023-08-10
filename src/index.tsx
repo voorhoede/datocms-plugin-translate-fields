@@ -34,6 +34,7 @@ connect({
           DatoFieldType.stringField,
           DatoFieldType.structuredTextField,
           DatoFieldType.seo,
+          DatoFieldType.slug,
         ],
         configurable: true,
       },
