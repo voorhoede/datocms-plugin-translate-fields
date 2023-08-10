@@ -7,16 +7,20 @@ import {
   FieldGroup,
 } from 'datocms-react-ui'
 
-import { fieldsOptions, translationServiceOptions } from '../../lib/constants'
+import {
+  deeplFormalityLevelOptions,
+  fieldsOptions,
+  translationServiceOptions,
+} from '../../lib/constants'
 import {
   GlobalParameters,
-  SettingOption,
   TranslationService,
 } from '../../lib/types'
 
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
 import { OpenAIConfigFieldsConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
 import GlossaryIdField from '../../components/GlossaryIdField/GlossaryIdField'
+import FormalityField from '../../components/FormalityField/FormalityField'
 
 type Props = {
   ctx: RenderConfigScreenCtx
@@ -24,8 +28,14 @@ type Props = {
 
 export default function ConfigScreen({ ctx }: Props) {
   const pluginParameters: GlobalParameters = ctx.plugin.attributes.parameters
-  const selectedTranslationService: SettingOption =
+  const selectedTranslationService =
     pluginParameters?.translationService || translationServiceOptions[0]
+  const selectedFormalityLevel =
+    pluginParameters?.deeplFormalityLevel || deeplFormalityLevelOptions[0]
+
+  const isDeepl = selectedTranslationService.value === TranslationService.deepl ||
+  selectedTranslationService.value ===
+    TranslationService.deeplFree
 
   return (
     <Canvas ctx={ctx}>
@@ -115,9 +125,11 @@ export default function ConfigScreen({ ctx }: Props) {
               )
             })}
 
-            {(selectedTranslationService.value === TranslationService.deepl ||
-              selectedTranslationService.value ===
-                TranslationService.deeplFree) && (
+            {isDeepl && (
+              <FormalityField ctx={ctx} value={selectedFormalityLevel} />
+            )}
+
+            {isDeepl && (
               <GlossaryIdField
                 value={pluginParameters?.deeplGlossaryId || ''}
                 onBlur={(newValue) => {

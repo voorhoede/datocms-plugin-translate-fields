@@ -22,12 +22,12 @@ import {
   TranslationOptions,
   GlobalParameters,
   Parameters,
-  SettingOption,
   TranslationService,
   TranslationServiceKey,
   OpenAIDefaultValues,
 } from '../../lib/types'
 import {
+  deeplFormalityLevelOptions,
   translationFormats,
   translationServiceOptions,
 } from '../../lib/constants'
@@ -46,14 +46,14 @@ export default function FieldAddon({ ctx }: Props) {
     ctx.plugin.attributes.parameters
   const pluginParameters: Parameters = ctx.parameters
 
-  const translationService: SettingOption =
+  const translationService =
     pluginParameters?.translationService ||
     pluginGlobalParameters?.translationService ||
     translationServiceOptions[0]
 
   const translationServiceValue = useMock
     ? TranslationService.mock
-    : (translationService.value as TranslationService)
+    : (translationService.value)
   const translationServiceApiKey =
     `${translationServiceValue}ApiKey` as TranslationServiceKey
 
@@ -81,8 +81,11 @@ export default function FieldAddon({ ctx }: Props) {
     OpenAIDefaultValues.topP
 
   const deeplGlossaryId =
-    pluginParameters.deeplGlossaryId ||
-    pluginGlobalParameters.deeplGlossaryId
+    pluginParameters.deeplGlossaryId || pluginGlobalParameters.deeplGlossaryId
+
+  const deeplFormalityLevelValue =
+    pluginGlobalParameters.deeplFormalityLevel?.value ||
+    (deeplFormalityLevelOptions[0].value)
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
@@ -128,6 +131,7 @@ export default function FieldAddon({ ctx }: Props) {
           apiKey: translationApiKey,
           deeplOptions: {
             glossaryId: deeplGlossaryId,
+            formality: deeplFormalityLevelValue,
           },
           openAIOptions: {
             model: modelValue,

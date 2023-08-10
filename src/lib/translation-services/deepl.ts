@@ -1,4 +1,8 @@
-import { TranslationOptions, TranslationService } from '../types'
+import {
+  DeeplFormalityLevel,
+  TranslationOptions,
+  TranslationService,
+} from '../types'
 
 export default async function translate(
   string: string,
@@ -17,6 +21,13 @@ export default async function translate(
 
   if (options.deeplOptions?.glossaryId) {
     params.set('glossary_id', options.deeplOptions.glossaryId)
+  }
+
+  if (
+    options.deeplOptions?.formality &&
+    options.deeplOptions.formality !== DeeplFormalityLevel.default
+  ) {
+    params.set('formality', options.deeplOptions.formality)
   }
 
   const apiVersion =
