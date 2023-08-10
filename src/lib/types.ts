@@ -4,6 +4,7 @@ export enum Fields {
   richTextField = 'rich_text',
   structuredTextField = 'structured_text',
   seo = 'seo',
+  slug = 'slug',
 }
 
 export enum Editor {
@@ -14,6 +15,7 @@ export enum Editor {
   richText = 'rich_text',
   textarea = 'textarea',
   seo = 'seo',
+  slug = 'slug',
 }
 
 export enum TranslationFormat {
@@ -23,6 +25,7 @@ export enum TranslationFormat {
   richText = 'rich_text',
   plain = 'plain',
   seo = 'seo',
+  slug = 'slug',
 }
 
 export enum TranslationService {

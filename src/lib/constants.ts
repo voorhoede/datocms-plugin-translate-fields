@@ -6,6 +6,7 @@ export const fieldsOptions = [
   { label: 'Structured text fields', value: Fields.structuredTextField },
   { label: 'Modular content fields', value: Fields.richTextField },
   { label: 'SEO fields', value: Fields.seo },
+  { label: 'Slug fields', value: Fields.slug },
 ]
 
 export const translationServiceOptions = [
@@ -23,4 +24,5 @@ export const translationFormats = {
   [Editor.richText]: TranslationFormat.richText,
   [Editor.textarea]: TranslationFormat.plain,
   [Editor.seo]: TranslationFormat.seo,
+  [Editor.slug]: TranslationFormat.slug,
 }

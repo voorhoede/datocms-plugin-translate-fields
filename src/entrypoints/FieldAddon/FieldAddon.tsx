@@ -10,6 +10,7 @@ import {
   getRichTextTranslation,
   getHtmlTranslation,
   getSeoTranslation,
+  getSlugTranslation,
 } from '../../lib/translation'
 import {
   getSupportedToLocale,
@@ -169,6 +170,13 @@ export default function FieldAddon({ ctx }: Props) {
             }
             case TranslationFormat.richText: {
               translatedField = await getRichTextTranslation(
+                translatableField,
+                options
+              )
+              break
+            }
+            case TranslationFormat.slug: {
+              translatedField = await getSlugTranslation(
                 translatableField,
                 options
               )

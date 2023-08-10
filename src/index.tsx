@@ -34,6 +34,7 @@ connect({
           Fields.stringField,
           Fields.structuredTextField,
           Fields.seo,
+          Fields.slug,
         ],
         configurable: true,
       },
