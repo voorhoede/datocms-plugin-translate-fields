@@ -43,7 +43,7 @@ By changing the following setting you can choose on which fields this plugin wil
 
 ![](https://github.com/voorhoede/datocms-plugin-translate-fields/raw/main/docs/translate-fields-general-settings.png)
 
-- **Translation service**: You can choose which service will be used to translate. The chosen service will be used and an option to add an api key will be presented automatically.
+- **Translation service**: You can choose which service will be used to translate. The chosen service will be used and an option to add an api key will be presented automatically. Some translation services require some extra settings. These will be shown when a `Translation service` is selected.
 
 > Options of `Translation service`:
 > * Yandex translate
