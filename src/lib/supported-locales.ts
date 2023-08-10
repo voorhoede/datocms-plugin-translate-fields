@@ -7,7 +7,7 @@ import {
 
 export function getSupportedToLocale(
   locale: string,
-  translationService: TranslationService
+  translationService: TranslationService,
 ): string {
   const localeLower = locale.toLowerCase()
   const indexOfDash = localeLower.indexOf('-')
@@ -46,7 +46,7 @@ export function getSupportedToLocale(
 
 export function getSupportedFromLocale(
   locale: string,
-  translationService: TranslationService
+  translationService: TranslationService,
 ): string {
   const localeLower = locale.toLowerCase()
   const indexOfDash = localeLower.indexOf('-')

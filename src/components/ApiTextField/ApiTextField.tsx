@@ -1,7 +1,7 @@
 import { TextField } from 'datocms-react-ui'
 import { useState } from 'react'
 
-import {  SettingOption } from '../../lib/types'
+import { SettingOption } from '../../lib/types'
 
 type ApiTextFieldProps = {
   option: SettingOption<string>

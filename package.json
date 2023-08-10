@@ -13,7 +13,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "eject": "react-scripts eject",
+    "prettier": "prettier --write .",
+    "pre-commit": "npm run prettier",
     "prepack": "npm run build",
+    "prepare": "husky install",
     "postversion": "git push --follow-tags"
   },
   "dependencies": {
@@ -36,8 +39,12 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
     "jest": "^29.5.0",
     "jest-fetch-mock": "^3.0.3",
+    "prettier": "^3.0.1",
     "react-scripts": "^5.0.1",
     "ts-jest": "^29.1.0"
   },
@@ -77,9 +84,25 @@
     "entryPoint": "build/index.html"
   },
   "eslintConfig": {
+    "plugins": [
+      "prettier"
+    ],
     "extends": [
-      "react-app"
-    ]
+      "react-app",
+      "prettier"
+    ],
+    "rules": {
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ],
+      "prettier/prettier": 1
+    }
   },
   "browserslist": {
     "production": [

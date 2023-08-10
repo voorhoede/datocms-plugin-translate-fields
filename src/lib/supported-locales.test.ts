@@ -8,17 +8,17 @@ describe('getSupportedFromLocale', () => {
   describe('deepl', () => {
     it('should return single locale if en-us', () => {
       expect(getSupportedFromLocale('en-us', TranslationService.deepl)).toBe(
-        'EN'
+        'EN',
       )
     })
     it('should return single locale if en', () => {
       expect(getSupportedFromLocale('en-us', TranslationService.deepl)).toBe(
-        'EN'
+        'EN',
       )
     })
     it('should return single locale if pt-pt', () => {
       expect(getSupportedFromLocale('pt-pt', TranslationService.deepl)).toBe(
-        'PT'
+        'PT',
       )
     })
     it('should return empty string if locale does not exist', () => {
@@ -29,22 +29,22 @@ describe('getSupportedFromLocale', () => {
   describe('deeplFree', () => {
     it('should return single locale if en-us', () => {
       expect(
-        getSupportedFromLocale('en-us', TranslationService.deeplFree)
+        getSupportedFromLocale('en-us', TranslationService.deeplFree),
       ).toBe('EN')
     })
     it('should return single locale if en', () => {
       expect(
-        getSupportedFromLocale('en-us', TranslationService.deeplFree)
+        getSupportedFromLocale('en-us', TranslationService.deeplFree),
       ).toBe('EN')
     })
     it('should return single locale if pt-pt', () => {
       expect(
-        getSupportedFromLocale('pt-pt', TranslationService.deeplFree)
+        getSupportedFromLocale('pt-pt', TranslationService.deeplFree),
       ).toBe('PT')
     })
     it('should return empty string if locale does not exist', () => {
       expect(getSupportedFromLocale('yi', TranslationService.deeplFree)).toBe(
-        ''
+        '',
       )
     })
   })
@@ -52,7 +52,7 @@ describe('getSupportedFromLocale', () => {
   describe('yandex', () => {
     it('should return single locale if en-us', () => {
       expect(getSupportedFromLocale('en-us', TranslationService.yandex)).toBe(
-        'en'
+        'en',
       )
     })
     it('should return single locale if EN', () => {
@@ -60,7 +60,7 @@ describe('getSupportedFromLocale', () => {
     })
     it('should return empty string if locale does not exist', () => {
       expect(getSupportedFromLocale('ab', TranslationService.deeplFree)).toBe(
-        ''
+        '',
       )
     })
   })
@@ -76,12 +76,12 @@ describe('getSupportedToLocale', () => {
     })
     it('should return double locale if pt-pt', () => {
       expect(getSupportedToLocale('pt-pt', TranslationService.deepl)).toBe(
-        'PT-PT'
+        'PT-PT',
       )
     })
     it('should return double locale if pt-br', () => {
       expect(getSupportedToLocale('pt-br', TranslationService.deepl)).toBe(
-        'PT-BR'
+        'PT-BR',
       )
     })
     it('should return single locale if nl', () => {
@@ -92,7 +92,7 @@ describe('getSupportedToLocale', () => {
     })
     it('should return locale if locale does not exist', () => {
       expect(getSupportedToLocale('bla-bla', TranslationService.deepl)).toBe(
-        'BLA-BLA'
+        'BLA-BLA',
       )
     })
   })
@@ -100,37 +100,37 @@ describe('getSupportedToLocale', () => {
   describe('deeplFree', () => {
     it('should return double locale if en', () => {
       expect(getSupportedToLocale('en', TranslationService.deeplFree)).toBe(
-        'EN-US'
+        'EN-US',
       )
     })
     it('should return double locale if pt', () => {
       expect(getSupportedToLocale('pt', TranslationService.deeplFree)).toBe(
-        'PT-PT'
+        'PT-PT',
       )
     })
     it('should return double locale if pt-pt', () => {
       expect(getSupportedToLocale('pt-pt', TranslationService.deeplFree)).toBe(
-        'PT-PT'
+        'PT-PT',
       )
     })
     it('should return double locale if pt-br', () => {
       expect(getSupportedToLocale('pt-br', TranslationService.deeplFree)).toBe(
-        'PT-BR'
+        'PT-BR',
       )
     })
     it('should return single locale if nl', () => {
       expect(getSupportedToLocale('nl', TranslationService.deeplFree)).toBe(
-        'NL'
+        'NL',
       )
     })
     it('should return single locale if nl-be', () => {
       expect(getSupportedToLocale('nl-be', TranslationService.deeplFree)).toBe(
-        'NL'
+        'NL',
       )
     })
     it('should return locale if locale does not exist', () => {
       expect(
-        getSupportedToLocale('bla-bla', TranslationService.deeplFree)
+        getSupportedToLocale('bla-bla', TranslationService.deeplFree),
       ).toBe('BLA-BLA')
     })
   })
@@ -138,16 +138,14 @@ describe('getSupportedToLocale', () => {
   describe('yandex', () => {
     it('should return single locale if en-us', () => {
       expect(getSupportedToLocale('en-us', TranslationService.yandex)).toBe(
-        'en'
+        'en',
       )
     })
     it('should return single locale if EN', () => {
       expect(getSupportedToLocale('EN', TranslationService.yandex)).toBe('en')
     })
     it('should return locale if locale does not exist', () => {
-      expect(getSupportedToLocale('ab', TranslationService.yandex)).toBe(
-        'ab'
-      )
+      expect(getSupportedToLocale('ab', TranslationService.yandex)).toBe('ab')
     })
   })
 })

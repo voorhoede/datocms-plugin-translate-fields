@@ -42,7 +42,7 @@ connect({
   },
   renderManualFieldExtensionConfigScreen(
     _,
-    ctx: RenderManualFieldExtensionConfigScreenCtx
+    ctx: RenderManualFieldExtensionConfigScreenCtx,
   ) {
     return render(<FieldAddonConfigScreen ctx={ctx} />)
   },
@@ -56,10 +56,10 @@ connect({
     const fieldIsLocalized: boolean = field.attributes.localized
 
     const hasPlugin: boolean = field.attributes.appearance.addons.some(
-      (addon) => addon.field_extension === extensionId
+      (addon) => addon.field_extension === extensionId,
     )
     const showOnThisFieldType: boolean = fieldsSettings.some(
-      (setting) => setting.value === field.attributes.field_type
+      (setting) => setting.value === field.attributes.field_type,
     )
 
     if (
@@ -67,7 +67,7 @@ connect({
       !hasPlugin &&
       showOnThisFieldType &&
       fieldIsLocalized
-      ) {
+    ) {
       return {
         addons: [{ id: extensionId }],
       }

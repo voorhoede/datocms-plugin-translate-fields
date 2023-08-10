@@ -6,7 +6,7 @@ import {
 
 export default async function translate(
   string: string,
-  options: TranslationOptions
+  options: TranslationOptions,
 ): Promise<string> {
   const params = new URLSearchParams()
 
@@ -36,7 +36,7 @@ export default async function translate(
       : 'api'
 
   const request = await fetch(
-    `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`
+    `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`,
   )
 
   if (request.status !== 200) {

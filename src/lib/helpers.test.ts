@@ -64,7 +64,7 @@ describe('removePropertyRecursively', () => {
       },
     ]
     expect(removePropertyRecursively(array, ['test', 'id'])).toStrictEqual(
-      result
+      result,
     )
   })
 
@@ -73,7 +73,7 @@ describe('removePropertyRecursively', () => {
       text: 'text',
     }
     expect(removePropertyRecursively(object, ['test', 'id'])).toStrictEqual(
-      result
+      result,
     )
   })
 })
@@ -90,7 +90,7 @@ describe('isJsonString', () => {
 describe('structuredTextValueToDast', () => {
   it('should convert slate to dast', () => {
     expect(
-      structuredTextValueToDast(structuredTextSlate, datoCmsCtx)
+      structuredTextValueToDast(structuredTextSlate, datoCmsCtx),
     ).toStrictEqual(structuredTextDast)
   })
 })
@@ -115,8 +115,8 @@ describe('fieldHasFieldValue', () => {
           title: 'test',
           description: 'test',
         },
-        extendedDatoCmsCtx
-      )
+        extendedDatoCmsCtx,
+      ),
     ).toBeTruthy()
   })
 
@@ -134,7 +134,7 @@ describe('fieldHasFieldValue', () => {
       editor: Editor.structuredText,
     }
     expect(
-      fieldHasFieldValue(structuredTextSlate, extendedDatoCmsCtx)
+      fieldHasFieldValue(structuredTextSlate, extendedDatoCmsCtx),
     ).toBeTruthy()
   })
 
@@ -144,7 +144,7 @@ describe('fieldHasFieldValue', () => {
       editor: Editor.structuredText,
     }
     expect(
-      fieldHasFieldValue(emptyStructuredTextSlate, extendedDatoCmsCtx)
+      fieldHasFieldValue(emptyStructuredTextSlate, extendedDatoCmsCtx),
     ).toBeFalsy()
   })
 

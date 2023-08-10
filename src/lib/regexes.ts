@@ -19,7 +19,7 @@ export const markdownBr = new RegExp(`((${newLine}){2,})`, 'g')
 export const markdownEm = /(\s|>)(\*|_)(.*?)\2(\s|<)/g
 export const markdownUlList = new RegExp(
   `${newLine}(((\\s{4})?\\*(.*?)${newLine}){1,})`,
-  'g'
+  'g',
 )
 export const markdownOlList = new RegExp(`${newLine}[0-9]+\\.(.*)`, 'g')
 

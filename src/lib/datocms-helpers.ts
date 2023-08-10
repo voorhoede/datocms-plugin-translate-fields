@@ -97,7 +97,7 @@ export function isSeo(value: any): boolean {
 export function getValueType(
   key: string,
   value: any,
-  currentType: PathType
+  currentType: PathType,
 ): PathType {
   if (
     key === 'itemTypeId' ||

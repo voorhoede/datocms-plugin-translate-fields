@@ -10,7 +10,11 @@ import {
   SettingOption,
 } from '../lib/types'
 
-function getDefaultModel({ models }: { models: Models }): SettingOption<string>  {
+function getDefaultModel({
+  models,
+}: {
+  models: Models
+}): SettingOption<string> {
   const model = models.find((model) => model.id === OpenAIDefaultValues.model)
   const modelId = model?.id
 
@@ -40,7 +44,7 @@ export function useOpenAIConfigFields({
 
   const selectedModel = useMemo(
     () => pluginParameters?.model ?? getDefaultModel({ models: models ?? [] }),
-    [models, pluginParameters?.model]
+    [models, pluginParameters?.model],
   )
 
   const options = useMemo(() => {
