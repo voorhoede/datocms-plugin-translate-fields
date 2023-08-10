@@ -21,11 +21,11 @@ type OpenAIConfigFieldsProps = {
   ctx: RenderConfigScreenCtx | RenderManualFieldExtensionConfigScreenCtx
   pluginParameters: Parameters | GlobalParameters
   updateParametersFn: (params: Record<string, unknown>) => Promise<void>
-  options: Array<SettingOption>
+  options: SettingOption<string>[]
   models: Models | null
   openAIApiKey: string | undefined
   error: string
-  selectedModel: SettingOption
+  selectedModel: SettingOption<string>
   temperature: number
   maxTokens: number
   topP: number

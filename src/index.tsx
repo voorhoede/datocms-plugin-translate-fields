@@ -11,7 +11,7 @@ import FieldAddon from './entrypoints/FieldAddon/FieldAddon'
 import FieldAddonConfigScreen from './entrypoints/FieldAddonConfigScreen/FieldAddonConfigScreen'
 
 import { fieldsOptions } from './lib/constants'
-import { GlobalParameters, SettingOption, Fields } from './lib/types'
+import { GlobalParameters, DatoFieldType } from './lib/types'
 import { render } from './lib/render'
 
 import 'datocms-react-ui/styles.css'
@@ -30,10 +30,10 @@ connect({
         name: 'Translate',
         type: 'addon',
         fieldTypes: [
-          Fields.textField,
-          Fields.stringField,
-          Fields.structuredTextField,
-          Fields.seo,
+          DatoFieldType.textField,
+          DatoFieldType.stringField,
+          DatoFieldType.structuredTextField,
+          DatoFieldType.seo,
         ],
         configurable: true,
       },
@@ -49,7 +49,7 @@ connect({
     const pluginGlobalParameters: GlobalParameters =
       ctx.plugin.attributes.parameters
 
-    const fieldsSettings: SettingOption[] =
+    const fieldsSettings =
       pluginGlobalParameters?.fieldsToEnable || fieldsOptions
 
     const fieldIsLocalized: boolean = field.attributes.localized
@@ -58,7 +58,7 @@ connect({
       (addon) => addon.field_extension === extensionId
     )
     const showOnThisFieldType: boolean = fieldsSettings.some(
-      (setting: SettingOption) => setting.value === field.attributes.field_type
+      (setting) => setting.value === field.attributes.field_type
     )
 
     if (

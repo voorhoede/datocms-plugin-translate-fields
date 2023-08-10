@@ -1,14 +1,21 @@
-import { Fields, Editor, TranslationFormat, TranslationService } from './types'
+import {
+  DatoFieldType,
+  Editor,
+  TranslationFormat,
+  TranslationService,
+  DeeplFormalityLevel,
+  SettingOption,
+} from './types'
 
-export const fieldsOptions = [
-  { label: 'String fields', value: Fields.stringField },
-  { label: 'Text fields', value: Fields.textField },
-  { label: 'Structured text fields', value: Fields.structuredTextField },
-  { label: 'Modular content fields', value: Fields.richTextField },
-  { label: 'SEO fields', value: Fields.seo },
+export const fieldsOptions: SettingOption<DatoFieldType>[] =  [
+  { label: 'String fields', value: DatoFieldType.stringField },
+  { label: 'Text fields', value: DatoFieldType.textField },
+  { label: 'Structured text fields', value: DatoFieldType.structuredTextField },
+  { label: 'Modular content fields', value: DatoFieldType.richTextField },
+  { label: 'SEO fields', value: DatoFieldType.seo },
 ]
 
-export const translationServiceOptions = [
+export const translationServiceOptions: SettingOption<TranslationService>[] = [
   { label: 'Yandex translate', value: TranslationService.yandex },
   { label: 'DeepL API Pro', value: TranslationService.deepl },
   { label: 'DeepL API Free', value: TranslationService.deeplFree },
@@ -24,3 +31,18 @@ export const translationFormats = {
   [Editor.textarea]: TranslationFormat.plain,
   [Editor.seo]: TranslationFormat.seo,
 }
+
+export const deeplFormalityLevelOptions: SettingOption<DeeplFormalityLevel>[] =
+  [
+    { label: 'Default', value: DeeplFormalityLevel.default },
+    { label: 'More formal', value: DeeplFormalityLevel.more },
+    { label: 'Less formal', value: DeeplFormalityLevel.less },
+    {
+      label: 'Prefer more formal if available',
+      value: DeeplFormalityLevel.preferMore,
+    },
+    {
+      label: 'Prefer less formal if available',
+      value: DeeplFormalityLevel.preferLess,
+    },
+  ]
