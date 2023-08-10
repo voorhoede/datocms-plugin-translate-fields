@@ -2,10 +2,6 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.XX.0] - 2023-XX-XX
-### Added
-- Ability to use Deepl formality of the translation by adding "Formality level" in the plugin settings
-
 ## [1.9.0] - 2023-06-27
 ### Added
 - Ability to use Deepl Glossaries by adding a glossary_id in the plugin settings

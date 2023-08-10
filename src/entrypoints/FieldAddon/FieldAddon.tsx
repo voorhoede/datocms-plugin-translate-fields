@@ -24,7 +24,6 @@ import {
   TranslationService,
   TranslationServiceKey,
   OpenAIDefaultValues,
-  SettingOption,
 } from '../../lib/types'
 import {
   deeplFormalityLevelOptions,
