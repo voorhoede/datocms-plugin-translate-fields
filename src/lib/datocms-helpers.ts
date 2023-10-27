@@ -10,6 +10,7 @@ export const pathTypeIsObject = [
   PathType.color,
   PathType.media,
   PathType.seo,
+  PathType.meta,
 ]
 
 export function isStructuredTextText(value: any): boolean {
@@ -112,6 +113,10 @@ export function getValueType(
 
   if (key === 'slug' || key === 'url') {
     return PathType.slug
+  }
+
+  if (key === 'meta') {
+    return PathType.meta
   }
 
   if (typeof value === 'boolean') {
