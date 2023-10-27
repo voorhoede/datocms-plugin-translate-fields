@@ -40,7 +40,9 @@ export async function getRichTextTranslation(
   value: any[],
   options: TranslationOptions,
 ): Promise<any[]> {
-  const mappedValue = removePropertyRecursively(value, ['itemId'])
+  const mappedValue = removePropertyRecursively(value, {
+    keysToRemove: ['itemId'],
+  })
   const allPaths = paths(mappedValue)
   let translatedArray = mappedValue
 
@@ -137,7 +139,10 @@ export async function getStructuredTextTranslation(
   value: any[],
   options: TranslationOptions,
 ): Promise<any[]> {
-  const mappedValue = removePropertyRecursively(value, ['id'])
+  const mappedValue = removePropertyRecursively(value, {
+    keysToRemove: ['id'],
+    keysToSkip: ['meta'],
+  })
   const allPaths = paths(mappedValue)
   let translatedArray = mappedValue
 
