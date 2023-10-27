@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2023-10-27
+### Fixed
+- Translation with `meta` field will keep content instead of removing `id`
+### Security
+- Update all dependencies to their latest version
+
 ## [1.10.1] - 2023-08-10
 ### Added
 - Some documentation about the `Translation service` settings
@@ -30,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Translation beyond first block in structured text
 - Saving copied structured text due to invalid block ID
 
+[1.11.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.10.1...v1.11.0
 [1.10.1]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.10.0...v1.10.1
 [1.10.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.8.1...v1.9.0
