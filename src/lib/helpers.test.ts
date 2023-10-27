@@ -10,71 +10,47 @@ import {
   structuredTextSlate,
   emptyStructuredTextSlate,
 } from '../mocks/structured-text-mock'
-import { array, object, jsonString, datoCmsCtx } from '../mocks/helper-mocks'
+import {
+  array,
+  arrayPaths,
+  arrayRemovedProperties,
+  object,
+  objectPaths,
+  objectRemovedProperties,
+  jsonString,
+  datoCmsCtx,
+} from '../mocks/helper-mocks'
 
 import { Editor } from './types'
 
 describe('paths', () => {
   it('should return paths from array', () => {
-    const result = [
-      { path: '0.id', value: '1', key: 'id', type: 'id' },
-      { path: '0.test', value: 'test', key: 'test', type: 'text' },
-      { path: '0.text', value: 'text', key: 'text', type: 'text' },
-      { path: '1.id', value: '2', key: 'id', type: 'id' },
-      { path: '1.test', value: 'test', key: 'test', type: 'text' },
-      { path: '1.children.0.id', value: '2-1', key: 'id', type: 'id' },
-      {
-        path: '1.children.0.test',
-        value: 'test',
-        key: 'test',
-        type: 'text',
-      },
-      {
-        path: '1.children.0.text',
-        value: 'text',
-        key: 'text',
-        type: 'text',
-      },
-    ]
+    const result = arrayPaths
     expect(paths(array)).toStrictEqual(result)
   })
 
   it('should return paths from object', () => {
-    const result = [
-      { path: 'id', value: '1', key: 'id', type: 'id' },
-      { path: 'test', value: 'test', key: 'test', type: 'text' },
-      { path: 'text', value: 'text', key: 'text', type: 'text' },
-    ]
+    const result = objectPaths
     expect(paths(object)).toStrictEqual(result)
   })
 })
 
 describe('removePropertyRecursively', () => {
   it('should remove properties from array', () => {
-    const result = [
-      {
-        text: 'text',
-      },
-      {
-        children: [
-          {
-            text: 'text',
-          },
-        ],
-      },
-    ]
-    expect(removePropertyRecursively(array, ['test', 'id'])).toStrictEqual(
-      result,
-    )
+    const result = arrayRemovedProperties
+    expect(
+      removePropertyRecursively(array, {
+        keysToRemove: ['test', 'id'],
+        keysToSkip: ['meta'],
+      }),
+    ).toStrictEqual(result)
   })
 
   it('should remove properties from object', () => {
-    const result = {
-      text: 'text',
-    }
-    expect(removePropertyRecursively(object, ['test', 'id'])).toStrictEqual(
-      result,
-    )
+    const result = objectRemovedProperties
+    expect(
+      removePropertyRecursively(object, { keysToRemove: ['test', 'id'] }),
+    ).toStrictEqual(result)
   })
 })
 

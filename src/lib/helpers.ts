@@ -40,19 +40,26 @@ export function paths(
 
 export function removePropertyRecursively(
   value: any,
-  propertyNames: string[],
+  options: {
+    keysToRemove: string[]
+    keysToSkip?: string[]
+  },
 ): any {
+  const localOptions = options
+
   if (Array.isArray(value)) {
     return value.map((item: any) =>
-      removePropertyRecursively(item, propertyNames),
+      removePropertyRecursively(item, localOptions),
     )
   }
 
   if (typeof value === 'object' && value !== null) {
     const newObj: any = {}
     for (const [key, val] of Object.entries(value)) {
-      if (!propertyNames.includes(key)) {
-        newObj[key] = removePropertyRecursively(val, propertyNames)
+      if (options?.keysToSkip && options.keysToSkip.indexOf(key) > -1) {
+        newObj[key] = val
+      } else if (!options.keysToRemove.includes(key)) {
+        newObj[key] = removePropertyRecursively(val, localOptions)
       }
     }
     return newObj
