@@ -126,6 +126,7 @@ export enum PathType {
   json = 'json',
   seo = 'seo',
   slug = 'slug',
+  meta = 'meta',
 }
 
 export type Models = Array<{ id: string }>

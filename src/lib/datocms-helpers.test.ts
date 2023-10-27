@@ -4,6 +4,7 @@ import {
   structuredTextInlineItemSlate,
   structuredTextSlate,
 } from '../mocks/structured-text-mock'
+import { metaArray } from '../mocks/helper-mocks'
 import { getValueType } from './datocms-helpers'
 import { PathType } from './types'
 
@@ -33,6 +34,12 @@ describe('getValueType', () => {
   })
   it('should return slug when key is url', () => {
     expect(getValueType('url', 'text', PathType.text)).toBe(PathType.slug)
+  })
+  it('should return meta when key is meta', () => {
+    expect(getValueType('meta', metaArray, PathType.meta)).toBe(PathType.meta)
+  })
+  it('should return meta when current key is meta', () => {
+    expect(getValueType('value', '_blank', PathType.meta)).toBe(PathType.meta)
   })
   it('should return boolean when value is boolean', () => {
     expect(getValueType('boolean', true, PathType.text)).toBe(PathType.boolean)
