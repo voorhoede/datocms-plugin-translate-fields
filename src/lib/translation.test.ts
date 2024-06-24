@@ -62,7 +62,7 @@ describe('getTranslation', () => {
   it('should return translation with openAI response', async () => {
     fetchMock.mockOnce(
       JSON.stringify({
-        choices: [{ text: translatedText }],
+        choices: [{ message: { content: translatedText } }],
       }),
     )
 
