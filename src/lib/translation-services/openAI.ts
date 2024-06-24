@@ -22,7 +22,7 @@ export default async function translate(
   }
 
   const request = await fetch(
-    'https://api.openai.com/v1/completions',
+    'https://api.openai.com/v1/chat/completions',
     requestOptions,
   )
 
@@ -31,7 +31,7 @@ export default async function translate(
   }
 
   const response = await request.json()
-  const text = response.choices[0].text as string
+  const text = response.choices[0].message.content as string
 
   return text.trim()
 }
