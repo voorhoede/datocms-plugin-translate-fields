@@ -13,7 +13,7 @@ export default async function translate(
       Authorization: 'Bearer ' + options.apiKey,
     },
     body: JSON.stringify({
-      prompt: prompt,
+      messages: [{ role: 'user', content: prompt }],
       model: options.openAIOptions.model,
       temperature: options.openAIOptions.temperature,
       max_tokens: options.openAIOptions.maxTokens,
