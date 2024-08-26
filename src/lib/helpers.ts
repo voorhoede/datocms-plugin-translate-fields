@@ -15,7 +15,24 @@ export function paths(
     return Object.keys(object).reduce((acc: any[], key: string) => {
       const path = `${prev}${prev ? `.${key}` : key}`
       const value = object[key]
-      let valueType = getValueType(key, value, type)
+      const excludedKeys = 'theme, variant' // TODO is still hardcoded
+      // Refactor to something like this
+      /**
+       *
+       * export function paths({
+        object,
+        prev = '',
+        type = PathType.text,
+        excludedKeys,
+      }: {
+        object: any
+        prev?: string
+        type?: PathType
+        excludedKeys?: string
+      }):
+
+       */
+      let valueType = getValueType(key, value, type, excludedKeys)
 
       if (
         pathTypeIsObject.indexOf(valueType) === -1 &&

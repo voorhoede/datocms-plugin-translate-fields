@@ -26,6 +26,9 @@ export default function ConfigScreen({ ctx }: Props) {
     pluginGlobalParameters?.translationService ||
     translationServiceOptions[0]
 
+  console.warn('pluginParameters', pluginParameters)
+  console.warn('pluginGlobalParameters', pluginGlobalParameters)
+
   return (
     <Canvas ctx={ctx}>
       <p>This DatoCMS plugin.</p>

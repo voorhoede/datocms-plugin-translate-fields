@@ -100,6 +100,7 @@ export type TranslationOptions = {
     maxTokens: number
     topP: number
   }
+  excludeKeys?: string
 }
 
 export type Path = {
@@ -127,6 +128,7 @@ export enum PathType {
   seo = 'seo',
   slug = 'slug',
   meta = 'meta',
+  exclude = 'exclude',
 }
 
 export type Models = Array<{ id: string }>

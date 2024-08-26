@@ -43,7 +43,7 @@ export async function getRichTextTranslation(
   const mappedValue = removePropertyRecursively(value, {
     keysToRemove: ['itemId'],
   })
-  const allPaths = paths(mappedValue)
+  const allPaths = paths(mappedValue, options.excludeKeys)
   let translatedArray = mappedValue
 
   for (const path of allPaths) {

@@ -34,11 +34,13 @@ export default function ConfigScreen({ ctx }: Props) {
     selectedTranslationService.value === TranslationService.deepl ||
     selectedTranslationService.value === TranslationService.deeplFree
 
+  console.warn('pluginParameters', pluginParameters)
+
   return (
     <Canvas ctx={ctx}>
       <p>
         This DatoCMS plugin gives you the ability to translate structured-text,
-        string and text fields.
+        string and text fields.!!
       </p>
 
       <Form>
