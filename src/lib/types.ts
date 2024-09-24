@@ -76,6 +76,7 @@ export type Parameters = {
 
 export interface GlobalParameters extends Parameters {
   autoApply?: boolean
+  showTranslateAll?: boolean
   fieldsToEnable?: SettingOption<DatoFieldType>[]
 }
 

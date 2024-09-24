@@ -57,6 +57,20 @@ export default function ConfigScreen({ ctx }: Props) {
               ctx.notice('Settings updated successfully!')
             }}
           />
+          <SwitchField
+            name="showTranslateAll"
+            id="showTranslateAll"
+            label="Show translate to all languages button"
+            hint="If disabled it will not show the Translate to all languages button."
+            value={Boolean(pluginParameters?.showTranslateAll)}
+            onChange={(newValue: boolean) => {
+              ctx.updatePluginParameters({
+                ...pluginParameters,
+                showTranslateAll: newValue,
+              })
+              ctx.notice('Settings updated successfully!')
+            }}
+          />
         </FieldGroup>
 
         {pluginParameters?.autoApply && (
