@@ -18,6 +18,7 @@ import ApiTextField from '../../components/ApiTextField/ApiTextField'
 import { OpenAIConfigFieldsConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
 import GlossaryIdField from '../../components/GlossaryIdField/GlossaryIdField'
 import FormalityField from '../../components/FormalityField/FormalityField'
+import ExcludedFields from '../../components/ExcludedKeysField/ExcludedKeysField'
 
 type Props = {
   ctx: RenderConfigScreenCtx
@@ -29,10 +30,13 @@ export default function ConfigScreen({ ctx }: Props) {
     pluginParameters?.translationService || translationServiceOptions[0]
   const selectedFormalityLevel =
     pluginParameters?.deeplFormalityLevel || deeplFormalityLevelOptions[0]
+  const excludedKeys = pluginParameters?.excludedKeys || ''
 
   const isDeepl =
     selectedTranslationService.value === TranslationService.deepl ||
     selectedTranslationService.value === TranslationService.deeplFree
+  const isOpenAI =
+    selectedTranslationService.value === TranslationService.openAI
 
   return (
     <Canvas ctx={ctx}>
@@ -123,7 +127,22 @@ export default function ConfigScreen({ ctx }: Props) {
             })}
 
             {isDeepl && (
-              <FormalityField ctx={ctx} value={selectedFormalityLevel} />
+              <FormalityField
+                onChange={(newValue) => {
+                  if (
+                    newValue?.value !==
+                    pluginParameters?.deeplFormalityLevel?.value
+                  ) {
+                    ctx.updatePluginParameters({
+                      ...pluginParameters,
+                      deeplFormalityLevel: newValue,
+                    })
+
+                    ctx.notice('Settings updated successfully!')
+                  }
+                }}
+                value={selectedFormalityLevel}
+              />
             )}
 
             {isDeepl && (
@@ -142,9 +161,21 @@ export default function ConfigScreen({ ctx }: Props) {
               />
             )}
 
-            {selectedTranslationService.value === TranslationService.openAI && (
-              <OpenAIConfigFieldsConfigScreen ctx={ctx} />
-            )}
+            {isOpenAI && <OpenAIConfigFieldsConfigScreen ctx={ctx} />}
+
+            <ExcludedFields
+              value={excludedKeys}
+              onBlur={(newValue) => {
+                if (newValue !== excludedKeys) {
+                  ctx.updatePluginParameters({
+                    ...pluginParameters,
+                    excludedKeys: newValue,
+                  })
+
+                  ctx.notice('Settings updated successfully!')
+                }
+              }}
+            />
           </FieldGroup>
         )}
       </Form>

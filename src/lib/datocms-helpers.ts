@@ -99,7 +99,16 @@ export function getValueType(
   key: string,
   value: any,
   currentType: PathType,
+  excludedKeys?: string,
 ): PathType {
+  if (excludedKeys) {
+    const excludedKeysArray = excludedKeys.split(',').map((key) => key.trim())
+
+    if (excludedKeysArray.includes(key)) {
+      return PathType.exclude
+    }
+  }
+
   if (
     key === 'itemTypeId' ||
     key === 'itemId' ||

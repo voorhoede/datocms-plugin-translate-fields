@@ -5,6 +5,7 @@ export enum DatoFieldType {
   structuredTextField = 'structured_text',
   seo = 'seo',
   slug = 'slug',
+  singleBlock = 'single_block',
 }
 
 export enum Editor {
@@ -12,6 +13,8 @@ export enum Editor {
   markdown = 'markdown',
   singleLine = 'single_line',
   structuredText = 'structured_text',
+  framedSingleBlock = 'framed_single_block',
+  framelessSingleBlock = 'frameless_single_block',
   richText = 'rich_text',
   textarea = 'textarea',
   seo = 'seo',
@@ -22,6 +25,7 @@ export enum TranslationFormat {
   html = 'html',
   markdown = 'markdown',
   structuredText = 'structured_text',
+  singleBlock = 'single_block',
   richText = 'rich_text',
   plain = 'plain',
   seo = 'seo',
@@ -67,6 +71,7 @@ export type Parameters = {
   topP?: number
   deeplGlossaryId?: string
   deeplFormalityLevel?: SettingOption<DeeplFormalityLevel>
+  excludedKeys?: string
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
@@ -100,6 +105,7 @@ export type TranslationOptions = {
     maxTokens: number
     topP: number
   }
+  excludedKeys?: string
 }
 
 export type Path = {
@@ -127,6 +133,7 @@ export enum PathType {
   seo = 'seo',
   slug = 'slug',
   meta = 'meta',
+  exclude = 'exclude',
 }
 
 export type Models = Array<{ id: string }>

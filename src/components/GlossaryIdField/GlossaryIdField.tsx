@@ -11,7 +11,6 @@ export default function GlossaryIdField({ value, onBlur }: ApiTextFieldProps) {
 
   return (
     <TextField
-      required
       name="deeplGlossaryId"
       id="deeplGlossaryId"
       label="DeepL glossary ID"

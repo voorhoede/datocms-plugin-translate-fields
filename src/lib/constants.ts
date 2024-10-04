@@ -11,7 +11,14 @@ export const fieldsOptions: SettingOption<DatoFieldType>[] = [
   { label: 'String fields', value: DatoFieldType.stringField },
   { label: 'Text fields', value: DatoFieldType.textField },
   { label: 'Structured text fields', value: DatoFieldType.structuredTextField },
-  { label: 'Modular content fields', value: DatoFieldType.richTextField },
+  {
+    label: 'Modular content fields (multiple)',
+    value: DatoFieldType.richTextField,
+  },
+  {
+    label: 'Modular content fields (single)',
+    value: DatoFieldType.singleBlock,
+  },
   { label: 'SEO fields', value: DatoFieldType.seo },
   { label: 'Slug fields', value: DatoFieldType.slug },
 ]
@@ -28,6 +35,8 @@ export const translationFormats = {
   [Editor.markdown]: TranslationFormat.markdown,
   [Editor.singleLine]: TranslationFormat.plain,
   [Editor.structuredText]: TranslationFormat.structuredText,
+  [Editor.framedSingleBlock]: TranslationFormat.singleBlock,
+  [Editor.framelessSingleBlock]: TranslationFormat.singleBlock,
   [Editor.richText]: TranslationFormat.richText,
   [Editor.textarea]: TranslationFormat.plain,
   [Editor.seo]: TranslationFormat.seo,

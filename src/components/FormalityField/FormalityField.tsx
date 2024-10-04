@@ -1,21 +1,19 @@
 import { SelectField } from 'datocms-react-ui'
-import { RenderConfigScreenCtx } from 'datocms-plugin-sdk'
 
-import {
-  DeeplFormalityLevel,
-  GlobalParameters,
-  SettingOption,
-} from '../../lib/types'
+import { DeeplFormalityLevel, SettingOption } from '../../lib/types'
 import { deeplFormalityLevelOptions } from '../../lib/constants'
 
+type Value = SettingOption<DeeplFormalityLevel>
+
 type FormalityFieldProps = {
-  ctx: RenderConfigScreenCtx
-  value: SettingOption<DeeplFormalityLevel>
+  value: Value
+  onChange: (newValue: Value) => void
 }
 
-export default function FormalityField({ ctx, value }: FormalityFieldProps) {
-  const pluginParameters: GlobalParameters = ctx.plugin.attributes.parameters
-
+export default function FormalityField({
+  onChange,
+  value,
+}: FormalityFieldProps) {
   return (
     <SelectField
       name="deeplFormalityLevel"
@@ -28,11 +26,7 @@ export default function FormalityField({ ctx, value }: FormalityFieldProps) {
       }}
       placeholder="Select a formality level"
       onChange={(newValue) => {
-        ctx.updatePluginParameters({
-          ...pluginParameters,
-          deeplFormalityLevel: newValue,
-        })
-        ctx.notice('Settings updated successfully!')
+        onChange(newValue as Value)
       }}
     />
   )

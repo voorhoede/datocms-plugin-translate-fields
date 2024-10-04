@@ -19,6 +19,8 @@ import {
   objectRemovedProperties,
   jsonString,
   datoCmsCtx,
+  arrayPathsExcluded,
+  objectPathsExcluded,
 } from '../mocks/helper-mocks'
 
 import { Editor } from './types'
@@ -26,12 +28,22 @@ import { Editor } from './types'
 describe('paths', () => {
   it('should return paths from array', () => {
     const result = arrayPaths
-    expect(paths(array)).toStrictEqual(result)
+    expect(paths({ object: array })).toStrictEqual(result)
+  })
+
+  it('should return paths from array with excluded property', () => {
+    const result = arrayPathsExcluded
+    expect(paths({ object: array, excludedKeys: 'test' })).toStrictEqual(result)
   })
 
   it('should return paths from object', () => {
     const result = objectPaths
-    expect(paths(object)).toStrictEqual(result)
+    expect(paths({ object })).toStrictEqual(result)
+  })
+
+  it('should return paths from object with excluded property', () => {
+    const result = objectPathsExcluded
+    expect(paths({ object, excludedKeys: 'test' })).toStrictEqual(result)
   })
 })
 

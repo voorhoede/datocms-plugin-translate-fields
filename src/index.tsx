@@ -23,6 +23,7 @@ connect({
   renderConfigScreen(ctx) {
     return render(<ConfigScreen ctx={ctx} />)
   },
+  // @ts-expect-error because of single bock missing as field type
   manualFieldExtensions() {
     return [
       {
@@ -33,8 +34,10 @@ connect({
           DatoFieldType.textField,
           DatoFieldType.stringField,
           DatoFieldType.structuredTextField,
+          DatoFieldType.richTextField,
           DatoFieldType.seo,
           DatoFieldType.slug,
+          DatoFieldType.singleBlock,
         ],
         configurable: true,
       },
