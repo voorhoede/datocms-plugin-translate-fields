@@ -23,7 +23,7 @@ connect({
   renderConfigScreen(ctx) {
     return render(<ConfigScreen ctx={ctx} />)
   },
-  // @ts-expect-error
+  // @ts-expect-error because of single bock missing as field type
   manualFieldExtensions() {
     return [
       {

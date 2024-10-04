@@ -26,8 +26,7 @@ export default function FormalityField({
       }}
       placeholder="Select a formality level"
       onChange={(newValue) => {
-        const value = newValue as Value
-        onChange(value)
+        onChange(newValue as Value)
       }}
     />
   )

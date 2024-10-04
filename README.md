@@ -44,7 +44,7 @@ By changing the following setting you can choose on which fields this plugin wil
 
 ![](https://github.com/voorhoede/datocms-plugin-translate-fields/raw/main/docs/translate-fields-general-settings.png)
 
-- **Translation service**: You can choose which service will be used to translate. The chosen service will be used and an option to add an api key will be presented automatically. Some translation services require some extra settings. These will be shown when a `Translation service` is selected.
+- **Translation service (multi select)**: You can choose which service will be used to translate. The chosen service will be used and an option to add an api key will be presented automatically. Some translation services require some extra settings. These will be shown when a `Translation service` is selected.
 
 > Options of `Translation service`:
 > * Yandex translate
@@ -52,9 +52,9 @@ By changing the following setting you can choose on which fields this plugin wil
 > * DeepL API Free
 > * OpenAI
 
-- **API key of `[selected translation service]`**: Add the API key of the translation service that you have selected. The plugin will give errors if the API key isn't added or if the translation service serves an error.
+- **API key of `[selected translation service]` (text field)**: Add the API key of the translation service that you have selected. The plugin will give errors if the API key isn't added or if the translation service serves an error.
 
-- **Exclude key**: Add a comma separated list of keys of fields you don't want to translate. This can be usefull for rich text components where certain fields have fixed keys (i.e. choosing a theme or have fixed variants). If you translate a field that is included in the list it will skip the field and copy the content 'as is' in the translated field.
+- **Exclude key (text field)**: Add a comma separated list of keys of fields you don't want to translate. This can be usefull for rich text components where certain fields have fixed keys (i.e. choosing a theme or have fixed variants). If you translate a field that is included in the list it will skip the field and copy the content 'as is' in the translated field.
 
 ## Contributing
 
