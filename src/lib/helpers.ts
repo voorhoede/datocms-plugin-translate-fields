@@ -6,39 +6,39 @@ import { Path, TranslationFormat, Editor, PathType } from './types'
 import { translationFormats } from './constants'
 import { pathTypeIsObject, getValueType } from './datocms-helpers'
 
-export function paths(
-  object: any,
-  prev = '',
-  type: PathType = PathType.text,
-): Path[] {
+type PathOptions = {
+  object: any
+  prev?: string
+  type?: PathType
+  excludedKeys?: string
+}
+
+export function paths({
+  object,
+  prev,
+  type,
+  excludedKeys,
+}: PathOptions): Path[] {
   if (object) {
     return Object.keys(object).reduce((acc: any[], key: string) => {
-      const path = `${prev}${prev ? `.${key}` : key}`
+      const prevPath = prev || ''
+      const path = `${prevPath}${prevPath ? `.${key}` : key}`
       const value = object[key]
-      const excludedKeys = 'theme, variant' // TODO is still hardcoded
-      // Refactor to something like this
-      /**
-       *
-       * export function paths({
-        object,
-        prev = '',
-        type = PathType.text,
-        excludedKeys,
-      }: {
-        object: any
-        prev?: string
-        type?: PathType
-        excludedKeys?: string
-      }):
-
-       */
-      let valueType = getValueType(key, value, type, excludedKeys)
+      const pathType = type || PathType.text
+      const valueType = getValueType(key, value, pathType, excludedKeys)
 
       if (
         pathTypeIsObject.indexOf(valueType) === -1 &&
         typeof value === 'object'
       ) {
-        acc.push(...paths(value, path, valueType))
+        acc.push(
+          ...paths({
+            object: value,
+            prev: path,
+            type: valueType,
+            excludedKeys,
+          }),
+        )
       } else {
         acc.push({
           path,

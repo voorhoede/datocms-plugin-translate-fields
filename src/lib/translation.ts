@@ -43,7 +43,10 @@ export async function getRichTextTranslation(
   const mappedValue = removePropertyRecursively(value, {
     keysToRemove: ['itemId'],
   })
-  const allPaths = paths(mappedValue, options.excludeKeys)
+  const allPaths = paths({
+    object: mappedValue,
+    excludedKeys: options.excludedKeys,
+  })
   let translatedArray = mappedValue
 
   for (const path of allPaths) {
@@ -143,7 +146,10 @@ export async function getStructuredTextTranslation(
     keysToRemove: ['id'],
     keysToSkip: ['meta'],
   })
-  const allPaths = paths(mappedValue)
+  const allPaths = paths({
+    object: mappedValue,
+    excludedKeys: options.excludedKeys,
+  })
   let translatedArray = mappedValue
 
   for (const path of allPaths) {
@@ -193,7 +199,10 @@ export async function getHtmlTranslation(
   options: TranslationOptions,
 ): Promise<string> {
   const json = parseHtml.html2json(string)
-  const allPaths: Path[] = paths(json.child)
+  const allPaths: Path[] = paths({
+    object: json.child,
+    excludedKeys: options.excludedKeys,
+  })
   let translatedArray = json.child
 
   for (const path of allPaths) {
@@ -216,7 +225,10 @@ export async function getMarkdownTranslation(
   options: TranslationOptions,
 ): Promise<string> {
   const json = fromMarkdown(string)
-  const allPaths: Path[] = paths(json.children)
+  const allPaths: Path[] = paths({
+    object: json.children,
+    excludedKeys: options.excludedKeys,
+  })
   let translatedArray = json.children
 
   for (const path of allPaths) {

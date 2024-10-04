@@ -1,7 +1,10 @@
 import { RenderManualFieldExtensionConfigScreenCtx } from 'datocms-plugin-sdk'
 import { Canvas, Form, SelectField, FieldGroup } from 'datocms-react-ui'
 
-import { translationServiceOptions } from '../../lib/constants'
+import {
+  deeplFormalityLevelOptions,
+  translationServiceOptions,
+} from '../../lib/constants'
 import {
   GlobalParameters,
   Parameters,
@@ -11,6 +14,8 @@ import {
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
 import { OpenAIConfigFieldsFieldAddonConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
 import GlossaryIdField from '../../components/GlossaryIdField/GlossaryIdField'
+import FormalityField from '../../components/FormalityField/FormalityField'
+import ExcludedFields from '../../components/ExcludedKeysField/ExcludedKeysField'
 
 type Props = {
   ctx: RenderManualFieldExtensionConfigScreenCtx
@@ -26,13 +31,22 @@ export default function ConfigScreen({ ctx }: Props) {
     pluginGlobalParameters?.translationService ||
     translationServiceOptions[0]
 
-  console.warn('pluginParameters', pluginParameters)
-  console.warn('pluginGlobalParameters', pluginGlobalParameters)
+  const selectedFormalityLevel =
+    pluginParameters?.deeplFormalityLevel ||
+    pluginGlobalParameters?.deeplFormalityLevel ||
+    deeplFormalityLevelOptions[0]
+
+  const excludedKeys =
+    pluginParameters?.excludedKeys || pluginGlobalParameters?.excludedKeys || ''
+
+  const isDeepl =
+    selectedTranslationService.value === TranslationService.deepl ||
+    selectedTranslationService.value === TranslationService.deeplFree
+  const isOpenAI =
+    selectedTranslationService.value === TranslationService.openAI
 
   return (
     <Canvas ctx={ctx}>
-      <p>This DatoCMS plugin.</p>
-
       <Form>
         <FieldGroup>
           <SelectField
@@ -61,6 +75,7 @@ export default function ConfigScreen({ ctx }: Props) {
             return (
               selectedTranslationService.value === option.value && (
                 <ApiTextField
+                  key={option.value}
                   value={currentValue}
                   option={option}
                   onBlur={(newValue) => {
@@ -78,14 +93,31 @@ export default function ConfigScreen({ ctx }: Props) {
             )
           })}
 
-          {(selectedTranslationService.value === TranslationService.deepl ||
-            selectedTranslationService.value ===
-              TranslationService.deeplFree) && (
+          {isDeepl && (
+            <FormalityField
+              onChange={(newValue) => {
+                if (
+                  newValue.value !==
+                  pluginParameters?.deeplFormalityLevel?.value
+                ) {
+                  ctx.setParameters({
+                    ...pluginParameters,
+                    deeplFormalityLevel: newValue,
+                  })
+
+                  ctx.notice('Settings updated successfully!')
+                }
+              }}
+              value={selectedFormalityLevel}
+            />
+          )}
+
+          {isDeepl && (
             <GlossaryIdField
               value={pluginParameters?.deeplGlossaryId || ''}
               onBlur={(newValue) => {
                 if (newValue !== pluginParameters?.deeplGlossaryId) {
-                  ctx.updatePluginParameters({
+                  ctx.setParameters({
                     ...pluginParameters,
                     deeplGlossaryId: newValue,
                   })
@@ -96,9 +128,21 @@ export default function ConfigScreen({ ctx }: Props) {
             />
           )}
 
-          {selectedTranslationService.value === TranslationService.openAI && (
-            <OpenAIConfigFieldsFieldAddonConfigScreen ctx={ctx} />
-          )}
+          {isOpenAI && <OpenAIConfigFieldsFieldAddonConfigScreen ctx={ctx} />}
+
+          <ExcludedFields
+            value={excludedKeys}
+            onBlur={(newValue) => {
+              if (newValue !== excludedKeys) {
+                ctx.setParameters({
+                  ...pluginParameters,
+                  excludedKeys: newValue,
+                })
+
+                ctx.notice('Settings updated successfully!')
+              }
+            }}
+          />
         </FieldGroup>
       </Form>
     </Canvas>

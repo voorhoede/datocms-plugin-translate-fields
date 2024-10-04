@@ -100,7 +100,7 @@ export type TranslationOptions = {
     maxTokens: number
     topP: number
   }
-  excludeKeys?: string
+  excludedKeys?: string
 }
 
 export type Path = {

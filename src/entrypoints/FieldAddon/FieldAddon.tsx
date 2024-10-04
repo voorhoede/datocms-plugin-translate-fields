@@ -84,8 +84,12 @@ export default function FieldAddon({ ctx }: Props) {
     pluginParameters.deeplGlossaryId || pluginGlobalParameters.deeplGlossaryId
 
   const deeplFormalityLevelValue =
+    pluginParameters.deeplFormalityLevel?.value ||
     pluginGlobalParameters.deeplFormalityLevel?.value ||
     deeplFormalityLevelOptions[0].value
+
+  const excludedKeys =
+    pluginParameters.excludedKeys || pluginGlobalParameters.excludedKeys || ''
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
@@ -139,6 +143,7 @@ export default function FieldAddon({ ctx }: Props) {
             maxTokens,
             topP,
           },
+          excludedKeys,
         }
 
         try {
@@ -149,6 +154,14 @@ export default function FieldAddon({ ctx }: Props) {
                 translatableField,
                 options,
               )
+              break
+            }
+            case TranslationFormat.singleBlock: {
+              const [translatedFieldFromArray] = await getRichTextTranslation(
+                [translatableField],
+                options,
+              )
+              translatedField = translatedFieldFromArray
               break
             }
             case TranslationFormat.html: {

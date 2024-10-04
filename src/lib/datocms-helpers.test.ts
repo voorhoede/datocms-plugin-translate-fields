@@ -9,6 +9,16 @@ import { getValueType } from './datocms-helpers'
 import { PathType } from './types'
 
 describe('getValueType', () => {
+  it('should return excluded when key is included in excluded key', () => {
+    expect(getValueType('test', 'text', PathType.text, 'test')).toBe(
+      PathType.exclude,
+    )
+  })
+  it('should return excluded when key is included in comma separated list', () => {
+    expect(getValueType('test', 'text', PathType.text, 'test, test2')).toBe(
+      PathType.exclude,
+    )
+  })
   it('should return id when key is itemTypeId', () => {
     expect(getValueType('itemTypeId', 'text', PathType.text)).toBe(PathType.id)
   })
