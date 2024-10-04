@@ -8,11 +8,12 @@
 
 * Translate text and string fields
 * Translate structured text fields
-* Translate rich text fields
+* Translate rich text fields (multiple and single)
 * Translate SEO fields
 * Translate Slug fields
 * Translate to all languages with one button press
 * Translate and copy text from the default language
+* Exclude keys of fields to make sure not every field is translated
 
 ## Configuration
 
@@ -20,7 +21,7 @@ First add this plugin via DatoCMS Settings > Plugins > Add (`/admin/plugins/new`
 
 ### Plugin settings
 
-For this plugin you can configure global settings and configure the plugin per field. Choose to apply the plugin automatically to all string/text fields or add the plugin as addon per model/field. Settings set per model/field will always overwrite all global settings.
+For this plugin you can configure global settings and configure the plugin per field. Choose to apply the plugin automatically to all string/text fields or add the plugin as addon per model/field. Settings set per model/field will always overwrite all global settings and empty settings for a model will be overwriten by global settings.
 
 #### **Global Settings**
 
@@ -52,6 +53,8 @@ By changing the following setting you can choose on which fields this plugin wil
 > * OpenAI
 
 - **API key of `[selected translation service]`**: Add the API key of the translation service that you have selected. The plugin will give errors if the API key isn't added or if the translation service serves an error.
+
+- **Exclude key**: Add a comma separated list of keys of fields you don't want to translate. This can be usefull for rich text components where certain fields have fixed keys (i.e. choosing a theme or have fixed variants). If you translate a field that is included in the list it will skip the field and copy the content 'as is' in the translated field.
 
 ## Contributing
 
