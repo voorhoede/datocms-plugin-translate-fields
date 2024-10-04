@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2024-10-04
+### Added
+- Excluded keys options to exclude certain fields from translating
+- Single block translations (single modular content block)
+### Fixed
+- Make sure you can change specific settings of rich text fields
+### Security
+- Update all dependencies to their latest version
+
 ## [1.11.2] - 2024-06-25
 ### Fixed
 - OpenAI API calls request parameter
