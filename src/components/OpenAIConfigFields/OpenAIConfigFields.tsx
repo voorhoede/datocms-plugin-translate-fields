@@ -66,7 +66,7 @@ function OpenAIConfigFields({
         name="model"
         id="model"
         label="Model"
-        hint="All available GPT3 models. Note: not all models are suitable for translation."
+        hint="All available models. Note: not all models are suitable for translation."
         selectInputProps={{ options }}
         value={selectedModel}
         onChange={(newValue) => {

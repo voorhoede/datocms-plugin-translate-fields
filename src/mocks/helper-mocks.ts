@@ -68,6 +68,33 @@ export const arrayRemovedProperties = [
   },
 ]
 
+export const arrayPathsExcluded = [
+  { path: '0.id', value: '1', key: 'id', type: 'id' },
+  { path: '0.test', value: 'test', key: 'test', type: 'exclude' },
+  { path: '0.text', value: 'text', key: 'text', type: 'text' },
+  { path: '1.id', value: '2', key: 'id', type: 'id' },
+  { path: '1.test', value: 'test', key: 'test', type: 'exclude' },
+  { path: '1.children.0.id', value: '2-1', key: 'id', type: 'id' },
+  {
+    path: '1.children.0.test',
+    value: 'test',
+    key: 'test',
+    type: 'exclude',
+  },
+  {
+    path: '1.children.0.text',
+    value: 'text',
+    key: 'text',
+    type: 'text',
+  },
+  {
+    path: '1.children.0.meta',
+    value: metaArray,
+    key: 'meta',
+    type: 'meta',
+  },
+]
+
 export const object = {
   id: '1',
   test: 'test',
@@ -78,6 +105,18 @@ export const object = {
 export const objectPaths = [
   { path: 'id', value: '1', key: 'id', type: 'id' },
   { path: 'test', value: 'test', key: 'test', type: 'text' },
+  { path: 'text', value: 'text', key: 'text', type: 'text' },
+  {
+    path: 'meta',
+    value: metaArray,
+    key: 'meta',
+    type: 'meta',
+  },
+]
+
+export const objectPathsExcluded = [
+  { path: 'id', value: '1', key: 'id', type: 'id' },
+  { path: 'test', value: 'test', key: 'test', type: 'exclude' },
   { path: 'text', value: 'text', key: 'text', type: 'text' },
   {
     path: 'meta',
