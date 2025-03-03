@@ -12,7 +12,7 @@ export default async function translate(
 
   params.set('auth_key', options.apiKey)
   params.set('target_lang', options.toLocale)
-  params.set('tag_handling', 'xml')
+  params.set('tag_handling', options.format === 'html' ? 'html' : 'xml')
   params.set('text', string)
 
   if (options.fromLocale) {

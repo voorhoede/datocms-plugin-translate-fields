@@ -198,6 +198,14 @@ export async function getHtmlTranslation(
   string: string,
   options: TranslationOptions,
 ): Promise<string> {
+  if (
+    options.translationService === TranslationService.deepl ||
+    options.translationService === TranslationService.deeplFree
+  ) {
+    const translatedString = await getTranslation(string, options)
+    return translatedString
+  }
+
   const json = parseHtml.html2json(string)
   const allPaths: Path[] = paths({
     object: json.child,
