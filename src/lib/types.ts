@@ -53,6 +53,7 @@ export enum OpenAIDefaultValues {
   temperature = 0,
   maxTokens = 100,
   topP = 0,
+  prompt = "Translate the following from the locale '{{fromLocale}}' to the locale '{{toLocale}}': {{value}}",
 }
 
 export enum DeeplFormalityLevel {
@@ -69,6 +70,7 @@ export type Parameters = {
   temperature?: number
   maxTokens?: number
   topP?: number
+  prompt?: string
   deeplGlossaryId?: string
   deeplFormalityLevel?: SettingOption<DeeplFormalityLevel>
   excludedKeys?: string
@@ -104,6 +106,7 @@ export type TranslationOptions = {
     temperature: number
     maxTokens: number
     topP: number
+    prompt: string
   }
   excludedKeys?: string
 }

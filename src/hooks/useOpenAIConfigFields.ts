@@ -7,6 +7,7 @@ import {
   GlobalParameters,
   Models,
   OpenAIDefaultValues,
+  Parameters,
   SettingOption,
 } from '../lib/types'
 
@@ -38,13 +39,21 @@ export function useOpenAIConfigFields({
 }) {
   const [models, setModels] = useState<Models | null>(null)
   const [error, setError] = useState<string>('')
+  const pluginGlobalParameters: GlobalParameters =
+    ctx.plugin.attributes.parameters
+  let pluginParameters: Parameters | undefined = undefined
 
-  const pluginParameters: GlobalParameters = ctx.plugin.attributes.parameters
-  const { openAIApiKey } = pluginParameters
+  if ('parameters' in ctx) {
+    pluginParameters = ctx.parameters
+  }
+
+  const model = pluginParameters?.model ?? pluginGlobalParameters.model
+  const openAIApiKey =
+    pluginParameters?.openAIApiKey ?? pluginGlobalParameters.openAIApiKey
 
   const selectedModel = useMemo(
-    () => pluginParameters?.model ?? getDefaultModel({ models: models ?? [] }),
-    [models, pluginParameters?.model],
+    () => model ?? getDefaultModel({ models: models ?? [] }),
+    [models, model],
   )
 
   const options = useMemo(() => {
@@ -59,9 +68,24 @@ export function useOpenAIConfigFields({
   }, [models])
 
   const temperature =
-    pluginParameters.temperature ?? OpenAIDefaultValues.temperature
-  const maxTokens = pluginParameters.maxTokens ?? OpenAIDefaultValues.maxTokens
-  const topP = pluginParameters.topP ?? OpenAIDefaultValues.topP
+    pluginParameters?.temperature ??
+    pluginGlobalParameters.temperature ??
+    OpenAIDefaultValues.temperature
+
+  const maxTokens =
+    pluginParameters?.maxTokens ??
+    pluginGlobalParameters.maxTokens ??
+    OpenAIDefaultValues.maxTokens
+
+  const topP =
+    pluginParameters?.topP ??
+    pluginGlobalParameters.topP ??
+    OpenAIDefaultValues.topP
+
+  const prompt =
+    pluginParameters?.prompt ??
+    pluginGlobalParameters.prompt ??
+    OpenAIDefaultValues.prompt
 
   useEffect(() => {
     if (openAIApiKey) {
@@ -97,5 +121,6 @@ export function useOpenAIConfigFields({
     temperature,
     maxTokens,
     topP,
+    prompt,
   }
 }

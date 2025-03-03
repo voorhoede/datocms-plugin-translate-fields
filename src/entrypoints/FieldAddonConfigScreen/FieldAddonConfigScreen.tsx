@@ -12,10 +12,10 @@ import {
 } from '../../lib/types'
 
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
-import { OpenAIConfigFieldsFieldAddonConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
 import GlossaryIdField from '../../components/GlossaryIdField/GlossaryIdField'
 import FormalityField from '../../components/FormalityField/FormalityField'
 import ExcludedFields from '../../components/ExcludedKeysField/ExcludedKeysField'
+import OpenAIAddonConfigScreen from '../../components/OpenAI/OpenAIAddonConfigScreen/OpenAIAddonConfigScreen'
 
 type Props = {
   ctx: RenderManualFieldExtensionConfigScreenCtx
@@ -128,7 +128,7 @@ export default function ConfigScreen({ ctx }: Props) {
             />
           )}
 
-          {isOpenAI && <OpenAIConfigFieldsFieldAddonConfigScreen ctx={ctx} />}
+          {isOpenAI && <OpenAIAddonConfigScreen ctx={ctx} />}
 
           <ExcludedFields
             value={excludedKeys}

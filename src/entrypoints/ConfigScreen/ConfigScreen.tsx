@@ -15,7 +15,7 @@ import {
 import { GlobalParameters, TranslationService } from '../../lib/types'
 
 import ApiTextField from '../../components/ApiTextField/ApiTextField'
-import { OpenAIConfigFieldsConfigScreen } from '../../components/OpenAIConfigFields/OpenAIConfigFields'
+import OpenAIConfigScreen from '../../components/OpenAI/OpenAIConfigScreen/OpenAIConfigScreen'
 import GlossaryIdField from '../../components/GlossaryIdField/GlossaryIdField'
 import FormalityField from '../../components/FormalityField/FormalityField'
 import ExcludedFields from '../../components/ExcludedKeysField/ExcludedKeysField'
@@ -161,7 +161,7 @@ export default function ConfigScreen({ ctx }: Props) {
               />
             )}
 
-            {isOpenAI && <OpenAIConfigFieldsConfigScreen ctx={ctx} />}
+            {isOpenAI && <OpenAIConfigScreen ctx={ctx} />}
 
             <ExcludedFields
               value={excludedKeys}

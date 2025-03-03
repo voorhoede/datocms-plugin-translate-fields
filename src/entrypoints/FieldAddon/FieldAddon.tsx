@@ -80,6 +80,11 @@ export default function FieldAddon({ ctx }: Props) {
     pluginGlobalParameters.topP ??
     OpenAIDefaultValues.topP
 
+  const prompt =
+    pluginParameters.prompt ??
+    pluginGlobalParameters.prompt ??
+    OpenAIDefaultValues.prompt
+
   const deeplGlossaryId =
     pluginParameters.deeplGlossaryId || pluginGlobalParameters.deeplGlossaryId
 
@@ -142,6 +147,7 @@ export default function FieldAddon({ ctx }: Props) {
             temperature,
             maxTokens,
             topP,
+            prompt,
           },
           excludedKeys,
         }
@@ -283,8 +289,12 @@ export default function FieldAddon({ ctx }: Props) {
           rightIcon={isTranslating ? <Spinner size={24} /> : null}
           disabled={isTranslating}
         >
-          Translate to all locales (
-          {locales.filter((locale) => locale !== currentLocale).join(', ')})
+          {locales.length > 2
+            ? `Translate to all locales (
+          ${locales.filter((locale) => locale !== currentLocale).join(', ')})`
+            : `Translate to ${locales.filter(
+                (locale) => locale !== currentLocale,
+              )}`}
         </Button>
       </Form>
     </Canvas>
