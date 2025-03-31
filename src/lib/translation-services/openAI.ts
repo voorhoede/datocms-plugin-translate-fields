@@ -4,7 +4,11 @@ export default async function translate(
   string: string,
   options: TranslationOptions,
 ): Promise<string> {
-  const prompt = `Translate the following from the locale '${options.fromLocale}' to the locale '${options.toLocale}': ${string}`
+  const prompt = getPrompt({
+    value: string,
+    prompt: options.openAIOptions.prompt,
+    options,
+  })
 
   const requestOptions = {
     method: 'POST',
@@ -34,4 +38,20 @@ export default async function translate(
   const text = response.choices[0].message.content as string
 
   return text.trim()
+}
+
+export function getPrompt({
+  value,
+  prompt,
+  options,
+}: {
+  value: string
+  prompt: string
+  options: TranslationOptions
+}) {
+  return prompt
+    .replace(/{{\s*fromLocale\s*}}/g, options.fromLocale)
+    .replace(/{{\s*toLocale\s*}}/g, options.toLocale)
+    .replace(/{{\s*format\s*}}/g, options.format)
+    .replace(/{{\s*value\s*}}/g, value)
 }
