@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.13.0] - 2025-31-03
+### Added
+- HTML handling for Deepl
+- Ability to customize prompt for OpenAI
+### Fixed
+- Show button with locale if there are only two locales
+- OpenAI config screen issues (saving and editing)
+
 ## [1.12.0] - 2024-10-04
 ### Added
 - Excluded keys options to exclude certain fields from translating
@@ -53,6 +61,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Translation beyond first block in structured text
 - Saving copied structured text due to invalid block ID
 
+[1.13.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.12.0...v1.13.0
+[1.12.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.11.2...v1.12.0
 [1.11.2]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.11.1...v1.11.2
 [1.11.1]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.11.0...v1.11.1
 [1.11.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.10.1...v1.11.0
