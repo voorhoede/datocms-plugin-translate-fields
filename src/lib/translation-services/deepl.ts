@@ -10,7 +10,6 @@ export default async function translate(
 ): Promise<string> {
   const params = new URLSearchParams()
 
-  params.set('auth_key', options.apiKey)
   params.set('target_lang', options.toLocale)
   params.set('tag_handling', options.format === 'html' ? 'html' : 'xml')
   params.set('text', string)
@@ -35,9 +34,18 @@ export default async function translate(
       ? 'api-free'
       : 'api'
 
-  const request = await fetch(
-    `https://${apiVersion}.deepl.com/v2/translate?${params.toString()}`,
-  )
+  const apiUrl = new URL('https://cors-proxy.datocms.com') // DatoCMS-provided CORS proxy
+  apiUrl.searchParams.set('url', `https://${apiVersion}.deepl.com/v2/translate`) // Actual DeepL API endpoint
+
+  // Make the API request
+  const request = await fetch(apiUrl, {
+    method: 'POST', // Note: DeepL will deprecate GET requests from March 2025: https://developers.deepl.com/docs/resources/breaking-changes-change-notices/march-2025-deprecating-get-requests-to-translate-and-authenticating-with-auth_key
+    headers: {
+      Authorization: `DeepL-Auth-Key ${options.apiKey}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: params, // Form body is URL-encoded just like search params
+  })
 
   if (request.status !== 200) {
     throw new Error(`DEEPL returned status ${request.status}`)
