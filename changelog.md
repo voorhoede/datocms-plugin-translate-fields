@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.13.1] - 2025-31-03
+### Fixed
+- Add a proxy in the Deepl request to bypass CORS issues
+
 ## [1.13.0] - 2025-31-03
 ### Added
 - HTML handling for Deepl
