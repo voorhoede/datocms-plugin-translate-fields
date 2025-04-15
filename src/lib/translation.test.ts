@@ -1,4 +1,3 @@
-import fetchMock from 'jest-fetch-mock'
 import { getTranslation } from './translation'
 import { TranslationFormat, TranslationService } from './types'
 
@@ -20,6 +19,18 @@ const tranlationOptions = {
 
 const translatedText = 'Translated test'
 
+const fetchMock = jest.fn()
+const setFetchReturnValue = (value: unknown) => {
+  fetchMock.mockReset()
+  fetchMock.mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(value),
+      status: 200,
+    }),
+  )
+}
+global.fetch = fetchMock
+
 describe('getTranslation', () => {
   it('should return translation', async () => {
     const translation = await getTranslation('test', tranlationOptions)
@@ -27,7 +38,7 @@ describe('getTranslation', () => {
   })
 
   it('should return translation with yandex response', async () => {
-    fetchMock.mockOnce(JSON.stringify({ text: [translatedText] }))
+    setFetchReturnValue({ text: [translatedText] })
     expect.assertions(1)
 
     const translation = await getTranslation('test', {
@@ -38,9 +49,7 @@ describe('getTranslation', () => {
   })
 
   it('should return translation with deepl response', async () => {
-    fetchMock.mockOnce(
-      JSON.stringify({ translations: [{ text: translatedText }] }),
-    )
+    setFetchReturnValue({ translations: [{ text: translatedText }] })
 
     const translation = await getTranslation('test', {
       ...tranlationOptions,
@@ -50,9 +59,7 @@ describe('getTranslation', () => {
   })
 
   it('should return translation with deepl free response', async () => {
-    fetchMock.mockOnce(
-      JSON.stringify({ translations: [{ text: translatedText }] }),
-    )
+    setFetchReturnValue({ translations: [{ text: translatedText }] })
 
     const translation = await getTranslation('test', {
       ...tranlationOptions,
@@ -62,11 +69,9 @@ describe('getTranslation', () => {
   })
 
   it('should return translation with openAI response', async () => {
-    fetchMock.mockOnce(
-      JSON.stringify({
-        choices: [{ message: { content: translatedText } }],
-      }),
-    )
+    setFetchReturnValue({
+      choices: [{ message: { content: translatedText } }],
+    })
 
     const translation = await getTranslation('test', {
       ...tranlationOptions,
@@ -76,7 +81,7 @@ describe('getTranslation', () => {
   })
 
   it('should return translation with yandex response', async () => {
-    fetchMock.mockOnce(JSON.stringify({ text: [translatedText] }))
+    setFetchReturnValue({ text: [translatedText] })
     await expect(() =>
       getTranslation('test', {
         ...tranlationOptions,
