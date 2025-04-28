@@ -23,6 +23,10 @@ export function getSupportedToLocale(
       switch (localeLower) {
         case 'en':
           return 'EN-US'
+        case 'en-eu':
+          return 'EN-GB'
+        case 'en-ie':
+          return 'EN-GB'
         case 'pt':
           return 'PT-PT'
         default:
