@@ -22,6 +22,10 @@ export default async function translate(
     params.set('glossary_id', options.deeplOptions.glossaryId)
   }
 
+  if (options.deeplOptions?.preserveFormatting) {
+    params.set('preserve_formatting', '1')
+  }
+
   if (
     options.deeplOptions?.formality &&
     options.deeplOptions.formality !== DeeplFormalityLevel.default
