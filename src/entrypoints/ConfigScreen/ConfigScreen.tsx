@@ -9,6 +9,7 @@ import {
 
 import {
   deeplFormalityLevelOptions,
+  defaultDeeplPreserveFormatting,
   fieldsOptions,
   translationServiceOptions,
 } from '../../lib/constants'
@@ -151,7 +152,10 @@ export default function ConfigScreen({ ctx }: Props) {
                 id="deeplPreserveFormatting"
                 label="Preserve formatting"
                 hint="Sets whether the translation engine should respect the original formatting, even if it would usually correct some aspects."
-                value={pluginParameters?.deeplPreserveFormatting || false}
+                value={
+                  pluginParameters?.deeplPreserveFormatting ??
+                  defaultDeeplPreserveFormatting
+                }
                 onChange={(newValue) => {
                   ctx.updatePluginParameters({
                     ...pluginParameters,

@@ -28,6 +28,7 @@ import {
 } from '../../lib/types'
 import {
   deeplFormalityLevelOptions,
+  defaultDeeplPreserveFormatting,
   translationFormats,
   translationServiceOptions,
 } from '../../lib/constants'
@@ -89,8 +90,9 @@ export default function FieldAddon({ ctx }: Props) {
     pluginParameters.deeplGlossaryId || pluginGlobalParameters.deeplGlossaryId
 
   const deeplPreserveFormatting =
-    pluginParameters.deeplPreserveFormatting ||
-    pluginGlobalParameters.deeplPreserveFormatting
+    pluginParameters.deeplPreserveFormatting ??
+    pluginGlobalParameters.deeplPreserveFormatting ??
+    defaultDeeplPreserveFormatting
 
   const deeplFormalityLevelValue =
     pluginParameters.deeplFormalityLevel?.value ||

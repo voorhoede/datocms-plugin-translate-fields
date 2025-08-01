@@ -9,6 +9,7 @@ import {
 
 import {
   deeplFormalityLevelOptions,
+  defaultDeeplPreserveFormatting,
   translationServiceOptions,
 } from '../../lib/constants'
 import {
@@ -43,9 +44,9 @@ export default function ConfigScreen({ ctx }: Props) {
     deeplFormalityLevelOptions[0]
 
   const selectedPreserveFormatting =
-    pluginParameters?.deeplPreserveFormatting ||
-    pluginGlobalParameters?.deeplPreserveFormatting ||
-    false
+    pluginParameters?.deeplPreserveFormatting ??
+    pluginGlobalParameters?.deeplPreserveFormatting ??
+    defaultDeeplPreserveFormatting
 
   const excludedKeys =
     pluginParameters?.excludedKeys || pluginGlobalParameters?.excludedKeys || ''

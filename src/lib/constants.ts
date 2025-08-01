@@ -7,6 +7,8 @@ import {
   SettingOption,
 } from './types'
 
+export const defaultDeeplPreserveFormatting = false
+
 export const fieldsOptions: SettingOption<DatoFieldType>[] = [
   { label: 'String fields', value: DatoFieldType.stringField },
   { label: 'Text fields', value: DatoFieldType.textField },
