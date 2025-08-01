@@ -4,6 +4,7 @@ import {
   isJsonString,
   structuredTextValueToDast,
   fieldHasFieldValue,
+  getFullLocaleText,
 } from './helpers'
 import {
   structuredTextDast,
@@ -150,5 +151,25 @@ describe('fieldHasFieldValue', () => {
       editor: Editor.richText,
     }
     expect(fieldHasFieldValue([], extendedDatoCmsCtx)).toBeFalsy()
+  })
+})
+
+describe('getFullLocaleText', () => {
+  it('should return full locale text for a given locale', () => {
+    const locale = 'en'
+    const result = 'English'
+    expect(getFullLocaleText(locale)).toBe(result)
+  })
+
+  it('should return full locale text for a different locale', () => {
+    const locale = 'fr'
+    const result = 'French'
+    expect(getFullLocaleText(locale)).toBe(result)
+  })
+
+  it('should return locale if locale is not supported', () => {
+    const locale = 'abc'
+    const result = 'abc'
+    expect(getFullLocaleText(locale)).toBe(result)
   })
 })

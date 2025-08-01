@@ -144,3 +144,10 @@ export function fieldHasFieldValue(
     }
   }
 }
+
+export function getFullLocaleText(locale: string): string {
+  const fullLocaleText = new Intl.DisplayNames(['en'], { type: 'language' }).of(
+    locale,
+  )
+  return fullLocaleText || locale
+}

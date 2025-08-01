@@ -31,7 +31,7 @@ import {
   translationFormats,
   translationServiceOptions,
 } from '../../lib/constants'
-import { fieldHasFieldValue } from '../../lib/helpers'
+import { fieldHasFieldValue, getFullLocaleText } from '../../lib/helpers'
 
 type Props = {
   ctx: RenderFieldExtensionCtx
@@ -220,7 +220,9 @@ export default function FieldAddon({ ctx }: Props) {
       }
     } else {
       setHasError(
-        `Please add content to the default field (${fromLocale || locales[0]})`,
+        `Please add content to the ${
+          fromLocale ? getFullLocaleText(fromLocale) : ''
+        } field`,
       )
     }
   }
@@ -269,20 +271,22 @@ export default function FieldAddon({ ctx }: Props) {
             }
             disabled={isTranslating}
           >
-            Copy and translate from {locales[0]}
+            Copy and translate from {getFullLocaleText(locales[0])}
           </Button>
         </Form>
       </Canvas>
     )
   }
 
+  const otherLocales = locales.filter((locale) => locale !== currentLocale)
+  const buttonText =
+    locales.length > 2
+      ? 'Translate to all locales'
+      : `Translate to ${getFullLocaleText(otherLocales[0])}`
+
   return (
     <Canvas ctx={ctx}>
-      <Form
-        onSubmit={() =>
-          translateField(locales.filter((locale) => locale !== currentLocale))
-        }
-      >
+      <Form onSubmit={() => translateField(otherLocales)}>
         <Button
           buttonSize="xxs"
           type="submit"
