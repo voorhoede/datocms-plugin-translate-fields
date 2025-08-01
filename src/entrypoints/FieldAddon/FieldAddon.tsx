@@ -28,6 +28,7 @@ import {
 } from '../../lib/types'
 import {
   deeplFormalityLevelOptions,
+  defaultShowTranslate,
   translationFormats,
   translationServiceOptions,
 } from '../../lib/constants'
@@ -45,6 +46,11 @@ export default function FieldAddon({ ctx }: Props) {
   const pluginGlobalParameters: GlobalParameters =
     ctx.plugin.attributes.parameters
   const pluginParameters: Parameters = ctx.parameters
+
+  const showTranslateAll =
+    pluginParameters?.showTranslateAll ??
+    pluginGlobalParameters?.showTranslateAll ??
+    defaultShowTranslate
 
   const translationService =
     pluginParameters?.translationService ||
@@ -278,6 +284,11 @@ export default function FieldAddon({ ctx }: Props) {
     )
   }
 
+  if (!showTranslateAll) {
+    ctx.setHeight(0)
+    return null
+  }
+
   const otherLocales = locales.filter((locale) => locale !== currentLocale)
   const buttonText =
     locales.length > 2
@@ -293,12 +304,7 @@ export default function FieldAddon({ ctx }: Props) {
           rightIcon={isTranslating ? <Spinner size={24} /> : null}
           disabled={isTranslating}
         >
-          {locales.length > 2
-            ? `Translate to all locales (
-          ${locales.filter((locale) => locale !== currentLocale).join(', ')})`
-            : `Translate to ${locales.filter(
-                (locale) => locale !== currentLocale,
-              )}`}
+          {buttonText}
         </Button>
       </Form>
     </Canvas>
