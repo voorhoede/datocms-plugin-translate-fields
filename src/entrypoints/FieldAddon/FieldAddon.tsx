@@ -88,6 +88,10 @@ export default function FieldAddon({ ctx }: Props) {
   const deeplGlossaryId =
     pluginParameters.deeplGlossaryId || pluginGlobalParameters.deeplGlossaryId
 
+  const deeplPreserveFormatting =
+    pluginParameters.deeplPreserveFormatting ||
+    pluginGlobalParameters.deeplPreserveFormatting
+
   const deeplFormalityLevelValue =
     pluginParameters.deeplFormalityLevel?.value ||
     pluginGlobalParameters.deeplFormalityLevel?.value ||
@@ -141,6 +145,7 @@ export default function FieldAddon({ ctx }: Props) {
           deeplOptions: {
             glossaryId: deeplGlossaryId,
             formality: deeplFormalityLevelValue,
+            preserveFormatting: deeplPreserveFormatting,
           },
           openAIOptions: {
             model: modelValue,
