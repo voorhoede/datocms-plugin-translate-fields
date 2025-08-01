@@ -7,6 +7,8 @@ import {
   SettingOption,
 } from './types'
 
+export const defaultShowTranslate = true
+
 export const fieldsOptions: SettingOption<DatoFieldType>[] = [
   { label: 'String fields', value: DatoFieldType.stringField },
   { label: 'Text fields', value: DatoFieldType.textField },
