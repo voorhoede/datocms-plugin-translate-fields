@@ -72,6 +72,7 @@ export type Parameters = {
   topP?: number
   prompt?: string
   deeplGlossaryId?: string
+  deeplPreserveFormatting?: boolean
   deeplFormalityLevel?: SettingOption<DeeplFormalityLevel>
   excludedKeys?: string
   [TranslationServiceKey.yandexKey]?: string
@@ -100,6 +101,7 @@ export type TranslationOptions = {
   deeplOptions?: {
     glossaryId?: string
     formality?: DeeplFormalityLevel
+    preserveFormatting?: boolean
   }
   openAIOptions: {
     model: string

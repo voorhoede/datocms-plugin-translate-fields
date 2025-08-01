@@ -146,6 +146,24 @@ export default function ConfigScreen({ ctx }: Props) {
             )}
 
             {isDeepl && (
+              <SwitchField
+                name="deeplPreserveFormatting"
+                id="deeplPreserveFormatting"
+                label="Preserve formatting"
+                hint="Sets whether the translation engine should respect the original formatting, even if it would usually correct some aspects."
+                value={pluginParameters?.deeplPreserveFormatting || false}
+                onChange={(newValue) => {
+                  ctx.updatePluginParameters({
+                    ...pluginParameters,
+                    deeplPreserveFormatting: newValue,
+                  })
+
+                  ctx.notice('Settings updated successfully!')
+                }}
+              />
+            )}
+
+            {isDeepl && (
               <GlossaryIdField
                 value={pluginParameters?.deeplGlossaryId || ''}
                 onBlur={(newValue) => {
