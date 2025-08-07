@@ -11,7 +11,13 @@ export default async function translate(
   const params = new URLSearchParams()
 
   params.set('target_lang', options.toLocale)
-  params.set('tag_handling', options.format === 'html' ? 'html' : 'xml')
+
+  if (options.format === 'html') {
+    params.set('tag_handling', 'html')
+  } else if (!options.deeplOptions?.preserveFormatting) {
+    params.set('tag_handling', 'xml')
+  }
+
   params.set('text', string)
 
   if (options.fromLocale) {
@@ -20,6 +26,10 @@ export default async function translate(
 
   if (options.deeplOptions?.glossaryId) {
     params.set('glossary_id', options.deeplOptions.glossaryId)
+  }
+
+  if (options.deeplOptions?.preserveFormatting) {
+    params.set('preserve_formatting', '1')
   }
 
   if (
