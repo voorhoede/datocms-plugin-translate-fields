@@ -9,6 +9,7 @@ import {
 
 import {
   deeplFormalityLevelOptions,
+  defaultShowTranslate,
   defaultDeeplPreserveFormatting,
   translationServiceOptions,
 } from '../../lib/constants'
@@ -32,6 +33,11 @@ export default function ConfigScreen({ ctx }: Props) {
   const pluginParameters: Parameters = ctx.parameters
   const pluginGlobalParameters: GlobalParameters =
     ctx.plugin.attributes.parameters
+
+  const selectedShowTranslateAll =
+    pluginParameters?.showTranslateAll ??
+    pluginGlobalParameters?.showTranslateAll ??
+    defaultShowTranslate
 
   const selectedTranslationService =
     pluginParameters?.translationService ||
@@ -61,6 +67,21 @@ export default function ConfigScreen({ ctx }: Props) {
     <Canvas ctx={ctx}>
       <Form>
         <FieldGroup>
+          <SwitchField
+            name="showTranslateAll"
+            id="showTranslateAll"
+            label='Show "translate to all locales" button'
+            hint='If disabled it will not show the "Translate to all locales" button.'
+            value={selectedShowTranslateAll}
+            onChange={(newValue) => {
+              ctx.setParameters({
+                ...pluginParameters,
+                showTranslateAll: newValue,
+              })
+              ctx.notice('Settings updated successfully!')
+            }}
+          />
+
           <SelectField
             name="translationService"
             id="translationService"
@@ -75,6 +96,8 @@ export default function ConfigScreen({ ctx }: Props) {
                 ...pluginParameters,
                 translationService: newValue,
               })
+
+              ctx.notice('Settings updated successfully!')
             }}
           />
 

@@ -9,6 +9,7 @@ import {
 
 import {
   deeplFormalityLevelOptions,
+  defaultShowTranslate,
   defaultDeeplPreserveFormatting,
   fieldsOptions,
   translationServiceOptions,
@@ -80,6 +81,21 @@ export default function ConfigScreen({ ctx }: Props) {
                 ctx.updatePluginParameters({
                   ...pluginParameters,
                   fieldsToEnable: newValue,
+                })
+                ctx.notice('Settings updated successfully!')
+              }}
+            />
+
+            <SwitchField
+              name="showTranslateAll"
+              id="showTranslateAll"
+              label='Show "translate to all locales" button'
+              hint='If disabled it will not show the "Translate to all locales" button.'
+              value={pluginParameters?.showTranslateAll ?? defaultShowTranslate}
+              onChange={(newValue) => {
+                ctx.updatePluginParameters({
+                  ...pluginParameters,
+                  showTranslateAll: newValue,
                 })
                 ctx.notice('Settings updated successfully!')
               }}

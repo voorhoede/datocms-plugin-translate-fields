@@ -30,6 +30,8 @@ For this plugin you can configure global settings and configure the plugin per f
 - **Auto apply to fields (switch)**: When enabled this will automatically apply the plugin to all `structured-text`, `rich-text`, `string`, `text` and `seo` fields.
 By changing the following setting you can choose on which fields this plugin will be applied.
 
+- **Show "Translate to all locales" button (switch)**: When enabled this will show a `Translate to all locales` button on for all English text to translate the field into all available languages.
+
 - **Field where this plugin is enabled (multi select)**: You can choose to which fields the plugin will be applied.
 
 > Options of `Field where this plugin is enabled`:

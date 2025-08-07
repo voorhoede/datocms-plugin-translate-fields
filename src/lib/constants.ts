@@ -7,6 +7,7 @@ import {
   SettingOption,
 } from './types'
 
+export const defaultShowTranslate = true
 export const defaultDeeplPreserveFormatting = false
 
 export const fieldsOptions: SettingOption<DatoFieldType>[] = [
