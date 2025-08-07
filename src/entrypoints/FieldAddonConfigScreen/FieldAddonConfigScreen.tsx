@@ -1,8 +1,15 @@
 import { RenderManualFieldExtensionConfigScreenCtx } from 'datocms-plugin-sdk'
-import { Canvas, Form, SelectField, FieldGroup } from 'datocms-react-ui'
+import {
+  Canvas,
+  Form,
+  SelectField,
+  FieldGroup,
+  SwitchField,
+} from 'datocms-react-ui'
 
 import {
   deeplFormalityLevelOptions,
+  defaultDeeplPreserveFormatting,
   translationServiceOptions,
 } from '../../lib/constants'
 import {
@@ -35,6 +42,11 @@ export default function ConfigScreen({ ctx }: Props) {
     pluginParameters?.deeplFormalityLevel ||
     pluginGlobalParameters?.deeplFormalityLevel ||
     deeplFormalityLevelOptions[0]
+
+  const selectedPreserveFormatting =
+    pluginParameters?.deeplPreserveFormatting ??
+    pluginGlobalParameters?.deeplPreserveFormatting ??
+    defaultDeeplPreserveFormatting
 
   const excludedKeys =
     pluginParameters?.excludedKeys || pluginGlobalParameters?.excludedKeys || ''
@@ -109,6 +121,24 @@ export default function ConfigScreen({ ctx }: Props) {
                 }
               }}
               value={selectedFormalityLevel}
+            />
+          )}
+
+          {isDeepl && (
+            <SwitchField
+              name="deeplPreserveFormatting"
+              id="deeplPreserveFormatting"
+              label="Preserve formatting"
+              hint="Sets whether the translation engine should respect the original formatting, even if it would usually correct some aspects."
+              onChange={(newValue) => {
+                ctx.setParameters({
+                  ...pluginParameters,
+                  deeplPreserveFormatting: newValue,
+                })
+
+                ctx.notice('Settings updated successfully!')
+              }}
+              value={selectedPreserveFormatting}
             />
           )}
 
