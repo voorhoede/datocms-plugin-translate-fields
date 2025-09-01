@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.14.1] - 2025-09-01
+### Fixed
+- Cases where structured fields have a different structure
+
 ## [1.14.0] - 2025-08-07
 ### Added
 - Option for Deepl to preverve formatting (no & to &amp)
@@ -77,6 +81,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Translation beyond first block in structured text
 - Saving copied structured text due to invalid block ID
 
+[1.14.1]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.14.0...v1.14.1
 [1.14.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.13.2...v1.14.0
 [1.13.2]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.13.1...v1.13.2
 [1.13.1]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.13.0...v1.13.1
