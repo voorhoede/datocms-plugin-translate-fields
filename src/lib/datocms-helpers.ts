@@ -27,7 +27,12 @@ export function isStructuredTextText(value: any): boolean {
       (Object.keys(value).length === 3 &&
         'children' in value &&
         'type' in value &&
-        'style' in value))
+        'style' in value) ||
+      (Object.keys(value).length === 4 &&
+        'children' in value &&
+        'type' in value &&
+        'style' in value &&
+        'level' in value))
   )
 }
 
