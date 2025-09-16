@@ -51,7 +51,7 @@ export enum TranslationServiceKey {
 export enum OpenAIDefaultValues {
   model = 'text-davinci-003',
   temperature = 0,
-  maxTokens = 100,
+  maxCompletionTokens = 100,
   topP = 0,
   prompt = "Translate the following from the locale '{{fromLocale}}' to the locale '{{toLocale}}': {{value}}",
 }
@@ -69,7 +69,7 @@ export type Parameters = {
   translationService?: SettingOption<TranslationService>
   model?: SettingOption<string>
   temperature?: number
-  maxTokens?: number
+  maxCompletionTokens?: number
   topP?: number
   prompt?: string
   deeplGlossaryId?: string
@@ -107,7 +107,7 @@ export type TranslationOptions = {
   openAIOptions: {
     model: string
     temperature: number
-    maxTokens: number
+    maxCompletionTokens: number
     topP: number
     prompt: string
   }

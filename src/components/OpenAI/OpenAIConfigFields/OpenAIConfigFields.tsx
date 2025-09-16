@@ -10,7 +10,7 @@ type OpenAIConfigFieldsProps = {
   error: string
   selectedModel: SettingOption<string>
   temperature: number
-  maxTokens: number
+  maxCompletionTokens: number
   topP: number
   prompt: string
 }
@@ -23,7 +23,7 @@ export default function OpenAIConfigFields({
   openAIApiKey,
   selectedModel,
   temperature,
-  maxTokens,
+  maxCompletionTokens,
   topP,
   prompt,
 }: OpenAIConfigFieldsProps) {
@@ -74,12 +74,12 @@ export default function OpenAIConfigFields({
         />
 
         <TextField
-          name="maxTokens"
-          id="maxTokens"
+          name="maxCompletionTokens"
+          id="maxCompletionTokens"
           label="Max Tokens"
           hint="The maximum number of tokens to generate in the completion. The exact limit varies per model."
           placeholder="100"
-          value={maxTokens}
+          value={maxCompletionTokens}
           textInputProps={{
             type: 'number',
             min: 0,
@@ -88,7 +88,7 @@ export default function OpenAIConfigFields({
           }}
           onChange={(newValue) => {
             updateParametersFn({
-              maxTokens: Number(newValue),
+              maxCompletionTokens: Number(newValue),
             })
           }}
         />
@@ -116,7 +116,7 @@ export default function OpenAIConfigFields({
           openAIApiKey={openAIApiKey}
           selectedModel={selectedModel}
           temperature={temperature}
-          maxTokens={maxTokens}
+          maxCompletionTokens={maxCompletionTokens}
           topP={topP}
           value={prompt}
           onBlur={(newValue) => {

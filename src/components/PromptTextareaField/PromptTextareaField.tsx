@@ -11,7 +11,7 @@ type PromptTextareaFieldProps = {
   openAIApiKey: string
   selectedModel: SettingOption<string>
   temperature: number
-  maxTokens: number
+  maxCompletionTokens: number
   topP: number
   value: string
   onBlur: (newValue: string) => void
@@ -21,7 +21,7 @@ export default function PromptTextareaField({
   openAIApiKey,
   selectedModel,
   temperature,
-  maxTokens,
+  maxCompletionTokens,
   topP,
   value,
   onBlur,
@@ -59,7 +59,7 @@ export default function PromptTextareaField({
                 openAIOptions: {
                   model: selectedModel.value,
                   temperature,
-                  maxTokens,
+                  maxCompletionTokens,
                   topP,
                   prompt,
                 },

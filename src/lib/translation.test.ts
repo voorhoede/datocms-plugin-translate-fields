@@ -10,7 +10,7 @@ const tranlationOptions = {
   openAIOptions: {
     model: 'text-davinci-003',
     temperature: 0,
-    maxTokens: 100,
+    maxCompletionTokens: 100,
     topP: 0,
     prompt:
       "Translate the following from the locale '{{fromLocale}}' to the locale '{{toLocale}}': {{value}}",

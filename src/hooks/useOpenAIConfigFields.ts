@@ -72,10 +72,10 @@ export function useOpenAIConfigFields({
     pluginGlobalParameters.temperature ??
     OpenAIDefaultValues.temperature
 
-  const maxTokens =
-    pluginParameters?.maxTokens ??
-    pluginGlobalParameters.maxTokens ??
-    OpenAIDefaultValues.maxTokens
+  const maxCompletionTokens =
+    pluginParameters?.maxCompletionTokens ??
+    pluginGlobalParameters.maxCompletionTokens ??
+    OpenAIDefaultValues.maxCompletionTokens
 
   const topP =
     pluginParameters?.topP ??
@@ -119,7 +119,7 @@ export function useOpenAIConfigFields({
     openAIApiKey,
     selectedModel,
     temperature,
-    maxTokens,
+    maxCompletionTokens,
     topP,
     prompt,
   }

@@ -15,7 +15,7 @@ export default function OpenAIConfigScreen({ ctx }: OpenAIConfigScreenProps) {
     openAIApiKey,
     selectedModel,
     temperature,
-    maxTokens,
+    maxCompletionTokens,
     topP,
     prompt,
   } = useOpenAIConfigFields({ ctx })
@@ -37,7 +37,7 @@ export default function OpenAIConfigScreen({ ctx }: OpenAIConfigScreenProps) {
       error={error}
       selectedModel={selectedModel}
       temperature={temperature}
-      maxTokens={maxTokens}
+      maxCompletionTokens={maxCompletionTokens}
       topP={topP}
       prompt={prompt}
     />

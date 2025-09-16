@@ -77,10 +77,10 @@ export default function FieldAddon({ ctx }: Props) {
     pluginGlobalParameters.temperature ??
     OpenAIDefaultValues.temperature
 
-  const maxTokens =
-    pluginParameters.maxTokens ??
-    pluginGlobalParameters.maxTokens ??
-    OpenAIDefaultValues.maxTokens
+  const maxCompletionTokens =
+    pluginParameters.maxCompletionTokens ??
+    pluginGlobalParameters.maxCompletionTokens ??
+    OpenAIDefaultValues.maxCompletionTokens
 
   const topP =
     pluginParameters.topP ??
@@ -158,7 +158,7 @@ export default function FieldAddon({ ctx }: Props) {
           openAIOptions: {
             model: modelValue,
             temperature,
-            maxTokens,
+            maxCompletionTokens,
             topP,
             prompt,
           },

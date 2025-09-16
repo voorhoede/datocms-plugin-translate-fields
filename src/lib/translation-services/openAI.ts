@@ -20,7 +20,7 @@ export default async function translate(
       messages: [{ role: 'user', content: prompt }],
       model: options.openAIOptions.model,
       temperature: options.openAIOptions.temperature,
-      max_tokens: options.openAIOptions.maxTokens,
+      max_completion_tokens: options.openAIOptions.maxCompletionTokens,
       top_p: options.openAIOptions.topP,
     }),
   }
