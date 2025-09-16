@@ -51,6 +51,10 @@ strong,
   color: var(--alert-color);
 }
 
+.text-underline {
+  text-decoration: underline;
+}
+
 pre,
 .code {
   font-family: var(--monospaced-font-family);

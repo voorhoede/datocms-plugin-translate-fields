@@ -243,7 +243,20 @@ export default function FieldAddon({ ctx }: Props) {
   if (hasError) {
     return (
       <Canvas ctx={ctx}>
-        <p className="text-error body--small">{hasError}</p>
+        <p className="text-error body--small">
+          {hasError}
+          &nbsp; &nbsp;
+          <Button
+            className="text-underline"
+            buttonSize="xxs"
+            onClick={() => {
+              setHasError('')
+              translateField([currentLocale], locales[0])
+            }}
+          >
+            Retry
+          </Button>
+        </p>
       </Canvas>
     )
   }
