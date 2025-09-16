@@ -76,7 +76,7 @@ export default function OpenAIConfigFields({
         <TextField
           name="maxCompletionTokens"
           id="maxCompletionTokens"
-          label="Max Tokens"
+          label="Max Completion Tokens"
           hint="The maximum number of tokens to generate in the completion. The exact limit varies per model."
           placeholder="100"
           value={maxCompletionTokens}
