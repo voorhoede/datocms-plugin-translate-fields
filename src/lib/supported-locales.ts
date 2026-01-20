@@ -3,6 +3,8 @@ import {
   yandex as yandexSupportedLocales,
   deeplTo as deeplSupportedToLocales,
   deeplFrom as deeplSupportedFromLocales,
+  supertextFrom as supertextSupportedFromLocales,
+  supertextTo as supertextSupportedToLocales,
 } from './supported-locales'
 
 export function getSupportedToLocale(
@@ -43,6 +45,34 @@ export function getSupportedToLocale(
 
       return locale.toUpperCase()
     }
+    case TranslationService.supertext: {
+      switch (localeLower) {
+        case 'en':
+          return 'en-US'
+        case 'en-eu':
+          return 'en-GB'
+        case 'en-ie':
+          return 'en-GB'
+        case 'pt':
+          return 'pt-PT'
+        case 'fr':
+          return 'fr-FR'
+        case 'de':
+          return 'de-DE'
+        case 'it':
+          return 'it-IT'
+        case 'sr':
+          return 'sr-Cyrl'
+        case 'zh':
+          return 'zh-Hans'
+        default:
+          break
+      }
+
+      if (supertextSupportedToLocales.includes(localeStart)) {
+        return localeStart
+      }
+    }
   }
 
   return locale
@@ -73,6 +103,13 @@ export function getSupportedFromLocale(
           .includes(localeStart)
       ) {
         return localeStart.toUpperCase()
+      }
+
+      return ''
+    }
+    case TranslationService.supertext: {
+      if (supertextSupportedFromLocales.includes(localeStart)) {
+        return localeStart
       }
 
       return ''
@@ -242,4 +279,75 @@ export const yandex = [
   'xh',
   'yi',
   'zh',
+]
+
+export const supertextFrom = [
+  'bg',
+  'cs',
+  'da',
+  'de',
+  'el',
+  'en',
+  'es',
+  'fi',
+  'fr',
+  'gsw',
+  'hr',
+  'hu',
+  'it',
+  'ja',
+  'ko',
+  'nb',
+  'nl',
+  'pl',
+  'pt',
+  'rm',
+  'ru',
+  'sk',
+  'sl',
+  'sq',
+  'sr',
+  'sv',
+  'tr',
+  'zh',
+]
+
+export const supertextTo = [
+  'bg',
+  'cs',
+  'da',
+  'de-AT',
+  'de-CH',
+  'de-DE',
+  'el',
+  'en-GB',
+  'en-US',
+  'es',
+  'fi',
+  'fr-CH',
+  'fr-FR',
+  'gsw-u-sd-chbe',
+  'gsw-u-sd-chzh',
+  'hr',
+  'hu',
+  'it-CH',
+  'it-IT',
+  'ja',
+  'ko',
+  'nb',
+  'nl',
+  'pl',
+  'pt-BR',
+  'pt-PT',
+  'rm',
+  'ru',
+  'sk',
+  'sl',
+  'sq',
+  'sr-Cyrl',
+  'sr-Latn',
+  'sv',
+  'tr',
+  'zh-Hans',
+  'zh-Hant',
 ]

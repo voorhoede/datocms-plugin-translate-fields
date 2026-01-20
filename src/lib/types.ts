@@ -37,6 +37,7 @@ export enum TranslationService {
   deepl = 'deepl',
   deeplFree = 'deeplFree',
   openAI = 'openAI',
+  supertext = 'supertext',
   mock = 'mock',
 }
 
@@ -45,6 +46,7 @@ export enum TranslationServiceKey {
   deeplApiKey = 'deeplApiKey',
   deeplFreeApiKey = 'deeplFreeApiKey',
   openAIKey = 'openAIApiKey',
+  supertextApiKey = 'supertextApiKey',
   mockKey = 'mockApiKey',
 }
 
@@ -64,6 +66,12 @@ export enum DeeplFormalityLevel {
   preferLess = 'prefer_less',
 }
 
+export enum SupertextPolitness {
+  default = 'default',
+  more = 'more',
+  less = 'less',
+}
+
 export type Parameters = {
   showTranslateAll?: boolean
   translationService?: SettingOption<TranslationService>
@@ -75,11 +83,13 @@ export type Parameters = {
   deeplGlossaryId?: string
   deeplPreserveFormatting?: boolean
   deeplFormalityLevel?: SettingOption<DeeplFormalityLevel>
+  supertextPoliteness?: SettingOption<SupertextPolitness>
   excludedKeys?: string
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
   [TranslationServiceKey.openAIKey]?: string
+  [TranslationServiceKey.supertextApiKey]?: string
   [TranslationServiceKey.mockKey]?: string
 }
 
@@ -110,6 +120,10 @@ export type TranslationOptions = {
     maxCompletionTokens: number
     topP: number
     prompt: string
+  }
+  supertextOptions?: {
+    politeness?: SupertextPolitness
+    preserveFormatting?: boolean
   }
   excludedKeys?: string
 }

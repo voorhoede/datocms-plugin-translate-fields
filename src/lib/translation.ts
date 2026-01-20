@@ -9,6 +9,7 @@ import { paths, removePropertyRecursively } from './helpers'
 import yandexTranslate from './translation-services/yandex'
 import deeplTranslate from './translation-services/deepl'
 import openAITranslate from './translation-services/openAI'
+import supertextTranslate from './translation-services/supertext'
 
 const parseHtml = require('html2json')
 
@@ -16,6 +17,7 @@ export async function getTranslation(
   string: string,
   options: TranslationOptions,
 ): Promise<string> {
+  console.log(options.translationService)
   switch (options.translationService) {
     case TranslationService.mock: {
       return `Translated ${string}`
@@ -29,6 +31,9 @@ export async function getTranslation(
     }
     case TranslationService.openAI: {
       return openAITranslate(string, options)
+    }
+    case TranslationService.supertext: {
+      return supertextTranslate(string, options)
     }
     default: {
       throw new Error('No translation service added in the settings')
