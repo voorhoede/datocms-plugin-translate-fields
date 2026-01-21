@@ -17,7 +17,6 @@ export async function getTranslation(
   string: string,
   options: TranslationOptions,
 ): Promise<string> {
-  console.log(options.translationService)
   switch (options.translationService) {
     case TranslationService.mock: {
       return `Translated ${string}`

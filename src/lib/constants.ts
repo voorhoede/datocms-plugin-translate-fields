@@ -63,9 +63,8 @@ export const deeplFormalityLevelOptions: SettingOption<DeeplFormalityLevel>[] =
     },
   ]
 
-export const supertextPolitenessOptions: SettingOption<SupertextPolitness>[] =
-  [
-    { label: 'Default', value: SupertextPolitness.default },
-    { label: 'More formal', value: SupertextPolitness.more },
-    { label: 'Less formal', value: SupertextPolitness.less },
-  ]
+export const supertextPolitenessOptions: SettingOption<SupertextPolitness>[] = [
+  { label: 'Default', value: SupertextPolitness.default },
+  { label: 'More formal', value: SupertextPolitness.more },
+  { label: 'Less formal', value: SupertextPolitness.less },
+]

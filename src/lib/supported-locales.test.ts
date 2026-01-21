@@ -12,9 +12,7 @@ describe('getSupportedFromLocale', () => {
       )
     })
     it('should return single locale if en', () => {
-      expect(getSupportedFromLocale('en-us', TranslationService.deepl)).toBe(
-        'EN',
-      )
+      expect(getSupportedFromLocale('en', TranslationService.deepl)).toBe('EN')
     })
     it('should return single locale if pt-pt', () => {
       expect(getSupportedFromLocale('pt-pt', TranslationService.deepl)).toBe(
@@ -33,9 +31,9 @@ describe('getSupportedFromLocale', () => {
       ).toBe('EN')
     })
     it('should return single locale if en', () => {
-      expect(
-        getSupportedFromLocale('en-us', TranslationService.deeplFree),
-      ).toBe('EN')
+      expect(getSupportedFromLocale('en', TranslationService.deeplFree)).toBe(
+        'EN',
+      )
     })
     it('should return single locale if pt-pt', () => {
       expect(
@@ -60,6 +58,29 @@ describe('getSupportedFromLocale', () => {
     })
     it('should return empty string if locale does not exist', () => {
       expect(getSupportedFromLocale('ab', TranslationService.deeplFree)).toBe(
+        '',
+      )
+    })
+  })
+
+  describe('supertext', () => {
+    it('should return single locale if en-us', () => {
+      expect(
+        getSupportedFromLocale('en-us', TranslationService.supertext),
+      ).toBe('en')
+    })
+    it('should return single locale if en', () => {
+      expect(getSupportedFromLocale('en', TranslationService.supertext)).toBe(
+        'en',
+      )
+    })
+    it('should return single locale if pt-pt', () => {
+      expect(
+        getSupportedFromLocale('pt-pt', TranslationService.supertext),
+      ).toBe('pt')
+    })
+    it('should return empty string if locale does not exist', () => {
+      expect(getSupportedFromLocale('yi', TranslationService.supertext)).toBe(
         '',
       )
     })
@@ -146,6 +167,59 @@ describe('getSupportedToLocale', () => {
     })
     it('should return locale if locale does not exist', () => {
       expect(getSupportedToLocale('ab', TranslationService.yandex)).toBe('ab')
+    })
+  })
+
+  describe('supertext', () => {
+    it('should return double locale if en', () => {
+      expect(getSupportedToLocale('en', TranslationService.supertext)).toBe(
+        'en-US',
+      )
+    })
+    it('should return double locale if en-US', () => {
+      expect(getSupportedToLocale('en-US', TranslationService.supertext)).toBe(
+        'en-US',
+      )
+    })
+    it('should return double locale if de', () => {
+      expect(getSupportedToLocale('de', TranslationService.supertext)).toBe(
+        'de-DE',
+      )
+    })
+    it('should return double locale if de-de', () => {
+      expect(getSupportedToLocale('de-de', TranslationService.supertext)).toBe(
+        'de-DE',
+      )
+    })
+    it('should return double locale if de-ch', () => {
+      expect(getSupportedToLocale('de-ch', TranslationService.supertext)).toBe(
+        'de-CH',
+      )
+    })
+    it('should return double locale if pt', () => {
+      expect(getSupportedToLocale('pt', TranslationService.supertext)).toBe(
+        'pt-PT',
+      )
+    })
+    it('should return double locale if pt-pt', () => {
+      expect(getSupportedToLocale('pt-pt', TranslationService.supertext)).toBe(
+        'pt-PT',
+      )
+    })
+    it('should return double locale if pt-br', () => {
+      expect(getSupportedToLocale('pt-br', TranslationService.supertext)).toBe(
+        'pt-BR',
+      )
+    })
+    it('should return single locale if nl', () => {
+      expect(getSupportedToLocale('nl', TranslationService.supertext)).toBe(
+        'nl',
+      )
+    })
+    it('should return locale if locale does not exist', () => {
+      expect(
+        getSupportedToLocale('bla-bla', TranslationService.supertext),
+      ).toBe('bla-bla')
     })
   })
 })
