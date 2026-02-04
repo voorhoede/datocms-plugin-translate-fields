@@ -156,7 +156,7 @@ export default function ConfigScreen({ ctx }: Props) {
             />
           )}
 
-          {isDeepl && (
+          {(isDeepl || isSupertext) && (
             <SwitchField
               name="deeplPreserveFormatting"
               id="deeplPreserveFormatting"

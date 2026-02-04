@@ -170,6 +170,7 @@ export default function FieldAddon({ ctx }: Props) {
           },
           supertextOptions: {
             politeness: supertextPolitenessValue,
+            preserveFormatting: deeplPreserveFormatting,
           },
           excludedKeys,
         }
