@@ -64,9 +64,9 @@ describe('getSupportedFromLocale', () => {
   })
 
   describe('supertext', () => {
-    it('should return single locale if en-us', () => {
+    it('should return single locale if en-US', () => {
       expect(
-        getSupportedFromLocale('en-us', TranslationService.supertext),
+        getSupportedFromLocale('en-US', TranslationService.supertext),
       ).toBe('en')
     })
     it('should return single locale if en', () => {
@@ -74,9 +74,9 @@ describe('getSupportedFromLocale', () => {
         'en',
       )
     })
-    it('should return single locale if pt-pt', () => {
+    it('should return single locale if pt-PT', () => {
       expect(
-        getSupportedFromLocale('pt-pt', TranslationService.supertext),
+        getSupportedFromLocale('pt-PT', TranslationService.supertext),
       ).toBe('pt')
     })
     it('should return empty string if locale does not exist', () => {
@@ -186,13 +186,13 @@ describe('getSupportedToLocale', () => {
         'de-DE',
       )
     })
-    it('should return double locale if de-de', () => {
-      expect(getSupportedToLocale('de-de', TranslationService.supertext)).toBe(
+    it('should return double locale if de-DE', () => {
+      expect(getSupportedToLocale('de-DE', TranslationService.supertext)).toBe(
         'de-DE',
       )
     })
-    it('should return double locale if de-ch', () => {
-      expect(getSupportedToLocale('de-ch', TranslationService.supertext)).toBe(
+    it('should return double locale if de-CH', () => {
+      expect(getSupportedToLocale('de-CH', TranslationService.supertext)).toBe(
         'de-CH',
       )
     })
@@ -201,13 +201,13 @@ describe('getSupportedToLocale', () => {
         'pt-PT',
       )
     })
-    it('should return double locale if pt-pt', () => {
-      expect(getSupportedToLocale('pt-pt', TranslationService.supertext)).toBe(
+    it('should return double locale if pt-PT', () => {
+      expect(getSupportedToLocale('pt-PT', TranslationService.supertext)).toBe(
         'pt-PT',
       )
     })
-    it('should return double locale if pt-br', () => {
-      expect(getSupportedToLocale('pt-br', TranslationService.supertext)).toBe(
+    it('should return double locale if pt-BR', () => {
+      expect(getSupportedToLocale('pt-BR', TranslationService.supertext)).toBe(
         'pt-BR',
       )
     })

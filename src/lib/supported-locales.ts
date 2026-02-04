@@ -50,53 +50,25 @@ export function getSupportedToLocale(
         return locale
       }
 
-      switch (localeLower) {
+      if (supertextSupportedToLocales.includes(localeStart)) {
+        return localeStart
+      }
+
+      switch (localeStart) {
         case 'en':
           return 'en-US'
-        case 'en-eu':
-          return 'en-GB'
-        case 'en-ie':
-          return 'en-GB'
         case 'de':
           return 'de-DE'
-        case 'de-ch':
-          return 'de-CH'
-        case 'de-de':
-          return 'de-DE'
-        case 'de-at':
-          return 'de-AT'
         case 'fr':
           return 'fr-FR'
-        case 'fr-ch':
-          return 'fr-CH'
-        case 'fr-fr':
-          return 'fr-FR'
         case 'it':
           return 'it-IT'
-        case 'it-it':
-          return 'it-IT'
-        case 'it-ch':
-          return 'it-CH'
         case 'pt':
           return 'pt-PT'
-        case 'pt-pt':
-          return 'pt-PT'
-        case 'pt-br':
-          return 'pt-BR'
-        case 'it':
-          return 'it-IT'
         case 'sr':
-          return 'sr-Cyrl'
-        case 'sr-cyrl':
-          return 'sr-Cyrl'
-        case 'sr-latn':
           return 'sr-Latn'
         case 'zh':
           return 'zh-Hans'
-        case 'zh-hans':
-          return 'zh-Hans'
-        case 'zh-Hant':
-          return 'zh-Hant'
         default:
           break
       }
@@ -136,7 +108,11 @@ export function getSupportedFromLocale(
       return ''
     }
     case TranslationService.supertext: {
-      if (supertextSupportedFromLocales.includes(localeStart)) {
+      if (
+        supertextSupportedFromLocales
+          .map((supertextLocale) => supertextLocale.toLowerCase())
+          .includes(localeStart)
+      ) {
         return localeStart
       }
 
