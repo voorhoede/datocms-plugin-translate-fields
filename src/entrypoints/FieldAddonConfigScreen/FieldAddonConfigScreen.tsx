@@ -12,6 +12,7 @@ import {
   defaultShowTranslate,
   defaultDeeplPreserveFormatting,
   translationServiceOptions,
+  supertextPolitenessOptions,
 } from '../../lib/constants'
 import {
   GlobalParameters,
@@ -24,6 +25,7 @@ import GlossaryIdField from '../../components/GlossaryIdField/GlossaryIdField'
 import FormalityField from '../../components/FormalityField/FormalityField'
 import ExcludedFields from '../../components/ExcludedKeysField/ExcludedKeysField'
 import OpenAIAddonConfigScreen from '../../components/OpenAI/OpenAIAddonConfigScreen/OpenAIAddonConfigScreen'
+import PolitenessField from '../../components/PolitenessField/PolitenessField'
 
 type Props = {
   ctx: RenderManualFieldExtensionConfigScreenCtx
@@ -49,6 +51,11 @@ export default function ConfigScreen({ ctx }: Props) {
     pluginGlobalParameters?.deeplFormalityLevel ||
     deeplFormalityLevelOptions[0]
 
+  const selectedPolitness =
+    pluginParameters?.supertextPoliteness ||
+    pluginGlobalParameters?.supertextPoliteness ||
+    supertextPolitenessOptions[0]
+
   const selectedPreserveFormatting =
     pluginParameters?.deeplPreserveFormatting ??
     pluginGlobalParameters?.deeplPreserveFormatting ??
@@ -62,6 +69,8 @@ export default function ConfigScreen({ ctx }: Props) {
     selectedTranslationService.value === TranslationService.deeplFree
   const isOpenAI =
     selectedTranslationService.value === TranslationService.openAI
+  const isSupertext =
+    selectedTranslationService.value === TranslationService.supertext
 
   return (
     <Canvas ctx={ctx}>
@@ -147,7 +156,7 @@ export default function ConfigScreen({ ctx }: Props) {
             />
           )}
 
-          {isDeepl && (
+          {(isDeepl || isSupertext) && (
             <SwitchField
               name="deeplPreserveFormatting"
               id="deeplPreserveFormatting"
@@ -182,6 +191,25 @@ export default function ConfigScreen({ ctx }: Props) {
           )}
 
           {isOpenAI && <OpenAIAddonConfigScreen ctx={ctx} />}
+
+          {isSupertext && (
+            <PolitenessField
+              onChange={(newValue) => {
+                if (
+                  newValue.value !==
+                  pluginParameters?.supertextPoliteness?.value
+                ) {
+                  ctx.setParameters({
+                    ...pluginParameters,
+                    supertextPoliteness: newValue,
+                  })
+
+                  ctx.notice('Settings updated successfully!')
+                }
+              }}
+              value={selectedPolitness}
+            />
+          )}
 
           <ExcludedFields
             value={excludedKeys}

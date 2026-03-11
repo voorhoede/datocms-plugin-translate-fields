@@ -68,7 +68,8 @@
     "chatGPT",
     "openAI",
     "GPT-3",
-    "GPT-4"
+    "GPT-4",
+    "supertext"
   ],
   "repository": {
     "type": "git",

@@ -5,6 +5,7 @@ import {
   TranslationService,
   DeeplFormalityLevel,
   SettingOption,
+  SupertextPolitness,
 } from './types'
 
 export const defaultShowTranslate = true
@@ -31,6 +32,7 @@ export const translationServiceOptions: SettingOption<TranslationService>[] = [
   { label: 'DeepL API Pro', value: TranslationService.deepl },
   { label: 'DeepL API Free', value: TranslationService.deeplFree },
   { label: 'OpenAI', value: TranslationService.openAI },
+  { label: 'Supertext', value: TranslationService.supertext },
 ]
 
 export const translationFormats = {
@@ -60,3 +62,9 @@ export const deeplFormalityLevelOptions: SettingOption<DeeplFormalityLevel>[] =
       value: DeeplFormalityLevel.preferLess,
     },
   ]
+
+export const supertextPolitenessOptions: SettingOption<SupertextPolitness>[] = [
+  { label: 'Default', value: SupertextPolitness.default },
+  { label: 'More formal', value: SupertextPolitness.more },
+  { label: 'Less formal', value: SupertextPolitness.less },
+]

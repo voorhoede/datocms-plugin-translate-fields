@@ -32,6 +32,7 @@ import {
   defaultDeeplPreserveFormatting,
   translationFormats,
   translationServiceOptions,
+  supertextPolitenessOptions,
 } from '../../lib/constants'
 import { fieldHasFieldValue, getFullLocaleText } from '../../lib/helpers'
 
@@ -105,6 +106,11 @@ export default function FieldAddon({ ctx }: Props) {
     pluginGlobalParameters.deeplFormalityLevel?.value ||
     deeplFormalityLevelOptions[0].value
 
+  const supertextPolitenessValue =
+    pluginParameters.supertextPoliteness?.value ||
+    pluginGlobalParameters.supertextPoliteness?.value ||
+    supertextPolitenessOptions[0].value
+
   const excludedKeys =
     pluginParameters.excludedKeys || pluginGlobalParameters.excludedKeys || ''
 
@@ -161,6 +167,10 @@ export default function FieldAddon({ ctx }: Props) {
             maxCompletionTokens,
             topP,
             prompt,
+          },
+          supertextOptions: {
+            politeness: supertextPolitenessValue,
+            preserveFormatting: deeplPreserveFormatting,
           },
           excludedKeys,
         }

@@ -53,6 +53,7 @@ By changing the following setting you can choose on which fields this plugin wil
 > * DeepL API Pro
 > * DeepL API Free
 > * OpenAI
+> * Supertext
 
 - **API key of `[selected translation service]` (text field)**: Add the API key of the translation service that you have selected. The plugin will give errors if the API key isn't added or if the translation service serves an error.
 
