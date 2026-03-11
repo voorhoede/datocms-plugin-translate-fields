@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.16.0] - 2026-03-11
+### Added
+- Translation service Supertext
+
 ## [1.15.0] - 2025-09-16
 ### Added
 - Retry button for failed API calls next to the error message
@@ -87,6 +91,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Translation beyond first block in structured text
 - Saving copied structured text due to invalid block ID
 
+[1.16.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.15.0...v1.16.0
 [1.15.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.14.1...v1.15.0
 [1.14.1]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.14.0...v1.14.1
 [1.14.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.13.2...v1.14.0
