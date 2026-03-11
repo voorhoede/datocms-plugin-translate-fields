@@ -3,9 +3,6 @@
   "homepage": "https://github.com/voorhoede/datocms-plugin-translate-fields",
   "version": "1.15.0",
   "description": "A DatoCMS plugin that gives you the ability to translate `structured-text`, `rich-text`, `string`, `text`, `seo` and `slug` fields in DatoCMS",
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "scripts": {
     "dev": "cross-env REACT_APP_USE_MOCK=true npm run start",
     "start": "cross-env BROWSER='none' PUBLIC_URL='/' react-scripts start",
@@ -13,6 +10,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "eject": "react-scripts eject",
+    "lint": "prettier --check .",
     "prettier": "prettier --write .",
     "pre-commit": "npm run prettier",
     "prepack": "npm run build",
@@ -74,7 +72,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/voorhoede/datocms-plugin-translate-fields.git"
+    "url": "git+https://github.com/voorhoede/datocms-plugin-translate-fields.git"
   },
   "author": "Voorhoede",
   "license": "ISC",
