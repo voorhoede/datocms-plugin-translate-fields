@@ -4,6 +4,20 @@ import {
   TranslationService,
 } from '../types'
 
+function escapeXml(text: string): string {
+  return text
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+}
+
+function unescapeXml(text: string): string {
+  return text
+    .replaceAll('&amp;', '&')
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+}
+
 export default async function translate(
   string: string,
   options: TranslationOptions,
@@ -12,13 +26,16 @@ export default async function translate(
 
   params.set('target_lang', options.toLocale)
 
+  const isXmlMode =
+    options.format !== 'html' && !options.deeplOptions?.preserveFormatting
+
   if (options.format === 'html') {
     params.set('tag_handling', 'html')
-  } else if (!options.deeplOptions?.preserveFormatting) {
+  } else if (isXmlMode) {
     params.set('tag_handling', 'xml')
   }
 
-  params.set('text', string)
+  params.set('text', isXmlMode ? escapeXml(string) : string)
 
   if (options.fromLocale) {
     params.set('source_lang', options.fromLocale)
@@ -64,6 +81,8 @@ export default async function translate(
   const response = await request.json()
 
   return response.translations
-    .map((translation: any) => translation.text)
+    .map((translation: any) =>
+      isXmlMode ? unescapeXml(translation.text) : translation.text,
+    )
     .join(' ')
 }

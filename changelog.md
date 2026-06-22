@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.15.2] - 2026-06-22
+### Fixed
+- DeepL XML mode: escape special characters (`&`, `<`, `>`) before sending to avoid 400 parsing errors when text contains an ampersand
+
 ## [1.15.1] - 2026-03-11
 ### Added
 - Translation service Supertext
@@ -91,6 +95,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Translation beyond first block in structured text
 - Saving copied structured text due to invalid block ID
 
+[1.15.2]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.15.1...v1.15.2
 [1.15.1]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.15.0...v1.15.1
 [1.15.0]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.14.1...v1.15.0
 [1.14.1]: https://github.com/voorhoede/datocms-plugin-translate-fields/compare/v1.14.0...v1.14.1
