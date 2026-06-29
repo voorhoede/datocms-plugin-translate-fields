@@ -37,6 +37,37 @@ export const structuredTextInlineItemSlate = {
   ],
 }
 
+export const structuredTextInlineBlockSlate = {
+  blockModelId: '1',
+  type: 'inlineBlock',
+  children: [
+    {
+      text: 'Test',
+    },
+  ],
+}
+
+export const structuredTextLinkSlate = {
+  type: 'link',
+  url: 'https://example.com',
+  children: [
+    {
+      text: 'Test',
+    },
+  ],
+}
+
+export const structuredTextItemLinkSlate = {
+  type: 'itemLink',
+  item: '1',
+  itemTypeId: '1',
+  children: [
+    {
+      text: 'Test',
+    },
+  ],
+}
+
 export const structuredTextCodeSlate = {
   type: 'code',
   children: [

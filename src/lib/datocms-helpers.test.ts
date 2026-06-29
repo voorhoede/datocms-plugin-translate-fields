@@ -1,7 +1,10 @@
 import {
   structuredTextBlockSlate,
   structuredTextCodeSlate,
+  structuredTextInlineBlockSlate,
   structuredTextInlineItemSlate,
+  structuredTextLinkSlate,
+  structuredTextItemLinkSlate,
   structuredTextSlate,
 } from '../mocks/structured-text-mock'
 import { metaArray } from '../mocks/helper-mocks'
@@ -30,6 +33,9 @@ describe('getValueType', () => {
   })
   it('should return id when key is id', () => {
     expect(getValueType('id', 'text', PathType.text)).toBe(PathType.id)
+  })
+  it('should return id when key is item', () => {
+    expect(getValueType('item', '123', PathType.text)).toBe(PathType.id)
   })
   it('should return id when key is blockModelId', () => {
     expect(getValueType('blockModelId', 'text', PathType.text)).toBe(
@@ -69,11 +75,30 @@ describe('getValueType', () => {
       getValueType('structured_text', structuredTextSlate, PathType.text),
     ).toBe(PathType.structured_text)
   })
+  it('should return structured_text when value is an array starting with a link node', () => {
+    expect(
+      getValueType('children', [structuredTextLinkSlate], PathType.text),
+    ).toBe(PathType.structured_text)
+  })
+  it('should return structured_text when value is an array starting with an itemLink node', () => {
+    expect(
+      getValueType('children', [structuredTextItemLinkSlate], PathType.text),
+    ).toBe(PathType.structured_text)
+  })
   it('should return structured_text_block when value is a block inside a structured text slate', () => {
     expect(
       getValueType(
         'structured_text_block',
         structuredTextBlockSlate,
+        PathType.text,
+      ),
+    ).toBe(PathType.structured_text_block)
+  })
+  it('should return structured_text_block when value is an inline block inside a structured text slate', () => {
+    expect(
+      getValueType(
+        'structured_text_inline_block',
+        structuredTextInlineBlockSlate,
         PathType.text,
       ),
     ).toBe(PathType.structured_text_block)

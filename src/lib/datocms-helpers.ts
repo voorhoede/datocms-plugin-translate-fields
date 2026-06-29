@@ -17,22 +17,11 @@ export function isStructuredTextText(value: any): boolean {
   return (
     Boolean(value) &&
     !Array.isArray(value) &&
-    ((Object.keys(value).length === 2 &&
-      'children' in value &&
-      'type' in value) ||
-      (Object.keys(value).length === 3 &&
-        'children' in value &&
-        'type' in value &&
-        'level' in value) ||
-      (Object.keys(value).length === 3 &&
-        'children' in value &&
-        'type' in value &&
-        'style' in value) ||
-      (Object.keys(value).length === 4 &&
-        'children' in value &&
-        'type' in value &&
-        'style' in value &&
-        'level' in value))
+    'children' in value &&
+    'type' in value &&
+    !isStructuredTextBlock(value) &&
+    !isStructuredTextInlineItem(value) &&
+    !isStructuredTextCode(value)
   )
 }
 
@@ -49,7 +38,7 @@ export function isStructuredTextBlock(value: any): boolean {
   return (
     Boolean(value) &&
     !Array.isArray(value) &&
-    value.type === 'block' &&
+    (value.type === 'block' || value.type === 'inlineBlock') &&
     'children' in value &&
     'blockModelId' in value
   )
@@ -117,6 +106,7 @@ export function getValueType(
   if (
     key === 'itemTypeId' ||
     key === 'itemId' ||
+    key === 'item' ||
     key === 'upload_id' ||
     key === 'id' ||
     key === 'blockModelId' ||

@@ -157,10 +157,10 @@ export async function getStructuredTextTranslation(
   let translatedArray = mappedValue
 
   for (const path of allPaths) {
-    if (path.type === PathType.text && path.key === 'text') {
+    if (path.key === 'text') {
       const currentPath = path.path
       const currentString = get(translatedArray, currentPath)
-      if (currentString) {
+      if (currentString && typeof currentString === 'string') {
         const translatedString = await getTranslation(currentString, options)
         set(translatedArray, currentPath, translatedString)
       }
